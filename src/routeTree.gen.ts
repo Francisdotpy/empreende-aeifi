@@ -10,33 +10,180 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AAeifiRouteImport } from './routes/a-aeifi'
+import { Route as AssocieSeRouteImport } from './routes/associe-se'
+import { Route as BuscameiRouteImport } from './routes/buscamei'
+import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as IniciativasRouteImport } from './routes/iniciativas'
+import { Route as OQueFazemosRouteImport } from './routes/o-que-fazemos'
+import { Route as ParceirosRouteImport } from './routes/parceiros'
+import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-privacidade'
+import { Route as TransparenciaRouteImport } from './routes/transparencia'
+import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
+import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AAeifiRoute = AAeifiRouteImport.update({
+  id: '/a-aeifi',
+  path: '/a-aeifi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssocieSeRoute = AssocieSeRouteImport.update({
+  id: '/associe-se',
+  path: '/associe-se',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuscameiRoute = BuscameiRouteImport.update({
+  id: '/buscamei',
+  path: '/buscamei',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContatoRoute = ContatoRouteImport.update({
+  id: '/contato',
+  path: '/contato',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IniciativasRoute = IniciativasRouteImport.update({
+  id: '/iniciativas',
+  path: '/iniciativas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OQueFazemosRoute = OQueFazemosRouteImport.update({
+  id: '/o-que-fazemos',
+  path: '/o-que-fazemos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParceirosRoute = ParceirosRouteImport.update({
+  id: '/parceiros',
+  path: '/parceiros',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoliticaDePrivacidadeRoute = PoliticaDePrivacidadeRouteImport.update({
+  id: '/politica-de-privacidade',
+  path: '/politica-de-privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TransparenciaRoute = TransparenciaRouteImport.update({
+  id: '/transparencia',
+  path: '/transparencia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticiasIndexRoute = NoticiasIndexRouteImport.update({
+  id: '/noticias/',
+  path: '/noticias/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticiasSlugRoute = NoticiasSlugRouteImport.update({
+  id: '/noticias/$slug',
+  path: '/noticias/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/a-aeifi': typeof AAeifiRoute
+  '/associe-se': typeof AssocieSeRoute
+  '/buscamei': typeof BuscameiRoute
+  '/contato': typeof ContatoRoute
+  '/iniciativas': typeof IniciativasRoute
+  '/o-que-fazemos': typeof OQueFazemosRoute
+  '/parceiros': typeof ParceirosRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/transparencia': typeof TransparenciaRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias/': typeof NoticiasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/a-aeifi': typeof AAeifiRoute
+  '/associe-se': typeof AssocieSeRoute
+  '/buscamei': typeof BuscameiRoute
+  '/contato': typeof ContatoRoute
+  '/iniciativas': typeof IniciativasRoute
+  '/o-que-fazemos': typeof OQueFazemosRoute
+  '/parceiros': typeof ParceirosRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/transparencia': typeof TransparenciaRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias': typeof NoticiasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/a-aeifi': typeof AAeifiRoute
+  '/associe-se': typeof AssocieSeRoute
+  '/buscamei': typeof BuscameiRoute
+  '/contato': typeof ContatoRoute
+  '/iniciativas': typeof IniciativasRoute
+  '/o-que-fazemos': typeof OQueFazemosRoute
+  '/parceiros': typeof ParceirosRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/transparencia': typeof TransparenciaRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias/': typeof NoticiasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/a-aeifi'
+    | '/associe-se'
+    | '/buscamei'
+    | '/contato'
+    | '/iniciativas'
+    | '/o-que-fazemos'
+    | '/parceiros'
+    | '/politica-de-privacidade'
+    | '/transparencia'
+    | '/noticias/$slug'
+    | '/noticias/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/a-aeifi'
+    | '/associe-se'
+    | '/buscamei'
+    | '/contato'
+    | '/iniciativas'
+    | '/o-que-fazemos'
+    | '/parceiros'
+    | '/politica-de-privacidade'
+    | '/transparencia'
+    | '/noticias/$slug'
+    | '/noticias'
+  id:
+    | '__root__'
+    | '/'
+    | '/a-aeifi'
+    | '/associe-se'
+    | '/buscamei'
+    | '/contato'
+    | '/iniciativas'
+    | '/o-que-fazemos'
+    | '/parceiros'
+    | '/politica-de-privacidade'
+    | '/transparencia'
+    | '/noticias/$slug'
+    | '/noticias/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AAeifiRoute: typeof AAeifiRoute
+  AssocieSeRoute: typeof AssocieSeRoute
+  BuscameiRoute: typeof BuscameiRoute
+  ContatoRoute: typeof ContatoRoute
+  IniciativasRoute: typeof IniciativasRoute
+  OQueFazemosRoute: typeof OQueFazemosRoute
+  ParceirosRoute: typeof ParceirosRoute
+  PoliticaDePrivacidadeRoute: typeof PoliticaDePrivacidadeRoute
+  TransparenciaRoute: typeof TransparenciaRoute
+  NoticiasSlugRoute: typeof NoticiasSlugRoute
+  NoticiasIndexRoute: typeof NoticiasIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +195,99 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/a-aeifi': {
+      id: '/a-aeifi'
+      path: '/a-aeifi'
+      fullPath: '/a-aeifi'
+      preLoaderRoute: typeof AAeifiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/associe-se': {
+      id: '/associe-se'
+      path: '/associe-se'
+      fullPath: '/associe-se'
+      preLoaderRoute: typeof AssocieSeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buscamei': {
+      id: '/buscamei'
+      path: '/buscamei'
+      fullPath: '/buscamei'
+      preLoaderRoute: typeof BuscameiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contato': {
+      id: '/contato'
+      path: '/contato'
+      fullPath: '/contato'
+      preLoaderRoute: typeof ContatoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/iniciativas': {
+      id: '/iniciativas'
+      path: '/iniciativas'
+      fullPath: '/iniciativas'
+      preLoaderRoute: typeof IniciativasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/o-que-fazemos': {
+      id: '/o-que-fazemos'
+      path: '/o-que-fazemos'
+      fullPath: '/o-que-fazemos'
+      preLoaderRoute: typeof OQueFazemosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parceiros': {
+      id: '/parceiros'
+      path: '/parceiros'
+      fullPath: '/parceiros'
+      preLoaderRoute: typeof ParceirosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politica-de-privacidade': {
+      id: '/politica-de-privacidade'
+      path: '/politica-de-privacidade'
+      fullPath: '/politica-de-privacidade'
+      preLoaderRoute: typeof PoliticaDePrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/transparencia': {
+      id: '/transparencia'
+      path: '/transparencia'
+      fullPath: '/transparencia'
+      preLoaderRoute: typeof TransparenciaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/noticias/': {
+      id: '/noticias/'
+      path: '/noticias'
+      fullPath: '/noticias/'
+      preLoaderRoute: typeof NoticiasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/noticias/$slug': {
+      id: '/noticias/$slug'
+      path: '/noticias/$slug'
+      fullPath: '/noticias/$slug'
+      preLoaderRoute: typeof NoticiasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AAeifiRoute: AAeifiRoute,
+  AssocieSeRoute: AssocieSeRoute,
+  BuscameiRoute: BuscameiRoute,
+  ContatoRoute: ContatoRoute,
+  IniciativasRoute: IniciativasRoute,
+  OQueFazemosRoute: OQueFazemosRoute,
+  ParceirosRoute: ParceirosRoute,
+  PoliticaDePrivacidadeRoute: PoliticaDePrivacidadeRoute,
+  TransparenciaRoute: TransparenciaRoute,
+  NoticiasSlugRoute: NoticiasSlugRoute,
+  NoticiasIndexRoute: NoticiasIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
