@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AAeifiRouteImport } from './routes/a-aeifi'
+import { Route as IniciativasRouteImport } from './routes/iniciativas'
+import { Route as OQueFazemosRouteImport } from './routes/o-que-fazemos'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AAeifiRoute = AAeifiRouteImport.update({
+  id: '/a-aeifi',
+  path: '/a-aeifi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IniciativasRoute = IniciativasRouteImport.update({
+  id: '/iniciativas',
+  path: '/iniciativas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OQueFazemosRoute = OQueFazemosRouteImport.update({
+  id: '/o-que-fazemos',
+  path: '/o-que-fazemos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/a-aeifi': typeof AAeifiRoute
+  '/iniciativas': typeof IniciativasRoute
+  '/o-que-fazemos': typeof OQueFazemosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/a-aeifi': typeof AAeifiRoute
+  '/iniciativas': typeof IniciativasRoute
+  '/o-que-fazemos': typeof OQueFazemosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/a-aeifi': typeof AAeifiRoute
+  '/iniciativas': typeof IniciativasRoute
+  '/o-que-fazemos': typeof OQueFazemosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/a-aeifi' | '/iniciativas' | '/o-que-fazemos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/a-aeifi' | '/iniciativas' | '/o-que-fazemos'
+  id: '__root__' | '/' | '/a-aeifi' | '/iniciativas' | '/o-que-fazemos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AAeifiRoute: typeof AAeifiRoute
+  IniciativasRoute: typeof IniciativasRoute
+  OQueFazemosRoute: typeof OQueFazemosRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/a-aeifi': {
+      id: '/a-aeifi'
+      path: '/a-aeifi'
+      fullPath: '/a-aeifi'
+      preLoaderRoute: typeof AAeifiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/iniciativas': {
+      id: '/iniciativas'
+      path: '/iniciativas'
+      fullPath: '/iniciativas'
+      preLoaderRoute: typeof IniciativasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/o-que-fazemos': {
+      id: '/o-que-fazemos'
+      path: '/o-que-fazemos'
+      fullPath: '/o-que-fazemos'
+      preLoaderRoute: typeof OQueFazemosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AAeifiRoute: AAeifiRoute,
+  IniciativasRoute: IniciativasRoute,
+  OQueFazemosRoute: OQueFazemosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
