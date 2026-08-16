@@ -84,7 +84,7 @@ export function CtaLink({
   };
   return (
     <Link
-      to={to}
+      to={to as never}
       className={`inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition-opacity ${styles[variant]}`}
     >
       {children}
