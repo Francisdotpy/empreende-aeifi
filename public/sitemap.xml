@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TODO: prefix each <loc> with the site's base URL once the domain is set. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>/</loc><priority>1.0</priority></url>
+  <url><loc>/a-aeifi</loc><priority>0.9</priority></url>
+  <url><loc>/o-que-fazemos</loc><priority>0.9</priority></url>
+  <url><loc>/iniciativas</loc><priority>0.9</priority></url>
+  <url><loc>/buscamei</loc><priority>0.8</priority></url>
+  <url><loc>/noticias</loc><priority>0.8</priority></url>
+  <url><loc>/transparencia</loc><priority>0.8</priority></url>
+  <url><loc>/parceiros</loc><priority>0.7</priority></url>
+  <url><loc>/associe-se</loc><priority>0.9</priority></url>
+  <url><loc>/contato</loc><priority>0.7</priority></url>
+  <url><loc>/politica-de-privacidade</loc><priority>0.3</priority></url>
+</urlset>
