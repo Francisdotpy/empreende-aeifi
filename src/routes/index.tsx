@@ -116,9 +116,11 @@ function Home() {
               A AEIFI é uma associação sem fins lucrativos sediada em Foz do Iguaçu, constituída para
               representar e desenvolver a base empreendedora da cidade.
             </p>
-            <CtaLink to="/a-aeifi" variant="ghost">
-              Conheça nossa história
-            </CtaLink>
+            <div className="mt-5">
+              <CtaLink to="/a-aeifi" variant="ghost">
+                Conheça nossa história
+              </CtaLink>
+            </div>
           </div>
         </div>
       </Section>

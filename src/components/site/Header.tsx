@@ -39,7 +39,7 @@ export function Header() {
               to={item.to}
               activeOptions={{ exact: item.to === "/" }}
               activeProps={{ className: "bg-muted text-primary" }}
-              className="rounded-md px-2.5 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-muted hover:text-primary"
+              className="whitespace-nowrap rounded-md px-2.5 py-2 text-[0.82rem] font-medium text-foreground/80 transition-colors hover:bg-muted hover:text-primary"
             >
               {item.label}
             </Link>
