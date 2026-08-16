@@ -11,8 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AAeifiRouteImport } from './routes/a-aeifi'
+import { Route as BuscameiRouteImport } from './routes/buscamei'
 import { Route as IniciativasRouteImport } from './routes/iniciativas'
 import { Route as OQueFazemosRouteImport } from './routes/o-que-fazemos'
+import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
+import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const AAeifiRoute = AAeifiRouteImport.update({
   id: '/a-aeifi',
   path: '/a-aeifi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuscameiRoute = BuscameiRouteImport.update({
+  id: '/buscamei',
+  path: '/buscamei',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IniciativasRoute = IniciativasRouteImport.update({
@@ -34,39 +42,83 @@ const OQueFazemosRoute = OQueFazemosRouteImport.update({
   path: '/o-que-fazemos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NoticiasIndexRoute = NoticiasIndexRouteImport.update({
+  id: '/noticias/',
+  path: '/noticias/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticiasSlugRoute = NoticiasSlugRouteImport.update({
+  id: '/noticias/$slug',
+  path: '/noticias/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-aeifi': typeof AAeifiRoute
+  '/buscamei': typeof BuscameiRoute
   '/iniciativas': typeof IniciativasRoute
   '/o-que-fazemos': typeof OQueFazemosRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias/': typeof NoticiasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-aeifi': typeof AAeifiRoute
+  '/buscamei': typeof BuscameiRoute
   '/iniciativas': typeof IniciativasRoute
   '/o-que-fazemos': typeof OQueFazemosRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias': typeof NoticiasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a-aeifi': typeof AAeifiRoute
+  '/buscamei': typeof BuscameiRoute
   '/iniciativas': typeof IniciativasRoute
   '/o-que-fazemos': typeof OQueFazemosRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias/': typeof NoticiasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/a-aeifi' | '/iniciativas' | '/o-que-fazemos'
+  fullPaths:
+    | '/'
+    | '/a-aeifi'
+    | '/buscamei'
+    | '/iniciativas'
+    | '/o-que-fazemos'
+    | '/noticias/$slug'
+    | '/noticias/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/a-aeifi' | '/iniciativas' | '/o-que-fazemos'
-  id: '__root__' | '/' | '/a-aeifi' | '/iniciativas' | '/o-que-fazemos'
+  to:
+    | '/'
+    | '/a-aeifi'
+    | '/buscamei'
+    | '/iniciativas'
+    | '/o-que-fazemos'
+    | '/noticias/$slug'
+    | '/noticias'
+  id:
+    | '__root__'
+    | '/'
+    | '/a-aeifi'
+    | '/buscamei'
+    | '/iniciativas'
+    | '/o-que-fazemos'
+    | '/noticias/$slug'
+    | '/noticias/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AAeifiRoute: typeof AAeifiRoute
+  BuscameiRoute: typeof BuscameiRoute
   IniciativasRoute: typeof IniciativasRoute
   OQueFazemosRoute: typeof OQueFazemosRoute
+  NoticiasSlugRoute: typeof NoticiasSlugRoute
+  NoticiasIndexRoute: typeof NoticiasIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -85,6 +137,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AAeifiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/buscamei': {
+      id: '/buscamei'
+      path: '/buscamei'
+      fullPath: '/buscamei'
+      preLoaderRoute: typeof BuscameiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/iniciativas': {
       id: '/iniciativas'
       path: '/iniciativas'
@@ -99,14 +158,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OQueFazemosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/noticias/': {
+      id: '/noticias/'
+      path: '/noticias'
+      fullPath: '/noticias/'
+      preLoaderRoute: typeof NoticiasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/noticias/$slug': {
+      id: '/noticias/$slug'
+      path: '/noticias/$slug'
+      fullPath: '/noticias/$slug'
+      preLoaderRoute: typeof NoticiasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AAeifiRoute: AAeifiRoute,
+  BuscameiRoute: BuscameiRoute,
   IniciativasRoute: IniciativasRoute,
   OQueFazemosRoute: OQueFazemosRoute,
+  NoticiasSlugRoute: NoticiasSlugRoute,
+  NoticiasIndexRoute: NoticiasIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
