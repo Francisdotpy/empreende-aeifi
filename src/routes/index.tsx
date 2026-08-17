@@ -10,6 +10,7 @@ import {
 import heroImg from "@/assets/hero-aeifi.jpg";
 import { areas, impacto, iniciativas, noticias, org, depoimentos } from "@/content/site";
 import { Card, CtaLink, Pending, Section } from "@/components/site/ui";
+import { useSite } from "@/content/useSite";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -36,6 +37,7 @@ export const Route = createFileRoute("/")({
 const icons = [Megaphone, GraduationCap, Handshake, Sparkles, Lightbulb];
 
 function Home() {
+  const { org, impacto, depoimentos, noticias } = useSite();
   return (
     <>
       <section className="border-b border-border bg-surface">

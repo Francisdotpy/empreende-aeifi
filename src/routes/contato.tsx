@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { org } from "@/content/site";
 import { Card, CtaLink, DataRow, PageHero, Section } from "@/components/site/ui";
+import { useSite } from "@/content/useSite";
 
 export const Route = createFileRoute("/contato")({
   head: () => ({
@@ -24,6 +25,7 @@ export const Route = createFileRoute("/contato")({
 });
 
 function Page() {
+  const { org } = useSite();
   return (
     <>
       <PageHero

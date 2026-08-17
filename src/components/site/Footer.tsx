@@ -1,7 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { org } from "@/content/site";
+import { useSite } from "@/content/useSite";
 
 export function Footer() {
+  const { org } = useSite();
   return (
     <footer className="mt-20 bg-ink text-ink-foreground">
       <div className="container-page grid gap-10 py-14 md:grid-cols-4">
