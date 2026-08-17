@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { org } from "@/content/site";
 import { PageHero, Section } from "@/components/site/ui";
+import { useSite } from "@/content/useSite";
 
 export const Route = createFileRoute("/politica-de-privacidade")({
   head: () => ({
@@ -21,6 +22,7 @@ export const Route = createFileRoute("/politica-de-privacidade")({
 });
 
 function Page() {
+  const { org } = useSite();
   return (
     <>
       <PageHero

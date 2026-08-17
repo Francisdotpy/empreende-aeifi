@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { beneficiosAssociado, org } from "@/content/site";
 import { Card, CtaLink, PageHero, Pending, Section } from "@/components/site/ui";
+import { useSite } from "@/content/useSite";
 
 export const Route = createFileRoute("/associe-se")({
   head: () => ({
@@ -32,6 +33,7 @@ const passos = [
 ];
 
 function Page() {
+  const { org } = useSite();
   return (
     <>
       <PageHero

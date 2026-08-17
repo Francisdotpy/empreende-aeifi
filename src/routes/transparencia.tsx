@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { diretoria, documentos, org } from "@/content/site";
 import { Card, CtaLink, DataRow, PageHero, Pending, Section } from "@/components/site/ui";
+import { useSite } from "@/content/useSite";
 
 export const Route = createFileRoute("/transparencia")({
   head: () => ({
@@ -24,6 +25,7 @@ export const Route = createFileRoute("/transparencia")({
 });
 
 function Page() {
+  const { org, diretoria, documentos } = useSite();
   return (
     <>
       <PageHero
