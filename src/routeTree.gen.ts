@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AAeifiRouteImport } from './routes/a-aeifi'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AssocieSeRouteImport } from './routes/associe-se'
 import { Route as BuscameiRouteImport } from './routes/buscamei'
 import { Route as ContatoRouteImport } from './routes/contato'
@@ -30,6 +31,11 @@ const IndexRoute = IndexRouteImport.update({
 const AAeifiRoute = AAeifiRouteImport.update({
   id: '/a-aeifi',
   path: '/a-aeifi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AssocieSeRoute = AssocieSeRouteImport.update({
@@ -86,6 +92,7 @@ const NoticiasSlugRoute = NoticiasSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-aeifi': typeof AAeifiRoute
+  '/admin': typeof AdminRoute
   '/associe-se': typeof AssocieSeRoute
   '/buscamei': typeof BuscameiRoute
   '/contato': typeof ContatoRoute
@@ -100,6 +107,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-aeifi': typeof AAeifiRoute
+  '/admin': typeof AdminRoute
   '/associe-se': typeof AssocieSeRoute
   '/buscamei': typeof BuscameiRoute
   '/contato': typeof ContatoRoute
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a-aeifi': typeof AAeifiRoute
+  '/admin': typeof AdminRoute
   '/associe-se': typeof AssocieSeRoute
   '/buscamei': typeof BuscameiRoute
   '/contato': typeof ContatoRoute
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/a-aeifi'
+    | '/admin'
     | '/associe-se'
     | '/buscamei'
     | '/contato'
@@ -145,6 +155,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/a-aeifi'
+    | '/admin'
     | '/associe-se'
     | '/buscamei'
     | '/contato'
@@ -159,6 +170,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/a-aeifi'
+    | '/admin'
     | '/associe-se'
     | '/buscamei'
     | '/contato'
@@ -174,6 +186,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AAeifiRoute: typeof AAeifiRoute
+  AdminRoute: typeof AdminRoute
   AssocieSeRoute: typeof AssocieSeRoute
   BuscameiRoute: typeof BuscameiRoute
   ContatoRoute: typeof ContatoRoute
@@ -200,6 +213,13 @@ declare module '@tanstack/react-router' {
       path: '/a-aeifi'
       fullPath: '/a-aeifi'
       preLoaderRoute: typeof AAeifiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/associe-se': {
@@ -278,6 +298,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AAeifiRoute: AAeifiRoute,
+  AdminRoute: AdminRoute,
   AssocieSeRoute: AssocieSeRoute,
   BuscameiRoute: BuscameiRoute,
   ContatoRoute: ContatoRoute,
