@@ -4,6 +4,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { editableFields, siteContentQuery } from "@/content/useSite";
+import type { EditableField } from "@/content/useSite";
+import { uploadSiteFile } from "@/lib/uploads.functions";
 import { Card, PageHero, Section } from "@/components/site/ui";
 
 export const Route = createFileRoute("/admin")({
@@ -183,23 +185,12 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
           <h2 className="font-display text-lg font-semibold text-primary">{group}</h2>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             {fields.map((field) => (
-              <label key={field.key} className="grid gap-1.5 text-sm font-medium text-primary">
-                {field.label}
-                {field.multiline ? (
-                  <textarea
-                    rows={3}
-                    value={values[field.key] ?? ""}
-                    onChange={(e) => setValues((v) => ({ ...v, [field.key]: e.target.value }))}
-                    className="rounded-lg border border-input bg-background px-3 py-2 text-sm font-normal text-foreground"
-                  />
-                ) : (
-                  <input
-                    value={values[field.key] ?? ""}
-                    onChange={(e) => setValues((v) => ({ ...v, [field.key]: e.target.value }))}
-                    className="rounded-lg border border-input bg-background px-3 py-2 text-sm font-normal text-foreground"
-                  />
-                )}
-              </label>
+              <FieldEditor
+                key={field.key}
+                field={field}
+                value={values[field.key] ?? ""}
+                onChange={(next) => setValues((v) => ({ ...v, [field.key]: next }))}
+              />
             ))}
           </div>
         </Card>
@@ -216,5 +207,94 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
         {status ? <span className="text-sm text-muted-foreground">{status}</span> : null}
       </div>
     </div>
+  );
+}
+
+function FieldEditor({
+  field,
+  value,
+  onChange,
+}: {
+  field: EditableField;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  const isUpload = field.kind === "file" || field.kind === "image";
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+
+  async function handleFile(file: File) {
+    setUploading(true);
+    setUploadError(null);
+    try {
+      const buffer = await file.arrayBuffer();
+      let binary = "";
+      const bytes = new Uint8Array(buffer);
+      for (let i = 0; i < bytes.length; i += 8192) {
+        binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
+      }
+      const result = await uploadSiteFile({
+        data: {
+          name: file.name,
+          contentType: file.type || "application/octet-stream",
+          dataBase64: btoa(binary),
+        },
+      });
+      onChange(result.url);
+    } catch {
+      setUploadError("Não foi possível enviar o arquivo. Tente um arquivo menor que 8 MB.");
+    }
+    setUploading(false);
+  }
+
+  if (isUpload) {
+    return (
+      <div className="grid gap-1.5 text-sm font-medium text-primary">
+        <span>{field.label}</span>
+        <input
+          type="file"
+          accept={field.kind === "image" ? "image/*" : "application/pdf,image/*"}
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) void handleFile(file);
+          }}
+          className="rounded-lg border border-input bg-background px-3 py-2 text-sm font-normal text-foreground"
+        />
+        {uploading ? <span className="text-xs text-muted-foreground">Enviando…</span> : null}
+        {uploadError ? <span className="text-xs text-destructive">{uploadError}</span> : null}
+        {value ? (
+          <span className="flex items-center gap-3 text-xs font-normal">
+            <a href={value} target="_blank" rel="noopener noreferrer" className="text-secondary underline">
+              Ver arquivo atual
+            </a>
+            <button type="button" onClick={() => onChange("")} className="text-destructive underline">
+              Remover
+            </button>
+          </span>
+        ) : (
+          <span className="text-xs font-normal text-muted-foreground">Nenhum arquivo enviado.</span>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <label className="grid gap-1.5 text-sm font-medium text-primary">
+      {field.label}
+      {field.multiline ? (
+        <textarea
+          rows={3}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="rounded-lg border border-input bg-background px-3 py-2 text-sm font-normal text-foreground"
+        />
+      ) : (
+        <input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="rounded-lg border border-input bg-background px-3 py-2 text-sm font-normal text-foreground"
+        />
+      )}
+    </label>
   );
 }
