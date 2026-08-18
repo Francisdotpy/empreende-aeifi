@@ -27,6 +27,7 @@ export const Route = createFileRoute("/buscamei")({
 });
 
 function Page() {
+  const { get } = useSite();
   return (
     <>
       <PageHero
