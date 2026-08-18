@@ -8,7 +8,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import heroImg from "@/assets/hero-aeifi.jpg";
-import { areas, impacto, iniciativas, noticias, org, depoimentos } from "@/content/site";
+import { areas, impacto, iniciativas, noticias, org, depoimentos, TBD } from "@/content/site";
 import { Card, CtaLink, Section, Value } from "@/components/site/ui";
 import { useSite } from "@/content/useSite";
 
