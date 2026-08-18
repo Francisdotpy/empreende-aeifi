@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { iniciativas } from "@/content/site";
-import { Card, CtaLink, PageHero, Pending, Section } from "@/components/site/ui";
+import { Card, CtaLink, ImageValue, PageHero, Section, Value } from "@/components/site/ui";
+import { useSite } from "@/content/useSite";
 
 export const Route = createFileRoute("/iniciativas")({
   head: () => ({
@@ -25,6 +26,7 @@ export const Route = createFileRoute("/iniciativas")({
 });
 
 function Page() {
+  const { get } = useSite();
   return (
     <>
       <PageHero
@@ -79,16 +81,16 @@ function Page() {
             <Card className="h-fit">
               <h3 className="font-display text-lg font-semibold text-primary">Resultados</h3>
               <p className="mt-2 text-sm">
-                <Pending />
+                <Value value={get(`iniciativas.${ini.slug}.resultados`)} />
               </p>
               <h3 className="mt-5 font-display text-lg font-semibold text-primary">Parceiros envolvidos</h3>
               <p className="mt-2 text-sm">
-                <Pending />
+                <Value value={get(`iniciativas.${ini.slug}.parceiros`)} />
               </p>
               <h3 className="mt-5 font-display text-lg font-semibold text-primary">Registro fotográfico</h3>
-              <p className="mt-2 text-sm">
-                <Pending label="[FOTOS A SEREM FORNECIDAS PELA AEIFI]" />
-              </p>
+              <div className="mt-2 text-sm">
+                <ImageValue value={get(`iniciativas.${ini.slug}.foto`)} alt={`Registro da iniciativa ${ini.titulo}`} />
+              </div>
             </Card>
           </div>
         </Section>

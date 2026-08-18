@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { beneficiosAssociado, org } from "@/content/site";
-import { Card, CtaLink, PageHero, Pending, Section } from "@/components/site/ui";
+import { Card, CtaLink, PageHero, Section, Value } from "@/components/site/ui";
 import { useSite } from "@/content/useSite";
 
 export const Route = createFileRoute("/associe-se")({
@@ -33,7 +33,7 @@ const passos = [
 ];
 
 function Page() {
-  const { org } = useSite();
+  const { org, get } = useSite();
   return (
     <>
       <PageHero
@@ -52,7 +52,7 @@ function Page() {
         </ul>
         <p className="mt-6 max-w-3xl text-sm text-muted-foreground">
           Critérios completos de admissão, categorias de associado e eventual contribuição associativa
-          estão previstos no Estatuto Social: <Pending />
+          estão previstos no Estatuto Social: <Value value={get("associe.contribuicao")} />
         </p>
       </Section>
 

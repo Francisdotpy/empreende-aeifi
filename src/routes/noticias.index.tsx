@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import capacitacaoImg from "@/assets/capacitacao.jpg";
 import { noticias } from "@/content/site";
-import { Card, PageHero, Pending, Section } from "@/components/site/ui";
+import { Card, PageHero, Section, Value } from "@/components/site/ui";
+import { useSite } from "@/content/useSite";
 
 export const Route = createFileRoute("/noticias/")({
   head: () => ({
@@ -49,7 +50,7 @@ function Page() {
                 <span className="font-semibold uppercase tracking-[0.14em] text-secondary">
                   {n.categoria}
                 </span>
-                <Pending label="[DATA]" />
+                <Value value={n.data} label="[DATA]" />
               </div>
               <h2 className="mt-3 font-display text-xl font-semibold text-primary">{n.titulo}</h2>
               <p className="mt-2 text-sm text-muted-foreground">{n.resumo}</p>
