@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { formatosParceria, org } from "@/content/site";
-import { Card, CtaLink, PageHero, Pending, Section } from "@/components/site/ui";
+import { Card, CtaLink, PageHero, Section, Value } from "@/components/site/ui";
 import { useSite } from "@/content/useSite";
 
 export const Route = createFileRoute("/parceiros")({
@@ -25,7 +25,7 @@ export const Route = createFileRoute("/parceiros")({
 });
 
 function Page() {
-  const { org } = useSite();
+  const { org, get } = useSite();
   return (
     <>
       <PageHero
@@ -66,7 +66,7 @@ function Page() {
           Relação de parceiros, escopo de cada parceria e logotipos:
         </p>
         <p className="mt-3">
-          <Pending />
+          <Value value={get("parceiros.lista")} />
         </p>
       </Section>
 

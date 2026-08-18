@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import capacitacaoImg from "@/assets/capacitacao.jpg";
-import { noticias } from "@/content/site";
-import { Card, PageHero, Pending, Section } from "@/components/site/ui";
+import { Card, PageHero, Section, Value } from "@/components/site/ui";
+import { useSite } from "@/content/useSite";
 
 export const Route = createFileRoute("/noticias/")({
   head: () => ({
@@ -25,6 +25,7 @@ export const Route = createFileRoute("/noticias/")({
 });
 
 function Page() {
+  const { noticias, get } = useSite();
   return (
     <>
       <PageHero
@@ -43,13 +44,21 @@ function Page() {
           className="mb-10 w-full rounded-2xl object-cover shadow-card"
         />
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {noticias.map((n) => (
+          {noticias.map((n, idx) => (
             <Card key={n.slug}>
+              {get(`noticias.${idx}.foto`) ? (
+                <img
+                  src={get(`noticias.${idx}.foto`)}
+                  alt={n.titulo}
+                  loading="lazy"
+                  className="mb-4 w-full rounded-xl object-cover"
+                />
+              ) : null}
               <div className="flex items-center gap-3 text-xs">
                 <span className="font-semibold uppercase tracking-[0.14em] text-secondary">
                   {n.categoria}
                 </span>
-                <Pending label="[DATA]" />
+                <Value value={n.data} label="[DATA]" />
               </div>
               <h2 className="mt-3 font-display text-xl font-semibold text-primary">{n.titulo}</h2>
               <p className="mt-2 text-sm text-muted-foreground">{n.resumo}</p>

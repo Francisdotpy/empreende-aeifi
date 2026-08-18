@@ -8,8 +8,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 import heroImg from "@/assets/hero-aeifi.jpg";
-import { areas, impacto, iniciativas, noticias, org, depoimentos } from "@/content/site";
-import { Card, CtaLink, Pending, Section } from "@/components/site/ui";
+import { areas, impacto, iniciativas, noticias, org, depoimentos, TBD } from "@/content/site";
+import { Card, CtaLink, Section, Value } from "@/components/site/ui";
 import { useSite } from "@/content/useSite";
 
 export const Route = createFileRoute("/")({
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/")({
 const icons = [Megaphone, GraduationCap, Handshake, Sparkles, Lightbulb];
 
 function Home() {
-  const { org, impacto, depoimentos, noticias } = useSite();
+  const { org, impacto, depoimentos, noticias, get } = useSite();
   return (
     <>
       <section className="border-b border-border bg-surface">
@@ -155,7 +155,7 @@ function Home() {
           {impacto.map((item) => (
             <Card key={item.rotulo}>
               <p className="font-display text-lg font-semibold text-primary">
-                <Pending />
+                <Value value={item.valor} />
               </p>
               <p className="mt-3 text-sm font-medium text-muted-foreground">{item.rotulo}</p>
             </Card>
@@ -166,10 +166,15 @@ function Home() {
             <Card key={i}>
               <p className="text-sm text-muted-foreground">Depoimento de empreendedor atendido:</p>
               <blockquote className="mt-3 text-base text-foreground">
-                <Pending />
+                <Value value={d.texto} />
               </blockquote>
               <p className="mt-3 text-sm font-semibold text-primary">
-                <Pending label="[NOME E NEGÓCIO A SEREM FORNECIDOS PELA AEIFI]" />
+                <Value
+                  value={[d.autor, d.negocio]
+                    .filter((t) => t && t.trim() && t.trim() !== TBD)
+                    .join(" — ")}
+                  label="[NOME E NEGÓCIO A SEREM FORNECIDOS PELA AEIFI]"
+                />
               </p>
             </Card>
           ))}
@@ -203,7 +208,10 @@ function Home() {
 
       <Section tone="muted" title="Parceiros" lead="A AEIFI constrói suas ações com empresas, entidades, universidades e poder público.">
         <div className="flex flex-wrap items-center gap-4">
-          <Pending label="[RELAÇÃO DE PARCEIROS A SER FORNECIDA PELA AEIFI]" />
+          <Value
+            value={get("parceiros.lista")}
+            label="[RELAÇÃO DE PARCEIROS A SER FORNECIDA PELA AEIFI]"
+          />
           <CtaLink to="/parceiros" variant="ghost">
             Seja parceiro da AEIFI
           </CtaLink>

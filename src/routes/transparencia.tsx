@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { diretoria, documentos, org } from "@/content/site";
-import { Card, CtaLink, DataRow, PageHero, Pending, Section } from "@/components/site/ui";
+import { Card, CtaLink, DataRow, FileValue, PageHero, Section, Value } from "@/components/site/ui";
 import { useSite } from "@/content/useSite";
 
 export const Route = createFileRoute("/transparencia")({
@@ -25,7 +24,7 @@ export const Route = createFileRoute("/transparencia")({
 });
 
 function Page() {
-  const { org, diretoria, documentos } = useSite();
+  const { org, diretoria, documentos, get } = useSite();
   return (
     <>
       <PageHero
@@ -38,25 +37,35 @@ function Page() {
         <Card>
           <dl>
             <DataRow term="Nome" value={org.nome} />
-            <DataRow term="Razão social" value={<Pending />} />
-            <DataRow term="CNPJ" value={<Pending />} />
+            <DataRow term="Razão social" value={<Value value={org.razaoSocial} />} />
+            <DataRow term="CNPJ" value={<Value value={org.cnpj} />} />
             <DataRow term="Natureza jurídica" value="Associação civil sem fins lucrativos" />
-            <DataRow term="Data de constituição" value={<Pending />} />
-            <DataRow term="Sede" value={<Pending />} />
-            <DataRow term="E-mail institucional" value={<Pending />} />
-            <DataRow term="Telefone / WhatsApp" value={<Pending />} />
+            <DataRow term="Data de constituição" value={<Value value={org.fundacao} />} />
+            <DataRow term="Sede" value={<Value value={org.sede} />} />
+            <DataRow term="E-mail institucional" value={<Value value={org.email} />} />
+            <DataRow
+              term="Telefone / WhatsApp"
+              value={
+                <>
+                  <Value value={org.telefone} /> {" / "} <Value value={org.whatsapp} />
+                </>
+              }
+            />
           </dl>
         </Card>
       </Section>
 
       <Section tone="muted" title="Documentos institucionais">
         <div className="grid gap-4 md:grid-cols-2">
-          {documentos.map((d) => (
+          {documentos.map((d, idx) => (
             <Card key={d.nome}>
               <h3 className="font-display text-lg font-semibold text-primary">{d.nome}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{d.descricao}</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Situação: <Value value={d.situacao} />
+              </p>
               <p className="mt-3">
-                <Pending label="[ARQUIVO A SER FORNECIDO PELA AEIFI]" />
+                <FileValue value={get(`documentos.${idx}.arquivo`)} />
               </p>
             </Card>
           ))}
@@ -69,7 +78,7 @@ function Page() {
             <Card key={d.cargo}>
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-secondary">{d.cargo}</p>
               <p className="mt-2">
-                <Pending label="[NOME A SER FORNECIDO PELA AEIFI]" />
+                <Value value={d.nome} label="[NOME A SER FORNECIDO PELA AEIFI]" />
               </p>
             </Card>
           ))}
@@ -89,7 +98,7 @@ function Page() {
               resultados alcançados.
             </p>
             <p className="mt-3">
-              <Pending />
+              <FileValue value={get("relatorios.atividades.arquivo")} />
             </p>
           </Card>
           <Card>
@@ -99,7 +108,7 @@ function Page() {
               assembleia.
             </p>
             <p className="mt-3">
-              <Pending />
+              <FileValue value={get("relatorios.contas.arquivo")} />
             </p>
           </Card>
         </div>

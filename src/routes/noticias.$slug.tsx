@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { noticias } from "@/content/site";
-import { Pending, Section } from "@/components/site/ui";
+import { ImageValue, Section, Value } from "@/components/site/ui";
+import { useSite } from "@/content/useSite";
 
 export const Route = createFileRoute("/noticias/$slug")({
   loader: ({ params }) => {
@@ -41,6 +42,8 @@ export const Route = createFileRoute("/noticias/$slug")({
 
 function Page() {
   const { noticia } = Route.useLoaderData();
+  const { get } = useSite();
+  const idx = noticias.findIndex((n) => n.slug === noticia.slug);
   return (
     <Section>
       <article className="mx-auto max-w-3xl">
@@ -51,7 +54,7 @@ function Page() {
           <span className="font-semibold uppercase tracking-[0.14em] text-secondary">
             {noticia.categoria}
           </span>
-          <Pending label="[DATA]" />
+          <Value value={get(`noticias.${idx}.data`)} label="[DATA]" />
         </div>
         <h1 className="mt-3 font-display text-4xl font-semibold text-primary text-balance-tight">
           {noticia.titulo}
@@ -62,9 +65,12 @@ function Page() {
             <p key={i}>{p}</p>
           ))}
         </div>
-        <p className="mt-8 text-sm text-muted-foreground">
-          Fotos da atividade: <Pending label="[FOTOS A SEREM FORNECIDAS PELA AEIFI]" />
-        </p>
+        <div className="mt-8 text-sm text-muted-foreground">
+          Fotos da atividade:
+          <div className="mt-2">
+            <ImageValue value={get(`noticias.${idx}.foto`)} alt={noticia.titulo} />
+          </div>
+        </div>
       </article>
     </Section>
   );
