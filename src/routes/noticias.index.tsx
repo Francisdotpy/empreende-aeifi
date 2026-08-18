@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import capacitacaoImg from "@/assets/capacitacao.jpg";
-import { noticias } from "@/content/site";
 import { Card, PageHero, Section, Value } from "@/components/site/ui";
 import { useSite } from "@/content/useSite";
 
@@ -26,6 +25,7 @@ export const Route = createFileRoute("/noticias/")({
 });
 
 function Page() {
+  const { noticias, get } = useSite();
   return (
     <>
       <PageHero
@@ -44,8 +44,16 @@ function Page() {
           className="mb-10 w-full rounded-2xl object-cover shadow-card"
         />
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {noticias.map((n) => (
+          {noticias.map((n, idx) => (
             <Card key={n.slug}>
+              {get(`noticias.${idx}.foto`) ? (
+                <img
+                  src={get(`noticias.${idx}.foto`)}
+                  alt={n.titulo}
+                  loading="lazy"
+                  className="mb-4 w-full rounded-xl object-cover"
+                />
+              ) : null}
               <div className="flex items-center gap-3 text-xs">
                 <span className="font-semibold uppercase tracking-[0.14em] text-secondary">
                   {n.categoria}

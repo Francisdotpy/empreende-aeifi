@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import buscameiImg from "@/assets/buscamei.jpg";
-import { Card, CtaLink, ExternalCta, PageHero, Pending, Section } from "@/components/site/ui";
+import { Card, CtaLink, ExternalCta, PageHero, Section, Value } from "@/components/site/ui";
+import { useSite } from "@/content/useSite";
 
 export const Route = createFileRoute("/buscamei")({
   head: () => ({
@@ -117,7 +118,7 @@ function Page() {
             </p>
             <p className="mt-4 text-base text-muted-foreground">
               Regras específicas de participação, documentos exigidos e eventuais condições:{" "}
-              <Pending />
+              <Value value={get("buscamei.regras")} />
             </p>
           </div>
           <div className="grid gap-5">
@@ -176,12 +177,16 @@ function Page() {
 
       <Section title="Resultados já alcançados">
         <div className="grid gap-4 sm:grid-cols-3">
-          {["Empreendedores cadastrados", "Categorias de atividade", "Buscas realizadas"].map((r) => (
-            <Card key={r}>
+          {[
+            { rotulo: "Empreendedores cadastrados", key: "buscamei.cadastrados" },
+            { rotulo: "Categorias de atividade", key: "buscamei.categorias" },
+            { rotulo: "Buscas realizadas", key: "buscamei.buscas" },
+          ].map((r) => (
+            <Card key={r.key}>
               <p>
-                <Pending />
+                <Value value={get(r.key)} />
               </p>
-              <p className="mt-3 text-sm font-medium text-muted-foreground">{r}</p>
+              <p className="mt-3 text-sm font-medium text-muted-foreground">{r.rotulo}</p>
             </Card>
           ))}
         </div>
