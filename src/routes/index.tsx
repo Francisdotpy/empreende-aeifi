@@ -170,7 +170,9 @@ function Home() {
               </blockquote>
               <p className="mt-3 text-sm font-semibold text-primary">
                 <Value
-                  value={[d.autor, d.negocio].filter((t) => t && t.trim()).join(" — ")}
+                  value={[d.autor, d.negocio]
+                    .filter((t) => t && t.trim() && t.trim() !== TBD)
+                    .join(" — ")}
                   label="[NOME E NEGÓCIO A SEREM FORNECIDOS PELA AEIFI]"
                 />
               </p>
