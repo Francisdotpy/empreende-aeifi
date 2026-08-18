@@ -6,6 +6,7 @@ import {
   diretoria as diretoriaBase,
   documentos as documentosBase,
   impacto as impactoBase,
+  iniciativas as iniciativasBase,
   noticias as noticiasBase,
   org as orgBase,
 } from "@/content/site";
@@ -26,11 +27,29 @@ export const siteContentQuery = {
   staleTime: 60_000,
 };
 
+export type FieldKind = "text" | "multiline" | "file" | "image";
+
+export type EditableField = {
+  group: string;
+  key: string;
+  label: string;
+  multiline?: boolean;
+  kind?: FieldKind;
+  hint?: string;
+};
+
 /** Lista de campos editáveis na área administrativa. */
-export const editableFields: { group: string; key: string; label: string; multiline?: boolean }[] = [
+export const editableFields: EditableField[] = [
   { group: "Identificação", key: "org.razaoSocial", label: "Razão social" },
   { group: "Identificação", key: "org.cnpj", label: "CNPJ" },
   { group: "Identificação", key: "org.fundacao", label: "Data de fundação" },
+  {
+    group: "Identificação",
+    key: "org.historia",
+    label: "História, marcos e conquistas",
+    multiline: true,
+  },
+  { group: "Identificação", key: "org.logo", label: "Logotipo da AEIFI", kind: "image" },
   { group: "Contato", key: "org.sede", label: "Endereço da sede" },
   { group: "Contato", key: "org.telefone", label: "Telefone" },
   { group: "Contato", key: "org.whatsapp", label: "WhatsApp" },
@@ -46,6 +65,24 @@ export const editableFields: { group: string; key: string; label: string; multil
     key: `documentos.${idx}`,
     label: d.nome,
   })),
+  ...documentosBase.map((d, idx) => ({
+    group: "Transparência (arquivos)",
+    key: `documentos.${idx}.arquivo`,
+    label: `${d.nome} — arquivo (PDF/imagem)`,
+    kind: "file" as const,
+  })),
+  {
+    group: "Transparência (arquivos)",
+    key: "relatorios.atividades.arquivo",
+    label: "Relatório anual de atividades — arquivo",
+    kind: "file",
+  },
+  {
+    group: "Transparência (arquivos)",
+    key: "relatorios.contas.arquivo",
+    label: "Prestação de contas — arquivo",
+    kind: "file",
+  },
   { group: "Depoimentos", key: "depoimentos.0.texto", label: "Depoimento 1 — texto", multiline: true },
   { group: "Depoimentos", key: "depoimentos.0.autor", label: "Depoimento 1 — autor" },
   { group: "Depoimentos", key: "depoimentos.0.negocio", label: "Depoimento 1 — negócio" },
@@ -57,6 +94,53 @@ export const editableFields: { group: string; key: string; label: string; multil
     key: `noticias.${idx}.data`,
     label: n.titulo,
   })),
+  ...noticiasBase.map((n, idx) => ({
+    group: "Notícias (fotos)",
+    key: `noticias.${idx}.foto`,
+    label: `${n.titulo} — foto`,
+    kind: "image" as const,
+  })),
+  ...iniciativasBase.flatMap((i) => [
+    {
+      group: "Iniciativas",
+      key: `iniciativas.${i.slug}.resultados`,
+      label: `${i.titulo} — resultados`,
+      multiline: true,
+    },
+    {
+      group: "Iniciativas",
+      key: `iniciativas.${i.slug}.parceiros`,
+      label: `${i.titulo} — parceiros envolvidos`,
+      multiline: true,
+    },
+    {
+      group: "Iniciativas",
+      key: `iniciativas.${i.slug}.foto`,
+      label: `${i.titulo} — foto`,
+      kind: "image" as const,
+    },
+  ]),
+  {
+    group: "BuscaMEI",
+    key: "buscamei.regras",
+    label: "Regras de participação e documentos exigidos",
+    multiline: true,
+  },
+  { group: "BuscaMEI", key: "buscamei.cadastrados", label: "Empreendedores cadastrados" },
+  { group: "BuscaMEI", key: "buscamei.categorias", label: "Categorias de atividade" },
+  { group: "BuscaMEI", key: "buscamei.buscas", label: "Buscas realizadas" },
+  {
+    group: "Parceiros",
+    key: "parceiros.lista",
+    label: "Relação de parceiros e escopo das parcerias",
+    multiline: true,
+  },
+  {
+    group: "Associe-se",
+    key: "associe.contribuicao",
+    label: "Contribuição associativa (valores e condições)",
+    multiline: true,
+  },
 ];
 
 function pick(map: Overrides, key: string, fallback: string) {
@@ -89,6 +173,8 @@ export function buildSite(map: Overrides) {
       negocio: pick(map, `depoimentos.${idx}.negocio`, d.negocio),
     })),
     noticias: noticiasBase.map((n, idx) => ({ ...n, data: pick(map, `noticias.${idx}.data`, n.data) })),
+    /** Valor bruto de qualquer chave editável (string vazia quando não preenchida). */
+    get: (key: string) => map[key] ?? "",
   };
 }
 

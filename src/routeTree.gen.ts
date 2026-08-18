@@ -22,6 +22,7 @@ import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-
 import { Route as TransparenciaRouteImport } from './routes/transparencia'
 import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
 import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
+import { Route as ApiPublicArquivoSplatRouteImport } from './routes/api/public/arquivo.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -88,6 +89,11 @@ const NoticiasSlugRoute = NoticiasSlugRouteImport.update({
   path: '/noticias/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicArquivoSplatRoute = ApiPublicArquivoSplatRouteImport.update({
+  id: '/api/public/arquivo/$',
+  path: '/api/public/arquivo/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/transparencia': typeof TransparenciaRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
   '/noticias/': typeof NoticiasIndexRoute
+  '/api/public/arquivo/$': typeof ApiPublicArquivoSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/transparencia': typeof TransparenciaRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
   '/noticias': typeof NoticiasIndexRoute
+  '/api/public/arquivo/$': typeof ApiPublicArquivoSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -134,6 +142,7 @@ export interface FileRoutesById {
   '/transparencia': typeof TransparenciaRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
   '/noticias/': typeof NoticiasIndexRoute
+  '/api/public/arquivo/$': typeof ApiPublicArquivoSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,6 +160,7 @@ export interface FileRouteTypes {
     | '/transparencia'
     | '/noticias/$slug'
     | '/noticias/'
+    | '/api/public/arquivo/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -166,6 +176,7 @@ export interface FileRouteTypes {
     | '/transparencia'
     | '/noticias/$slug'
     | '/noticias'
+    | '/api/public/arquivo/$'
   id:
     | '__root__'
     | '/'
@@ -181,6 +192,7 @@ export interface FileRouteTypes {
     | '/transparencia'
     | '/noticias/$slug'
     | '/noticias/'
+    | '/api/public/arquivo/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -197,6 +209,7 @@ export interface RootRouteChildren {
   TransparenciaRoute: typeof TransparenciaRoute
   NoticiasSlugRoute: typeof NoticiasSlugRoute
   NoticiasIndexRoute: typeof NoticiasIndexRoute
+  ApiPublicArquivoSplatRoute: typeof ApiPublicArquivoSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -292,6 +305,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NoticiasSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/arquivo/$': {
+      id: '/api/public/arquivo/$'
+      path: '/api/public/arquivo/$'
+      fullPath: '/api/public/arquivo/$'
+      preLoaderRoute: typeof ApiPublicArquivoSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -309,6 +329,7 @@ const rootRouteChildren: RootRouteChildren = {
   TransparenciaRoute: TransparenciaRoute,
   NoticiasSlugRoute: NoticiasSlugRoute,
   NoticiasIndexRoute: NoticiasIndexRoute,
+  ApiPublicArquivoSplatRoute: ApiPublicArquivoSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
