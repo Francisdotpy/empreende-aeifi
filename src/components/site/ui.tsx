@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
+import { TBD } from "@/content/site";
 
 export function PageHero({
   eyebrow,
@@ -66,6 +67,39 @@ export function Pending({ label }: { label?: string }) {
       {label ?? "[INFORMAÇÃO A SER FORNECIDA PELA AEIFI]"}
     </span>
   );
+}
+
+/** Mostra o valor preenchido pela AEIFI ou o marcador de pendência. */
+export function Value({ value, label }: { value?: string; label?: string }) {
+  if (value && value.trim() && value.trim() !== TBD) return <>{value}</>;
+  return <Pending label={label} />;
+}
+
+/** Link para arquivo enviado na área administrativa. */
+export function FileValue({ value, label }: { value?: string; label?: string }) {
+  if (value && value.trim()) {
+    return (
+      <a
+        href={value}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-sm font-semibold text-secondary underline"
+      >
+        Abrir documento
+      </a>
+    );
+  }
+  return <Pending label={label ?? "[ARQUIVO A SER FORNECIDO PELA AEIFI]"} />;
+}
+
+/** Imagem enviada na área administrativa, com marcador quando ausente. */
+export function ImageValue({ value, alt, label }: { value?: string; alt: string; label?: string }) {
+  if (value && value.trim()) {
+    return (
+      <img src={value} alt={alt} loading="lazy" className="w-full rounded-xl border border-border object-cover" />
+    );
+  }
+  return <Pending label={label ?? "[FOTOS A SEREM FORNECIDAS PELA AEIFI]"} />;
 }
 
 export function CtaLink({
