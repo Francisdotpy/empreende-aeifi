@@ -61,7 +61,7 @@ export function Card({ children, className = "" }: { children: ReactNode; classN
   );
 }
 
-export function Pending({ label }: { label?: string }) {
+export function Pending({ label }: { label?: string | undefined }) {
   return (
     <span className="inline-flex items-center rounded-md border border-dashed border-accent/70 bg-highlight px-2 py-1 text-xs font-medium text-highlight-foreground">
       {label ?? "[INFORMAÇÃO A SER FORNECIDA PELA AEIFI]"}
@@ -70,13 +70,13 @@ export function Pending({ label }: { label?: string }) {
 }
 
 /** Mostra o valor preenchido pela AEIFI ou o marcador de pendência. */
-export function Value({ value, label }: { value?: string; label?: string }) {
+export function Value({ value, label }: { value?: string | undefined; label?: string | undefined }) {
   if (value && value.trim() && value.trim() !== TBD) return <>{value}</>;
   return <Pending label={label} />;
 }
 
 /** Link para arquivo enviado na área administrativa. */
-export function FileValue({ value, label }: { value?: string; label?: string }) {
+export function FileValue({ value, label }: { value?: string | undefined; label?: string | undefined }) {
   if (value && value.trim()) {
     return (
       <a
@@ -93,7 +93,15 @@ export function FileValue({ value, label }: { value?: string; label?: string }) 
 }
 
 /** Imagem enviada na área administrativa, com marcador quando ausente. */
-export function ImageValue({ value, alt, label }: { value?: string; alt: string; label?: string }) {
+export function ImageValue({
+  value,
+  alt,
+  label,
+}: {
+  value?: string | undefined;
+  alt: string;
+  label?: string | undefined;
+}) {
   if (value && value.trim()) {
     return (
       <img src={value} alt={alt} loading="lazy" className="w-full rounded-xl border border-border object-cover" />
