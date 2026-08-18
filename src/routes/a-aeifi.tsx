@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { diretoria, org } from "@/content/site";
-import { Card, CtaLink, DataRow, PageHero, Pending, Section } from "@/components/site/ui";
+import { Card, CtaLink, DataRow, PageHero, Section, Value } from "@/components/site/ui";
 import { useSite } from "@/content/useSite";
 
 export const Route = createFileRoute("/a-aeifi")({
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/a-aeifi")({
 });
 
 function Page() {
-  const { org, diretoria } = useSite();
+  const { org, diretoria, get } = useSite();
   return (
     <>
       <PageHero
@@ -51,7 +51,7 @@ function Page() {
               articulação de parcerias e desenvolvimento de projetos próprios.
             </p>
             <p>
-              Data de fundação, marcos da trajetória e principais conquistas: <Pending />
+              Data de fundação, marcos da trajetória e principais conquistas: <Value value={get("org.historia")} />
             </p>
           </div>
           <Card className="h-fit">
@@ -59,10 +59,10 @@ function Page() {
             <dl className="mt-3">
               <DataRow term="Nome" value={org.nome} />
               <DataRow term="Sigla" value={org.sigla} />
-              <DataRow term="Razão social" value={<Pending />} />
-              <DataRow term="CNPJ" value={<Pending />} />
-              <DataRow term="Fundação" value={<Pending />} />
-              <DataRow term="Sede" value={<Pending />} />
+              <DataRow term="Razão social" value={<Value value={org.razaoSocial} />} />
+              <DataRow term="CNPJ" value={<Value value={org.cnpj} />} />
+              <DataRow term="Fundação" value={<Value value={org.fundacao} />} />
+              <DataRow term="Sede" value={<Value value={org.sede} />} />
               <DataRow term="Cidade" value={org.cidade} />
               <DataRow term="Natureza" value="Associação civil sem fins lucrativos" />
             </dl>
@@ -117,7 +117,7 @@ function Page() {
             <Card key={d.cargo}>
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-secondary">{d.cargo}</p>
               <p className="mt-2">
-                <Pending label="[NOME A SER FORNECIDO PELA AEIFI]" />
+                <Value value={d.nome} label="[NOME A SER FORNECIDO PELA AEIFI]" />
               </p>
             </Card>
           ))}
