@@ -9,7 +9,7 @@ export const Route = createFileRoute("/o-que-fazemos")({
       {
         name: "description",
         content:
-          "Representatividade, capacitação, conexões, oportunidades e projetos: conheça em detalhe as áreas de atuação da AEIFI junto aos empreendedores.",
+          "Representatividade, capacitação, conexões, oportunidades e projetos: conheça em detalhe as áreas de atuação da AEIFI junto aos empreendedores de Foz do Iguaçu.",
       },
       { property: "og:title", content: "O que fazemos — áreas de atuação da AEIFI" },
       {
@@ -29,8 +29,8 @@ function Page() {
     <>
       <PageHero
         eyebrow="Áreas de atuação"
-        title="O que a AEIFI faz pelos empreendedores"
-        lead="Nossa atuação é organizada em cinco frentes. Cada uma responde a uma necessidade concreta de quem toca um pequeno negócio."
+        title="O que a AEIFI faz pelos empreendedores de Foz do Iguaçu"
+        lead="Nossa atuação é organizada em cinco frentes. Cada uma responde a uma necessidade concreta de quem toca um pequeno negócio na cidade."
       />
 
       {areas.map((area, i) => (

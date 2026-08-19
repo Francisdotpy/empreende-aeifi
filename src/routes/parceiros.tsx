@@ -10,7 +10,7 @@ export const Route = createFileRoute("/parceiros")({
       {
         name: "description",
         content:
-          "Empresas, entidades, universidades e poder público podem apoiar as iniciativas da AEIFI em favor dos microempreendedores.",
+          "Empresas, entidades, universidades e poder público podem apoiar as iniciativas da AEIFI em favor dos microempreendedores de Foz do Iguaçu.",
       },
       { property: "og:title", content: "Parceiros — colabore com a AEIFI" },
       {
@@ -37,15 +37,15 @@ function Page() {
       <Section title="Por que ser parceiro">
         <div className="grid gap-8 lg:grid-cols-2">
           <p className="text-base leading-relaxed text-muted-foreground">
-            Apoiar a AEIFI é investir diretamente na base econômica do pequeno negócio. Os
+            Apoiar a AEIFI é investir diretamente na base econômica de Foz do Iguaçu. Os
             microempreendedores atendidos pela associação geram renda, empregam, movimentam bairros e
             sustentam famílias. Cada capacitação, encontro ou projeto viabilizado por um parceiro se
             converte em negócios mais organizados, formais e competitivos.
           </p>
           <p className="text-base leading-relaxed text-muted-foreground">
             Para a instituição parceira, a colaboração significa presença qualificada junto a uma
-            rede de empreendedores de diferentes cidades, associação a uma causa de desenvolvimento
-            econômico e impacto social mensurável.
+            rede de empreendedores locais, associação a uma causa de desenvolvimento econômico e
+            impacto social mensurável na própria cidade.
           </p>
         </div>
       </Section>

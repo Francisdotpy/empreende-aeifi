@@ -10,7 +10,7 @@ export const Route = createFileRoute("/iniciativas")({
       {
         name: "description",
         content:
-          "Conheça os projetos, produtos, eventos e programas desenvolvidos pela AEIFI para fortalecer microempreendedores e pequenos negócios.",
+          "Conheça os projetos, produtos, eventos e programas desenvolvidos pela AEIFI para fortalecer microempreendedores e pequenos negócios de Foz do Iguaçu.",
       },
       { property: "og:title", content: "Projetos e iniciativas da AEIFI" },
       {
@@ -32,7 +32,7 @@ function Page() {
       <PageHero
         eyebrow="Nossas iniciativas"
         title="Projetos, produtos e ações desenvolvidos pela AEIFI"
-        lead="Cada iniciativa nasce de um problema real identificado junto aos empreendedores e é conduzida pela associação com objetivo, público e resultados definidos."
+        lead="Cada iniciativa nasce de um problema real identificado junto aos empreendedores da cidade e é conduzida pela associação com objetivo, público e resultados definidos."
       />
 
       {iniciativas.map((ini, i) => (

@@ -50,13 +50,6 @@ export const editableFields: EditableField[] = [
     multiline: true,
   },
   { group: "Identificação", key: "org.logo", label: "Logotipo da AEIFI", kind: "image" },
-  {
-    group: "Identificação",
-    key: "home.hero.imagem",
-    label: "Imagem principal da página inicial",
-    kind: "image",
-    hint: "Substitui a foto do topo da home. Use JPG/PNG na horizontal (ex.: 1600x1000).",
-  },
   { group: "Contato", key: "org.sede", label: "Endereço da sede" },
   { group: "Contato", key: "org.telefone", label: "Telefone" },
   { group: "Contato", key: "org.whatsapp", label: "WhatsApp" },

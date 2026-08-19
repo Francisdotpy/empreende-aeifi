@@ -9,7 +9,7 @@ export const Route = createFileRoute("/transparencia")({
       {
         name: "description",
         content:
-          "Razão social, CNPJ, estatuto, diretoria, relatórios de atividades e prestação de contas da AEIFI, associação de empreendedores individuais.",
+          "Razão social, CNPJ, estatuto, diretoria, relatórios de atividades e prestação de contas da AEIFI, associação de empreendedores de Foz do Iguaçu.",
       },
       { property: "og:title", content: "Transparência — documentos e governança da AEIFI" },
       {

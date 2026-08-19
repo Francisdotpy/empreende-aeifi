@@ -15,13 +15,13 @@ import { useSite } from "@/content/useSite";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "AEIFI — Associação de Empreendedores Individuais" },
+      { title: "AEIFI — Associação de Empreendedores de Foz do Iguaçu" },
       {
         name: "description",
         content:
-          "A AEIFI apoia, capacita, representa e conecta microempreendedores individuais e pequenos negócios de qualquer cidade. Conheça a associação e associe-se.",
+          "A AEIFI apoia, capacita, representa e conecta microempreendedores individuais e pequenos negócios de Foz do Iguaçu. Conheça a associação e associe-se.",
       },
-      { property: "og:title", content: "AEIFI — Associação de Empreendedores Individuais" },
+      { property: "og:title", content: "AEIFI — Associação de Empreendedores de Foz do Iguaçu" },
       {
         property: "og:description",
         content:
@@ -44,14 +44,14 @@ function Home() {
         <div className="container-page grid items-center gap-10 py-14 md:py-20 lg:grid-cols-2">
           <div>
             <p className="inline-flex rounded-full bg-highlight px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-highlight-foreground">
-              Associação de empreendedores individuais
+              Associação de Foz do Iguaçu
             </p>
             <h1 className="mt-5 font-display text-4xl font-semibold text-primary text-balance-tight md:text-5xl lg:text-[3.4rem] lg:leading-[1.05]">
               Fortalecemos quem empreende. Desenvolvemos nossa comunidade.
             </h1>
             <p className="mt-6 max-w-xl text-lg text-muted-foreground">
               A AEIFI trabalha para apoiar, conectar, representar e criar oportunidades para
-              microempreendedores e pequenos negócios.
+              microempreendedores e pequenos negócios de Foz do Iguaçu.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <CtaLink to="/a-aeifi">Conheça a AEIFI</CtaLink>
@@ -64,7 +64,7 @@ function Home() {
             src={heroImg}
             width={1600}
             height={1008}
-            alt="Microempreendedores reunidos em um encontro da AEIFI"
+            alt="Microempreendedores de Foz do Iguaçu reunidos em um encontro da AEIFI"
             className="w-full rounded-3xl object-cover shadow-lift"
           />
         </div>
@@ -74,14 +74,14 @@ function Home() {
         <div className="container-page py-6 text-sm md:text-base">
           <p>
             <strong className="font-semibold">Quem representamos:</strong> microempreendedores
-            individuais, pequenos negócios e profissionais autônomos, de qualquer cidade.
+            individuais, pequenos negócios e profissionais autônomos de Foz do Iguaçu.
           </p>
         </div>
       </div>
 
       <Section
         title="O que fazemos"
-        lead="Nossa atuação se organiza em cinco frentes complementares, todas voltadas ao fortalecimento de quem empreende."
+        lead="Nossa atuação se organiza em cinco frentes complementares, todas voltadas ao fortalecimento de quem empreende na cidade."
       >
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {areas.map((area, i) => {
@@ -115,9 +115,8 @@ function Home() {
           <p className="text-xl leading-relaxed text-foreground lg:col-span-2">{org.missao}</p>
           <div>
             <p className="text-sm text-muted-foreground">
-              A AEIFI é uma associação sem fins lucrativos com sede em Foz do Iguaçu, constituída para
-              representar e desenvolver a base empreendedora — de sua cidade de origem e de outras
-              localidades.
+              A AEIFI é uma associação sem fins lucrativos sediada em Foz do Iguaçu, constituída para
+              representar e desenvolver a base empreendedora da cidade.
             </p>
             <div className="mt-5">
               <CtaLink to="/a-aeifi" variant="ghost">
@@ -151,7 +150,7 @@ function Home() {
         </div>
       </Section>
 
-      <Section tone="muted" title="Nosso impacto" lead="Resultados da atuação da associação junto aos empreendedores.">
+      <Section tone="muted" title="Nosso impacto" lead="Resultados da atuação da associação em Foz do Iguaçu.">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {impacto.map((item) => (
             <Card key={item.rotulo}>
@@ -223,8 +222,8 @@ function Home() {
         <div className="container-page section-y text-center">
           <h2 className="font-display text-3xl font-semibold md:text-4xl">Faça parte da AEIFI</h2>
           <p className="mx-auto mt-4 max-w-2xl text-ink-foreground/85">
-            Associe-se e participe de uma rede que representa, capacita e conecta quem empreende,
-            em qualquer cidade.
+            Associe-se e participe de uma rede que representa, capacita e conecta quem empreende em
+            Foz do Iguaçu.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <CtaLink to="/associe-se" variant="secondary">

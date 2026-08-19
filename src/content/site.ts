@@ -18,9 +18,9 @@ export const org = {
     { nome: "LinkedIn", url: TBD },
   ],
   missao:
-    "Apoiar, representar e conectar microempreendedores individuais e pequenos negócios, com origem em Foz do Iguaçu e atuação aberta a empreendedores de qualquer cidade, criando oportunidades reais de desenvolvimento para quem empreende.",
+    "Apoiar, representar e conectar microempreendedores individuais e pequenos negócios de Foz do Iguaçu, criando oportunidades reais de desenvolvimento para quem empreende na cidade.",
   visao:
-    "Ser referência associativa do microempreendedorismo, reconhecida pela seriedade, pela capacidade de articulação e pelo impacto concreto na vida de quem empreende.",
+    "Ser a referência associativa do microempreendedorismo em Foz do Iguaçu, reconhecida pela seriedade, pela capacidade de articulação e pelo impacto concreto na vida de quem empreende.",
   valores: [
     {
       titulo: "Coletividade",
@@ -33,14 +33,14 @@ export const org = {
         "Documentos, decisões e resultados são apresentados de forma aberta a associados, parceiros e à comunidade.",
     },
     {
-      titulo: "Compromisso com quem empreende",
+      titulo: "Compromisso local",
       texto:
-        "Nossa história começou em Foz do Iguaçu e nossa atuação alcança empreendedores de outras cidades. Fortalecer o pequeno negócio é fortalecer bairros, famílias e a economia de cada comunidade.",
+        "Nossa atuação é enraizada em Foz do Iguaçu. Fortalecer o pequeno negócio é fortalecer os bairros, as famílias e a economia da cidade.",
     },
     {
       titulo: "Respeito e inclusão",
       texto:
-        "Atendemos empreendedores de todos os perfis, setores e localidades, sem distinção.",
+        "Atendemos empreendedores de todos os perfis, setores e regiões da cidade, sem distinção.",
     },
     {
       titulo: "Inovação com propósito",
@@ -51,9 +51,9 @@ export const org = {
   objetivos: [
     "Representar os interesses dos microempreendedores individuais junto ao poder público, entidades e instituições.",
     "Promover capacitação continuada e acesso à informação de qualidade para pequenos negócios.",
-    "Estimular conexões entre empreendedores, consumidores, empresas e instituições.",
+    "Estimular conexões entre empreendedores, consumidores, empresas e instituições da cidade.",
     "Criar e divulgar oportunidades de negócio, formalização e crescimento.",
-    "Desenvolver projetos e ferramentas que ampliem a visibilidade e a competitividade do pequeno negócio.",
+    "Desenvolver projetos e ferramentas que ampliem a visibilidade e a competitividade do pequeno negócio local.",
     "Manter uma gestão transparente, participativa e prestadora de contas.",
   ],
   publico: [
@@ -78,12 +78,12 @@ export const areas: Area[] = [
     slug: "representatividade",
     titulo: "Representatividade",
     resumo:
-      "Fortalecimento e representação dos interesses dos empreendedores.",
+      "Fortalecimento e representação dos interesses dos empreendedores de Foz do Iguaçu.",
     descricao:
-      "A AEIFI existe para que o microempreendedor individual não precise falar sozinho. Reunimos demandas comuns, organizamos a pauta do segmento e levamos essa voz a espaços de decisão, entidades e instituições que influenciam o dia a dia de quem empreende.",
+      "A AEIFI existe para que o microempreendedor individual não precise falar sozinho. Reunimos demandas comuns, organizamos a pauta do segmento e levamos essa voz a espaços de decisão, entidades e instituições que influenciam o dia a dia de quem empreende na cidade.",
     praticas: [
       "Escuta permanente das demandas dos associados",
-      "Articulação com poder público, entidades e instituições",
+      "Articulação com poder público, entidades e instituições locais",
       "Participação em fóruns, conselhos e reuniões de interesse do segmento",
       "Posicionamento institucional sobre temas que afetam o pequeno negócio",
     ],
@@ -108,7 +108,7 @@ export const areas: Area[] = [
     resumo:
       "Aproximação entre empreendedores, consumidores, empresas, instituições e parceiros.",
     descricao:
-      "Boa parte das oportunidades nasce de um encontro. A associação cria pontes: entre empreendedores que podem comprar e vender entre si, entre pequenos negócios e seus consumidores, e entre a base empreendedora e instituições capazes de apoiá-la.",
+      "Boa parte das oportunidades nasce de um encontro. A associação cria pontes: entre empreendedores que podem comprar e vender entre si, entre pequenos negócios e consumidores da cidade, e entre a base empreendedora e instituições capazes de apoiá-la.",
     praticas: [
       "Encontros e reuniões de associados",
       "Aproximação entre empreendedores e consumidores locais",
@@ -136,7 +136,7 @@ export const areas: Area[] = [
     resumo:
       "Desenvolvimento de soluções que contribuam para o crescimento dos empreendedores.",
     descricao:
-      "A AEIFI desenvolve projetos e ferramentas próprias quando identifica um problema concreto que o mercado não resolve. É desse trabalho que nasceu o BuscaMEI, plataforma criada pela associação para ampliar a visibilidade dos microempreendedores.",
+      "A AEIFI desenvolve projetos e ferramentas próprias quando identifica um problema concreto que o mercado não resolve. É desse trabalho que nasceu o BuscaMEI, plataforma criada pela associação para ampliar a visibilidade dos microempreendedores da cidade.",
     praticas: [
       "Diagnóstico de dificuldades recorrentes dos associados",
       "Desenvolvimento de soluções próprias, como o BuscaMEI",
@@ -171,13 +171,13 @@ export const iniciativas: Iniciativa[] = [
     problema:
       "Muitos microempreendedores prestam serviços de qualidade, mas são pouco encontrados por quem procura. A ausência de presença digital organizada limita o alcance do negócio.",
     objetivo:
-      "Ampliar a visibilidade dos microempreendedores e facilitar que consumidores encontrem produtos e serviços.",
+      "Ampliar a visibilidade dos microempreendedores de Foz do Iguaçu e facilitar que consumidores encontrem produtos e serviços locais.",
     publico:
-      "Microempreendedores individuais e pequenos negócios; e o público que procura produtos e serviços.",
+      "Microempreendedores individuais e pequenos negócios; e a comunidade que procura produtos e serviços na cidade.",
     funcionamento: [
       "O empreendedor cadastra seu negócio, atividades e formas de contato.",
       "As informações ficam organizadas por tipo de produto ou serviço.",
-      "Quem procura faz a busca por categoria, cidade ou estado e encontra empreendedores.",
+      "Quem procura faz a busca e encontra empreendedores locais.",
       "O contato acontece diretamente entre consumidor e empreendedor.",
     ],
     resultados: TBD,
@@ -195,7 +195,7 @@ export const iniciativas: Iniciativa[] = [
       "O microempreendedor costuma aprender na tentativa e erro, sem acesso a formação acessível e aplicada à sua realidade.",
     objetivo:
       "Oferecer formação prática e gratuita ou de baixo custo em temas essenciais para a sustentação do negócio.",
-    publico: "MEIs, empreendedores em formalização e pequenos negócios, de qualquer cidade.",
+    publico: "MEIs, empreendedores em formalização e pequenos negócios da cidade.",
     funcionamento: [
       "Levantamento das necessidades formativas junto aos associados.",
       "Organização das turmas, temas e parcerias.",
@@ -277,9 +277,9 @@ export const noticias: Noticia[] = [
     data: TBD,
     categoria: "Projetos",
     resumo:
-      "A associação apresentou aos associados a plataforma desenvolvida para ampliar a visibilidade dos microempreendedores.",
+      "A associação apresentou aos associados a plataforma desenvolvida para ampliar a visibilidade dos microempreendedores da cidade.",
     corpo: [
-      "A AEIFI apresentou aos seus associados o BuscaMEI, plataforma desenvolvida pela própria associação para ampliar a visibilidade dos microempreendedores e facilitar a conexão entre quem oferece e quem procura produtos e serviços.",
+      "A AEIFI apresentou aos seus associados o BuscaMEI, plataforma desenvolvida pela própria associação para ampliar a visibilidade dos microempreendedores de Foz do Iguaçu e facilitar a conexão entre quem oferece e quem procura produtos e serviços.",
       "Durante o encontro foram explicados o funcionamento do cadastro, as informações que ficam visíveis para quem faz a busca e a forma como a ferramenta se articula com as demais ações da associação.",
       `Detalhes da atividade, data, local e número de participantes: ${TBD}.`,
     ],
@@ -290,9 +290,9 @@ export const noticias: Noticia[] = [
     data: TBD,
     categoria: "Capacitação",
     resumo:
-      "Atividade formativa abordou temas práticos de gestão para quem toca um pequeno negócio.",
+      "Atividade formativa abordou temas práticos de gestão para quem toca um pequeno negócio na cidade.",
     corpo: [
-      "A AEIFI realizou mais uma atividade de capacitação voltada a microempreendedores individuais e pequenos negócios, dentro do seu programa permanente de formação.",
+      "A AEIFI realizou mais uma atividade de capacitação voltada a microempreendedores individuais e pequenos negócios de Foz do Iguaçu, dentro do seu programa permanente de formação.",
       "A programação tratou de temas práticos do dia a dia do empreendedor, como organização financeira, atendimento ao cliente e presença digital.",
       `Data, local, conteúdo programático, parceiros e número de participantes: ${TBD}.`,
     ],
@@ -305,7 +305,7 @@ export const noticias: Noticia[] = [
     resumo:
       "Novas articulações buscam ampliar as oportunidades oferecidas aos empreendedores associados.",
     corpo: [
-      "A associação segue ampliando sua rede de parceiros com empresas, entidades, instituições de ensino e órgãos públicos interessados em contribuir com o desenvolvimento do microempreendedorismo.",
+      "A associação segue ampliando sua rede de parceiros com empresas, entidades, instituições de ensino e órgãos públicos interessados em contribuir com o desenvolvimento do microempreendedorismo em Foz do Iguaçu.",
       "As parcerias viabilizam capacitações, ações de divulgação, espaços de comercialização e apoio técnico às iniciativas da AEIFI.",
       `Relação de parceiros, escopo de cada parceria e datas: ${TBD}.`,
     ],
@@ -341,7 +341,7 @@ export const beneficiosAssociado = [
 
 export const formatosParceria = [
   { titulo: "Apoio a capacitações", texto: "Ceder instrutores, conteúdo, espaço ou estrutura para oficinas, cursos e palestras." },
-  { titulo: "Projetos conjuntos", texto: "Desenvolver com a AEIFI projetos voltados ao fortalecimento do pequeno negócio." },
+  { titulo: "Projetos conjuntos", texto: "Desenvolver com a AEIFI projetos voltados ao fortalecimento do pequeno negócio local." },
   { titulo: "Oportunidades para associados", texto: "Oferecer condições, serviços, espaços de comercialização ou vagas de compra a empreendedores associados." },
   { titulo: "Apoio institucional", texto: "Somar-se às ações da associação com apoio técnico, articulação ou patrocínio de iniciativas." },
 ];

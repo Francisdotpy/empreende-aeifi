@@ -10,13 +10,13 @@ export const Route = createFileRoute("/associe-se")({
       {
         name: "description",
         content:
-          "Quem pode se associar, benefícios, funcionamento da associação e como solicitar a associação à AEIFI, esteja você em qualquer cidade.",
+          "Quem pode se associar, benefícios, funcionamento da associação e como solicitar a associação à AEIFI, em Foz do Iguaçu.",
       },
       { property: "og:title", content: "Associe-se — faça parte da AEIFI" },
       {
         property: "og:description",
         content:
-          "Participe de uma rede que representa, capacita e conecta microempreendedores de diferentes cidades.",
+          "Participe de uma rede que representa, capacita e conecta microempreendedores de Foz do Iguaçu.",
       },
       { property: "og:url", content: "/associe-se" },
     ],
@@ -39,7 +39,7 @@ function Page() {
       <PageHero
         eyebrow="Associe-se"
         title="Faça parte da AEIFI"
-        lead="Associar-se é somar sua voz a uma rede organizada de empreendedores que trabalha por representação, formação e oportunidades — participação aberta a empreendedores de qualquer cidade."
+        lead="Associar-se é somar sua voz a uma rede organizada de empreendedores que trabalha por representação, formação e oportunidades em Foz do Iguaçu."
       />
 
       <Section title="Quem pode participar">
@@ -51,9 +51,6 @@ function Page() {
           ))}
         </ul>
         <p className="mt-6 max-w-3xl text-sm text-muted-foreground">
-          A associação está aberta a empreendedores de qualquer cidade ou estado — não há
-          exigência de que o negócio esteja em Foz do Iguaçu. No cadastro, basta informar cidade,
-          estado e, quando aplicável, bairro.{" "}
           Critérios completos de admissão, categorias de associado e eventual contribuição associativa
           estão previstos no Estatuto Social: <Value value={get("associe.contribuicao")} />
         </p>
@@ -80,7 +77,7 @@ function Page() {
           <p className="text-base leading-relaxed text-muted-foreground">
             O trabalho é contínuo: encontros periódicos, capacitações, articulação com parceiros e
             desenvolvimento de projetos como o BuscaMEI. Quanto maior a base associada, maior a força
-            de representação do microempreendedorismo.
+            de representação do microempreendedorismo local.
           </p>
         </div>
       </Section>

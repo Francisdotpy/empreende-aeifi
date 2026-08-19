@@ -11,7 +11,7 @@ export const Route = createFileRoute("/buscamei")({
       {
         name: "description",
         content:
-          "O BuscaMEI é a plataforma criada pela AEIFI para ampliar a visibilidade dos microempreendedores e conectar quem oferece a quem procura.",
+          "O BuscaMEI é a plataforma criada pela AEIFI para ampliar a visibilidade dos microempreendedores de Foz do Iguaçu e conectar quem oferece a quem procura.",
       },
       { property: "og:title", content: "BuscaMEI — um produto da AEIFI" },
       {
@@ -46,8 +46,8 @@ function Page() {
               gerenciar presença digital, muitos MEIs dependiam apenas do boca a boca.
             </p>
             <p>
-              Ao mesmo tempo, consumidores relatavam dificuldade em encontrar prestadores de
-              serviço e pequenos produtores. Havia oferta e havia procura — faltava um lugar
+              Ao mesmo tempo, moradores da cidade relatavam dificuldade em encontrar prestadores de
+              serviço e pequenos produtores locais. Havia oferta e havia procura — faltava um lugar
               organizado onde as duas se encontrassem.
             </p>
             <p>
@@ -84,7 +84,7 @@ function Page() {
             </p>
           </Card>
           <Card>
-            <h3 className="font-display text-lg font-semibold text-primary">Valorizar quem está perto</h3>
+            <h3 className="font-display text-lg font-semibold text-primary">Valorizar o local</h3>
             <p className="mt-2 text-sm text-muted-foreground">
               Estimular que a compra aconteça dentro da própria cidade, fortalecendo a economia de
               Foz do Iguaçu.
@@ -97,9 +97,8 @@ function Page() {
         <ol className="grid gap-4 md:grid-cols-2">
           {[
             "O empreendedor realiza seu cadastro, informando o negócio, as atividades que exerce e as formas de contato.",
-            "No cadastro, o empreendedor informa também sua localização (cidade, estado e bairro, quando aplicável) — de qualquer localidade do país.",
-            "As informações são organizadas por categoria, produto ou serviço, nome do empreendimento, cidade e estado, facilitando a busca.",
-            "Quem procura utiliza a busca e pode filtrar por categoria, produto, serviço, cidade ou estado.",
+            "As informações são organizadas por categoria de produto ou serviço, facilitando a localização.",
+            "Quem procura utiliza a busca e visualiza os empreendedores que atendem àquela necessidade.",
             "O contato é feito diretamente entre o consumidor e o empreendedor, sem intermediação.",
           ].map((step, i) => (
             <li key={step} className="rounded-2xl border border-border bg-card p-5 shadow-card">
@@ -115,7 +114,7 @@ function Page() {
           <div>
             <p className="text-base text-muted-foreground">
               O BuscaMEI foi pensado para microempreendedores individuais e pequenos negócios que
-              atuam em qualquer cidade, de qualquer setor: alimentação, serviços, reformas,
+              atuam em Foz do Iguaçu e região, de qualquer setor: alimentação, serviços, reformas,
               beleza, artesanato, tecnologia, comércio e muitos outros.
             </p>
             <p className="mt-4 text-base text-muted-foreground">
@@ -136,7 +135,7 @@ function Page() {
                 Está procurando um produto ou serviço?
               </h3>
               <p className="mt-2 text-sm text-muted-foreground">
-                Encontre microempreendedores por categoria, cidade ou estado no BuscaMEI.
+                Encontre microempreendedores da cidade por meio do BuscaMEI.
               </p>
             </Card>
           </div>
@@ -157,10 +156,10 @@ function Page() {
           <Card>
             <h3 className="font-display text-xl font-semibold text-primary">Para a comunidade</h3>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li>Facilidade para localizar produtos e serviços oferecidos por pequenos negócios.</li>
+              <li>Facilidade para localizar produtos e serviços oferecidos por pequenos negócios locais.</li>
               <li>Acesso a uma variedade de empreendedores que antes eram pouco visíveis.</li>
-              <li>Estímulo ao consumo local e à circulação de renda em cada comunidade atendida.</li>
-              <li>Aproximação entre consumidores e a base empreendedora.</li>
+              <li>Estímulo ao consumo local e à circulação de renda dentro de Foz do Iguaçu.</li>
+              <li>Aproximação entre moradores e a base empreendedora da cidade.</li>
             </ul>
           </Card>
         </div>
@@ -168,7 +167,7 @@ function Page() {
 
       <Section tone="muted" title="Relação com a missão da AEIFI">
         <p className="max-w-3xl text-base leading-relaxed text-muted-foreground">
-          A missão da AEIFI é apoiar, representar e conectar quem empreende. O
+          A missão da AEIFI é apoiar, representar e conectar quem empreende em Foz do Iguaçu. O
           BuscaMEI cumpre diretamente a parte de <strong>conexão</strong> e{" "}
           <strong>oportunidade</strong> dessa missão: é a tradução prática de uma associação que não
           se limita a discursos, mas desenvolve ferramentas para resolver dificuldades reais dos seus
