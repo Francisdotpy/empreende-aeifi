@@ -10,7 +10,7 @@ export const Route = createFileRoute("/a-aeifi")({
       {
         name: "description",
         content:
-          "Conheça a AEIFI: história, missão, visão, valores, objetivos, público atendido, sede, CNPJ e diretoria da associação de empreendedores de Foz do Iguaçu.",
+          "Conheça a AEIFI: história, missão, visão, valores, objetivos, público atendido, sede, CNPJ e diretoria da associação de empreendedores individuais.",
       },
       { property: "og:title", content: "A AEIFI — quem somos, missão e diretoria" },
       {
@@ -31,8 +31,8 @@ function Page() {
     <>
       <PageHero
         eyebrow="Quem somos"
-        title="Uma associação construída por quem empreende em Foz do Iguaçu"
-        lead="A AEIFI reúne microempreendedores individuais e pequenos negócios da cidade em torno de um objetivo comum: ter representação, formação e oportunidades de crescimento."
+        title="Uma associação construída por quem empreende"
+        lead="A AEIFI reúne microempreendedores individuais e pequenos negócios — de Foz do Iguaçu e de outras cidades — em torno de um objetivo comum: ter representação, formação e oportunidades de crescimento."
       />
 
       <Section title="Nossa história">
@@ -40,7 +40,7 @@ function Page() {
           <div className="space-y-4 text-base leading-relaxed text-muted-foreground lg:col-span-2">
             <p>
               A AEIFI nasceu da percepção de que o microempreendedor individual, apesar de representar
-              parcela expressiva da economia de Foz do Iguaçu, atuava de forma isolada: sem canal de
+              parcela expressiva da economia, atuava de forma isolada: sem canal de
               representação, com pouco acesso a formação e com dificuldade de ser encontrado por
               clientes.
             </p>

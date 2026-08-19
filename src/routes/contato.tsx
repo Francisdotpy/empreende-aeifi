@@ -31,7 +31,7 @@ function Page() {
       <PageHero
         eyebrow="Contato"
         title="Fale com a AEIFI"
-        lead="Estamos à disposição de empreendedores, associados, parceiros, imprensa e de toda a comunidade de Foz do Iguaçu."
+        lead="Estamos à disposição de empreendedores, associados, parceiros, imprensa e da comunidade, em qualquer cidade."
       />
 
       <Section>
