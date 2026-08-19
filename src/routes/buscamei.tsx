@@ -97,8 +97,9 @@ function Page() {
         <ol className="grid gap-4 md:grid-cols-2">
           {[
             "O empreendedor realiza seu cadastro, informando o negócio, as atividades que exerce e as formas de contato.",
-            "As informações são organizadas por categoria de produto ou serviço, facilitando a localização.",
-            "Quem procura utiliza a busca e visualiza os empreendedores que atendem àquela necessidade.",
+            "No cadastro, o empreendedor informa também sua localização (cidade, estado e bairro, quando aplicável) — de qualquer localidade do país.",
+            "As informações são organizadas por categoria, produto ou serviço, nome do empreendimento, cidade e estado, facilitando a busca.",
+            "Quem procura utiliza a busca e pode filtrar por categoria, produto, serviço, cidade ou estado.",
             "O contato é feito diretamente entre o consumidor e o empreendedor, sem intermediação.",
           ].map((step, i) => (
             <li key={step} className="rounded-2xl border border-border bg-card p-5 shadow-card">
