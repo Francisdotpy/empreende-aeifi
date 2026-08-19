@@ -79,11 +79,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AEIFI — Associação dos Empreendedores de Foz do Iguaçu" },
+      { title: "AEIFI — Associação dos Empreendedores Individuais" },
       {
         name: "description",
         content:
-          "A AEIFI apoia, representa e conecta microempreendedores individuais e pequenos negócios de Foz do Iguaçu.",
+          "A AEIFI apoia, representa e conecta microempreendedores individuais e pequenos negócios de qualquer cidade.",
       },
       { name: "author", content: "AEIFI" },
       { property: "og:site_name", content: "AEIFI" },
@@ -113,9 +113,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           name: "AEIFI – Associação dos Empreendedores Individuais de Foz do Iguaçu",
           alternateName: "AEIFI",
           url: "/",
-          areaServed: "Foz do Iguaçu, Paraná, Brasil",
+          areaServed: "Brasil",
           description:
-            "Associação que apoia, representa e conecta microempreendedores individuais e pequenos negócios de Foz do Iguaçu.",
+            "Associação que apoia, representa e conecta microempreendedores individuais e pequenos negócios em todo o Brasil.",
         }),
       },
     ],
