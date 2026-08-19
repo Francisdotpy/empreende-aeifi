@@ -51,6 +51,9 @@ function Page() {
           ))}
         </ul>
         <p className="mt-6 max-w-3xl text-sm text-muted-foreground">
+          A associação está aberta a empreendedores de qualquer cidade ou estado — não há
+          exigência de que o negócio esteja em Foz do Iguaçu. No cadastro, basta informar cidade,
+          estado e, quando aplicável, bairro.{" "}
           Critérios completos de admissão, categorias de associado e eventual contribuição associativa
           estão previstos no Estatuto Social: <Value value={get("associe.contribuicao")} />
         </p>
