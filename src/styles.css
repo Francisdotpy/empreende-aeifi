@@ -122,3 +122,15 @@
 @utility text-balance-tight {
   text-wrap: balance;
 }
+
+/* Modo de edição de textos (apenas administradores) */
+body.inline-edit-on *:not([data-inline-edit-ui]):not([data-inline-edit-ui] *):hover {
+  outline: 1px dashed var(--color-secondary, #2563eb);
+  outline-offset: 2px;
+  cursor: text;
+}
+body.inline-edit-on [data-inline-editing="true"] {
+  outline: 2px solid var(--color-secondary, #2563eb);
+  outline-offset: 2px;
+  background: color-mix(in oklch, var(--color-secondary, #2563eb) 8%, transparent);
+}
