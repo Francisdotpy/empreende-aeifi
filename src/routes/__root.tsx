@@ -154,6 +154,7 @@ function RootComponent() {
         </main>
         <Footer />
       </div>
+      <InlineTextEditor />
     </QueryClientProvider>
   );
 }
