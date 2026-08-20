@@ -179,13 +179,14 @@ export function InlineTextEditor() {
       const textNodes = [...element.childNodes].filter(
         (n): n is Text => n.nodeType === Node.TEXT_NODE && normalize(n.nodeValue ?? "").length > 1,
       );
-      if (textNodes.length !== 1 || element.children.length > 0) {
+      const textNode = textNodes[0];
+      if (!textNode || textNodes.length !== 1 || element.children.length > 0) {
         setStatus("Clique diretamente sobre o trecho de texto que deseja editar.");
         return;
       }
       event.preventDefault();
       event.stopPropagation();
-      if (!originals.has(textNodes[0])) originals.set(textNodes[0], textNodes[0].nodeValue ?? "");
+      if (!originals.has(textNode)) originals.set(textNode, textNode.nodeValue ?? "");
       startEdit(element);
     }
 
