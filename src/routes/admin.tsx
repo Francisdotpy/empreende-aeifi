@@ -180,6 +180,16 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
         </button>
       </div>
 
+      <Card>
+        <h2 className="font-display text-lg font-semibold text-primary">Textos das páginas</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Para reescrever qualquer texto do site, navegue até a página desejada com o seu login ativo e clique
+          em <strong>“Editar textos da página”</strong>, no canto inferior esquerdo. Depois é só clicar sobre o
+          trecho e digitar. Abaixo ficam registradas as alterações já feitas.
+        </p>
+        <CustomTexts data={data ?? {}} />
+      </Card>
+
       {groups.map(([group, fields]) => (
         <Card key={group}>
           <h2 className="font-display text-lg font-semibold text-primary">{group}</h2>
