@@ -56,9 +56,7 @@ export function applyOverrides(map: Overrides) {
     const original = originals.get(node) ?? node.nodeValue ?? "";
     originals.set(node, original);
     const override = map[textKey(original)];
-    const desired = override && override.trim() ? original.replace(normalize(original), override) : original;
-    const fallback = override && override.trim() ? override : original;
-    const next = desired === original && override && override.trim() ? fallback : desired;
+    const next = override && override.trim() ? override : original;
     if (node.nodeValue !== next) node.nodeValue = next;
   });
 }
