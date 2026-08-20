@@ -128,8 +128,9 @@ export function InlineTextEditor() {
 
     async function save(original: string, value: string) {
       const key = textKey(original);
+      const nextValue = normalize(value) === normalize(original) ? "" : value.trim();
       const rows = [
-        { key, value: normalize(value) === normalize(original) ? "" : value.trim() },
+        { key, value: nextValue },
         { key: sourceKey(original), value: normalize(original) },
       ];
       const { error } = await supabase.from("site_content").upsert(rows, { onConflict: "key" });
@@ -138,7 +139,7 @@ export function InlineTextEditor() {
         return;
       }
       setStatus("Texto salvo e publicado.");
-      mapRef.current = { ...mapRef.current, [key]: rows[0].value };
+      mapRef.current = { ...mapRef.current, [key]: nextValue };
       await queryClient.invalidateQueries({ queryKey: ["site_content"] });
     }
 
