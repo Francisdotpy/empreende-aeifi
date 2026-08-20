@@ -308,3 +308,52 @@ function FieldEditor({
     </label>
   );
 }
+
+function CustomTexts({ data }: { data: Record<string, string> }) {
+  const queryClient = useQueryClient();
+  const [busy, setBusy] = useState<string | null>(null);
+
+  const items = Object.entries(data)
+    .filter(([key, value]) => key.startsWith("txt.") && value.trim())
+    .map(([key, value]) => ({
+      key,
+      value,
+      original: data[`src.${key.slice(4)}`] ?? "",
+    }));
+
+  async function reset(key: string) {
+    setBusy(key);
+    await supabase.from("site_content").upsert([{ key, value: "" }], { onConflict: "key" });
+    await queryClient.invalidateQueries({ queryKey: ["site_content"] });
+    setBusy(null);
+  }
+
+  if (items.length === 0) {
+    return (
+      <p className="mt-4 text-sm text-muted-foreground">
+        Nenhum texto personalizado ainda. As alterações feitas na navegação aparecerão aqui.
+      </p>
+    );
+  }
+
+  return (
+    <ul className="mt-4 grid gap-3">
+      {items.map((item) => (
+        <li key={item.key} className="rounded-xl border border-border p-4">
+          {item.original ? (
+            <p className="text-xs text-muted-foreground line-through">{item.original}</p>
+          ) : null}
+          <p className="mt-1 text-sm text-foreground">{item.value}</p>
+          <button
+            type="button"
+            disabled={busy === item.key}
+            onClick={() => void reset(item.key)}
+            className="mt-2 text-xs font-semibold text-destructive underline disabled:opacity-60"
+          >
+            {busy === item.key ? "Restaurando…" : "Restaurar texto original"}
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+}
