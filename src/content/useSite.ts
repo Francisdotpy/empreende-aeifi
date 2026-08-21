@@ -164,7 +164,7 @@ export function buildSite(map: Overrides) {
       redes: orgBase.redes.map((r, idx) => ({ ...r, url: pick(map, `org.redes.${idx}`, r.url) })),
     },
     impacto: impactoBase.map((i, idx) => ({ ...i, valor: pick(map, `impacto.${idx}`, i.valor) })),
-    diretoria: diretoriaBase.map((d, idx) => ({ ...d, nome: pick(map, `diretoria.${idx}`, d.nome) })),
+    diretoria: diretoriaBase.map((d) => ({ ...d, nome: pick(map, `diretoria.${d.id}`, d.nome) })),
     documentos: documentosBase.map((d, idx) => ({
       ...d,
       situacao: pick(map, `documentos.${idx}`, d.situacao),
