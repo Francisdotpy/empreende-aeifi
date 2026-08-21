@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { siteContentQuery, type Overrides } from "@/content/useSite";
 
-/** Hash estável (FNV-1a) usado como chave do texto original. */
+/** Hash estável (FNV-1a) usado como parte da chave do texto. */
 export function textHash(input: string) {
   let h = 0x811c9dc5;
   for (let i = 0; i < input.length; i += 1) {
@@ -13,12 +13,19 @@ export function textHash(input: string) {
   return h.toString(16).padStart(8, "0");
 }
 
-export function textKey(original: string) {
-  return `txt.${textHash(normalize(original))}`;
+function currentPath() {
+  if (typeof window === "undefined") return "/";
+  const path = window.location.pathname.replace(/\/+$/, "");
+  return path || "/";
 }
 
-export function sourceKey(original: string) {
-  return `src.${textHash(normalize(original))}`;
+/** Chave única por página + trecho + ocorrência (evita que um texto altere outros). */
+export function textKey(original: string, occurrence = 0, path = currentPath()) {
+  return `txt.${textHash(path)}.${textHash(normalize(original))}.${occurrence}`;
+}
+
+export function sourceKey(original: string, occurrence = 0, path = currentPath()) {
+  return `src.${textHash(path)}.${textHash(normalize(original))}.${occurrence}`;
 }
 
 function normalize(value: string) {
@@ -27,6 +34,7 @@ function normalize(value: string) {
 
 const SKIP_TAGS = new Set(["SCRIPT", "STYLE", "NOSCRIPT", "TEXTAREA", "INPUT", "SVG", "PATH"]);
 const originals = new WeakMap<Text, string>();
+const nodeKeys = new WeakMap<Text, { original: string; occurrence: number }>();
 
 function eligible(node: Text) {
   const parent = node.parentElement;
@@ -51,15 +59,21 @@ function walk(root: HTMLElement, fn: (node: Text) => void) {
 /** Aplica os textos personalizados sobre o conteúdo já renderizado. */
 export function applyOverrides(map: Overrides) {
   if (typeof document === "undefined") return;
+  const seen = new Map<string, number>();
   walk(document.body, (node) => {
     if (!eligible(node)) return;
     const original = originals.get(node) ?? node.nodeValue ?? "";
     originals.set(node, original);
-    const override = map[textKey(original)];
+    const id = normalize(original);
+    const occurrence = seen.get(id) ?? 0;
+    seen.set(id, occurrence + 1);
+    nodeKeys.set(node, { original, occurrence });
+    const override = map[textKey(original, occurrence)];
     const next = override && override.trim() ? override : original;
     if (node.nodeValue !== next) node.nodeValue = next;
   });
 }
+
 
 export function useIsAdmin() {
   const [isAdmin, setIsAdmin] = useState(false);
