@@ -58,8 +58,10 @@ export const editableFields: EditableField[] = [
   { group: "Redes sociais", key: "org.redes.0", label: "Instagram (URL)" },
   { group: "Redes sociais", key: "org.redes.1", label: "Facebook (URL)" },
   { group: "Redes sociais", key: "org.redes.2", label: "LinkedIn (URL)" },
+  { group: "Identificação", key: "home.hero.foto", label: "Foto de capa da página inicial", kind: "image" },
   ...impactoBase.map((i, idx) => ({ group: "Números de impacto", key: `impacto.${idx}`, label: i.rotulo })),
-  ...diretoriaBase.map((d, idx) => ({ group: "Diretoria", key: `diretoria.${idx}`, label: d.cargo })),
+  ...diretoriaBase.map((d) => ({ group: "Diretoria", key: `diretoria.${d.id}`, label: d.cargo })),
+
   ...documentosBase.map((d, idx) => ({
     group: "Transparência (situação dos documentos)",
     key: `documentos.${idx}`,
@@ -162,7 +164,7 @@ export function buildSite(map: Overrides) {
       redes: orgBase.redes.map((r, idx) => ({ ...r, url: pick(map, `org.redes.${idx}`, r.url) })),
     },
     impacto: impactoBase.map((i, idx) => ({ ...i, valor: pick(map, `impacto.${idx}`, i.valor) })),
-    diretoria: diretoriaBase.map((d, idx) => ({ ...d, nome: pick(map, `diretoria.${idx}`, d.nome) })),
+    diretoria: diretoriaBase.map((d) => ({ ...d, nome: pick(map, `diretoria.${d.id}`, d.nome) })),
     documentos: documentosBase.map((d, idx) => ({
       ...d,
       situacao: pick(map, `documentos.${idx}`, d.situacao),
