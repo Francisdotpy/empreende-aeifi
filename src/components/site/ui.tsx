@@ -149,9 +149,9 @@ export function ExternalCta({ href, children }: { href: string; children: ReactN
 
 export function DataRow({ term, value }: { term: string; value: ReactNode }) {
   return (
-    <div className="grid gap-1 border-b border-border py-3 last:border-0 sm:grid-cols-[minmax(0,10rem)_minmax(0,1fr)] sm:gap-6">
+    <div className="grid grid-cols-1 gap-1 border-b border-border py-3 last:border-0 sm:grid-cols-[minmax(0,9rem)_minmax(0,1fr)] sm:gap-4 md:gap-6">
       <dt className="text-sm font-semibold text-primary">{term}</dt>
-      <dd className="min-w-0 break-words text-sm text-muted-foreground">{value}</dd>
+      <dd className="min-w-0 whitespace-normal break-words text-sm text-muted-foreground">{value}</dd>
     </div>
   );
 }
