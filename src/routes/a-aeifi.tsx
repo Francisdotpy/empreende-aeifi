@@ -54,9 +54,9 @@ function Page() {
               Data de fundação, marcos da trajetória e principais conquistas: <Value value={get("org.historia")} />
             </p>
           </div>
-          <Card className="h-fit">
+          <Card className="h-fit overflow-hidden p-5 md:p-6">
             <h3 className="font-display text-lg font-semibold text-primary">Ficha institucional</h3>
-            <dl className="mt-3">
+            <dl className="mt-3 min-w-0">
               <DataRow term="Nome" value={org.nome} />
               <DataRow term="Sigla" value={org.sigla} />
               <DataRow term="Razão social" value={<Value value={org.razaoSocial} />} />
