@@ -140,12 +140,12 @@ export function InlineTextEditor() {
     if (!editing) return;
     document.body.classList.add("inline-edit-on");
 
-    async function save(original: string, value: string) {
-      const key = textKey(original);
+    async function save(original: string, occurrence: number, value: string) {
+      const key = textKey(original, occurrence);
       const nextValue = normalize(value) === normalize(original) ? "" : value.trim();
       const rows = [
         { key, value: nextValue },
-        { key: sourceKey(original), value: normalize(original) },
+        { key: sourceKey(original, occurrence), value: normalize(original) },
       ];
       const { error } = await supabase.from("site_content").upsert(rows, { onConflict: "key" });
       if (error) {
@@ -157,52 +157,83 @@ export function InlineTextEditor() {
       await queryClient.invalidateQueries({ queryKey: ["site_content"] });
     }
 
-    function startEdit(element: HTMLElement) {
-      const original = originals.get(element.firstChild as Text) ?? element.textContent ?? "";
-      element.setAttribute("data-inline-editing", "true");
-      element.contentEditable = "true";
-      element.focus();
+    function startEdit(node: Text) {
+      const parent = node.parentNode;
+      if (!parent) return;
+      const info = nodeKeys.get(node) ?? {
+        original: originals.get(node) ?? node.nodeValue ?? "",
+        occurrence: 0,
+      };
+      const span = document.createElement("span");
+      span.setAttribute("data-inline-editing", "true");
+      span.contentEditable = "true";
+      span.textContent = node.nodeValue ?? "";
+      parent.replaceChild(span, node);
+      span.focus();
+      const selection = window.getSelection();
+      if (selection) {
+        const range = document.createRange();
+        range.selectNodeContents(span);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+
       const finish = () => {
-        element.removeAttribute("data-inline-editing");
-        element.contentEditable = "false";
-        element.removeEventListener("blur", finish);
-        element.removeEventListener("keydown", onKey);
-        const value = element.textContent ?? "";
-        void save(original, value);
+        span.removeEventListener("blur", finish);
+        span.removeEventListener("keydown", onKey);
+        const value = span.textContent ?? "";
+        node.nodeValue = value;
+        span.replaceWith(node);
+        originals.set(node, info.original);
+        nodeKeys.set(node, info);
+        void save(info.original, info.occurrence, value);
       };
       const onKey = (e: KeyboardEvent) => {
         if (e.key === "Escape") {
-          element.textContent = mapRef.current[textKey(original)] || original;
-          element.blur();
+          span.textContent = mapRef.current[textKey(info.original, info.occurrence)] || info.original;
+          span.blur();
         }
         if (e.key === "Enter" && !e.shiftKey) {
           e.preventDefault();
-          element.blur();
+          span.blur();
         }
       };
-      element.addEventListener("blur", finish);
-      element.addEventListener("keydown", onKey);
+      span.addEventListener("blur", finish);
+      span.addEventListener("keydown", onKey);
     }
 
     function onClick(event: MouseEvent) {
       const target = event.target as HTMLElement | null;
       if (!target || target.closest("[data-inline-edit-ui]")) return;
-      if (target.getAttribute("data-inline-editing") === "true") return;
-      const element = target.closest<HTMLElement>("*");
-      if (!element) return;
-      const textNodes = [...element.childNodes].filter(
-        (n): n is Text => n.nodeType === Node.TEXT_NODE && normalize(n.nodeValue ?? "").length > 1,
-      );
-      const textNode = textNodes[0];
-      if (!textNode || textNodes.length !== 1 || element.children.length > 0) {
+      if (target.closest("[data-inline-editing]")) return;
+      if (SKIP_TAGS.has(target.tagName)) return;
+
+      let node: Text | null = null;
+      const caret = (
+        document as Document & {
+          caretRangeFromPoint?: (x: number, y: number) => Range | null;
+        }
+      ).caretRangeFromPoint?.(event.clientX, event.clientY);
+      if (caret && caret.startContainer.nodeType === Node.TEXT_NODE) {
+        node = caret.startContainer as Text;
+      }
+      if (!node || node.parentElement !== target) {
+        node =
+          ([...target.childNodes].find(
+            (n): n is Text =>
+              n.nodeType === Node.TEXT_NODE && normalize(n.nodeValue ?? "").length > 1,
+          ) as Text | undefined) ?? node;
+      }
+      if (!node || normalize(node.nodeValue ?? "").length <= 1) {
         setStatus("Clique diretamente sobre o trecho de texto que deseja editar.");
         return;
       }
       event.preventDefault();
       event.stopPropagation();
-      if (!originals.has(textNode)) originals.set(textNode, textNode.nodeValue ?? "");
-      startEdit(element);
+      if (!originals.has(node)) originals.set(node, node.nodeValue ?? "");
+      startEdit(node);
     }
+
 
     document.addEventListener("click", onClick, true);
     return () => {
