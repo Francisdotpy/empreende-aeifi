@@ -58,8 +58,10 @@ export const editableFields: EditableField[] = [
   { group: "Redes sociais", key: "org.redes.0", label: "Instagram (URL)" },
   { group: "Redes sociais", key: "org.redes.1", label: "Facebook (URL)" },
   { group: "Redes sociais", key: "org.redes.2", label: "LinkedIn (URL)" },
+  { group: "Identificação", key: "home.hero.foto", label: "Foto de capa da página inicial", kind: "image" },
   ...impactoBase.map((i, idx) => ({ group: "Números de impacto", key: `impacto.${idx}`, label: i.rotulo })),
-  ...diretoriaBase.map((d, idx) => ({ group: "Diretoria", key: `diretoria.${idx}`, label: d.cargo })),
+  ...diretoriaBase.map((d) => ({ group: "Diretoria", key: `diretoria.${d.id}`, label: d.cargo })),
+
   ...documentosBase.map((d, idx) => ({
     group: "Transparência (situação dos documentos)",
     key: `documentos.${idx}`,
