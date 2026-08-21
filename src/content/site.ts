@@ -313,12 +313,12 @@ export const noticias: Noticia[] = [
 ];
 
 export const diretoria = [
-  { cargo: "Presidência", nome: TBD },
-  { cargo: "Vice-presidência", nome: TBD },
-  { cargo: "Secretaria", nome: TBD },
-  { cargo: "Tesouraria", nome: TBD },
-  { cargo: "Conselho fiscal", nome: TBD },
+  { id: "presidencia", cargo: "Presidência", nome: TBD },
+  { id: "secretaria", cargo: "Secretaria", nome: TBD },
+  { id: "tesouraria", cargo: "Tesouraria", nome: TBD },
+  { id: "conselho-fiscal", cargo: "Conselho fiscal", nome: TBD },
 ];
+
 
 export const documentos = [
   { nome: "Estatuto Social", descricao: "Documento que define a finalidade, a estrutura e as regras de funcionamento da associação.", situacao: TBD },
