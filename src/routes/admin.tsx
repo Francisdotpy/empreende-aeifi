@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { editableFields, siteContentQuery } from "@/content/useSite";
 import type { EditableField } from "@/content/useSite";
 import { uploadSiteFile } from "@/lib/uploads.functions";
+import { claimAdmin } from "@/lib/admin.functions";
 import { Card, PageHero, Section } from "@/components/site/ui";
 
 export const Route = createFileRoute("/admin")({
@@ -84,7 +85,7 @@ function LoginForm() {
       }
     }
     if (signInError) setError("Não foi possível entrar. Verifique o e-mail e a senha.");
-    else await supabase.rpc("claim_admin");
+    else await claimAdmin().catch(() => undefined);
     setLoading(false);
   }
 
@@ -137,7 +138,7 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
   }, [data]);
 
   useEffect(() => {
-    supabase.rpc("claim_admin");
+    claimAdmin().catch(() => undefined);
   }, []);
 
   const groups = useMemo(() => {
