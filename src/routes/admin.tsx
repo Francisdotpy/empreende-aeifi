@@ -306,6 +306,9 @@ function FieldEditor({
           className="rounded-lg border border-input bg-background px-3 py-2 text-sm font-normal text-foreground"
         />
       )}
+      {field.hint ? (
+        <span className="text-xs font-normal text-muted-foreground">{field.hint}</span>
+      ) : null}
     </label>
   );
 }

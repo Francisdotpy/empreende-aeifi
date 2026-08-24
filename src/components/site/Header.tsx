@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { useSite } from "@/content/useSite";
+import logoHeader from "@/assets/logo-header.jpeg";
 
 const nav = [
   { to: "/", label: "Início" },
@@ -11,32 +11,21 @@ const nav = [
   { to: "/buscamei", label: "BuscaMEI" },
   { to: "/noticias", label: "Notícias" },
   { to: "/transparencia", label: "Transparência" },
-  { to: "/associe-se", label: "Associe-se" },
   { to: "/contato", label: "Contato" },
 ] as const;
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const { get } = useSite();
-  const logo = get("org.logo");
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/95 backdrop-blur">
       <div className="container-page flex h-18 items-center justify-between gap-4 py-3">
-        <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          {logo ? (
-            <img src={logo} alt="Logotipo da AEIFI" className="h-11 w-11 rounded-xl object-contain" />
-          ) : (
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary font-display text-lg font-semibold text-primary-foreground">
-              A
-            </span>
-          )}
-          <span className="leading-tight">
-            <span className="block font-display text-lg font-semibold text-primary">AEIFI</span>
-            <span className="block max-w-[15rem] text-[0.7rem] text-muted-foreground">
-              Associação dos Empreendedores Individuais de Foz do Iguaçu
-            </span>
-          </span>
+        <Link to="/" className="flex items-center" onClick={() => setOpen(false)}>
+          <img
+            src={logoHeader}
+            alt="Logotipo da AEIFI"
+            className="h-11 w-11 rounded-xl object-contain"
+          />
         </Link>
 
         <nav className="hidden items-center gap-1 xl:flex" aria-label="Navegação principal">
@@ -87,6 +76,13 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              to="/associe-se"
+              onClick={() => setOpen(false)}
+              className="mt-2 rounded-md bg-secondary px-3 py-3 text-center text-base font-semibold text-secondary-foreground"
+            >
+              Quero me associar
+            </Link>
           </div>
         </nav>
       )}

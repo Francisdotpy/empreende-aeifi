@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { beneficiosAssociado, org } from "@/content/site";
-import { Card, CtaLink, PageHero, Section, Value } from "@/components/site/ui";
+import { useState } from "react";
+import { beneficiosAssociado } from "@/content/site";
+import { Card, PageHero, Section, Value } from "@/components/site/ui";
 import { useSite } from "@/content/useSite";
+import { sendAssociationRequest } from "@/lib/association.functions";
 
 export const Route = createFileRoute("/associe-se")({
   head: () => ({
@@ -42,7 +44,11 @@ function Page() {
         lead="Associar-se é somar sua voz a uma rede organizada de empreendedores que trabalha por representação, formação e oportunidades em Foz do Iguaçu."
       />
 
-      <Section title="Quem pode participar">
+      <Section title="Solicite sua associação">
+        <AssociationForm />
+      </Section>
+
+      <Section tone="muted" title="Quem pode participar">
         <ul className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {org.publico.map((p) => (
             <li key={p} className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
@@ -56,7 +62,7 @@ function Page() {
         </p>
       </Section>
 
-      <Section tone="muted" title="Por que se associar">
+      <Section title="Por que se associar">
         <div className="grid gap-4 md:grid-cols-2">
           {beneficiosAssociado.map((b) => (
             <Card key={b}>
@@ -66,7 +72,7 @@ function Page() {
         </div>
       </Section>
 
-      <Section title="Como funciona a associação">
+      <Section tone="muted" title="Como funciona a associação">
         <div className="grid gap-8 lg:grid-cols-2">
           <p className="text-base leading-relaxed text-muted-foreground">
             A AEIFI é uma associação civil sem fins lucrativos. Suas decisões são tomadas em
@@ -82,7 +88,7 @@ function Page() {
         </div>
       </Section>
 
-      <Section tone="muted" title="Como solicitar sua associação">
+      <Section title="Como solicitar sua associação">
         <ol className="grid gap-4 md:grid-cols-2">
           {passos.map((p, i) => (
             <li key={p} className="rounded-2xl border border-border bg-card p-5 shadow-card">
@@ -111,13 +117,101 @@ function Page() {
               <dd>{org.horario}</dd>
             </div>
           </dl>
-          <div className="mt-6">
-            <CtaLink to="/contato" variant="secondary">
-              Quero me associar
-            </CtaLink>
-          </div>
         </Card>
       </Section>
     </>
+  );
+}
+
+function AssociationForm() {
+  const [form, setForm] = useState({ nome: "", cnpj: "", telefone: "" });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  async function submit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (status === "loading") return;
+
+    const data = {
+      nome: form.nome.trim(),
+      cnpj: form.cnpj.trim(),
+      telefone: form.telefone.trim(),
+    };
+    if (!data.nome || !data.cnpj || !data.telefone) {
+      setStatus("error");
+      return;
+    }
+
+    setStatus("loading");
+    try {
+      await sendAssociationRequest({ data });
+      setForm({ nome: "", cnpj: "", telefone: "" });
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  const inputClassName =
+    "rounded-lg border border-input bg-background px-3 py-2.5 text-sm font-normal text-foreground";
+
+  return (
+    <Card className="max-w-2xl">
+      <p className="text-sm text-muted-foreground">
+        Preencha os dados abaixo. A equipe da AEIFI receberá sua solicitação e entrará em contato.
+      </p>
+      <form className="mt-5 grid gap-4" onSubmit={submit}>
+        <label className="grid gap-1.5 text-sm font-semibold text-primary">
+          Nome
+          <input
+            required
+            autoComplete="name"
+            value={form.nome}
+            onChange={(event) => setForm((current) => ({ ...current, nome: event.target.value }))}
+            className={inputClassName}
+          />
+        </label>
+        <label className="grid gap-1.5 text-sm font-semibold text-primary">
+          CNPJ
+          <input
+            required
+            inputMode="numeric"
+            autoComplete="off"
+            value={form.cnpj}
+            onChange={(event) => setForm((current) => ({ ...current, cnpj: event.target.value }))}
+            className={inputClassName}
+          />
+        </label>
+        <label className="grid gap-1.5 text-sm font-semibold text-primary">
+          Telefone / WhatsApp
+          <input
+            required
+            type="tel"
+            autoComplete="tel"
+            value={form.telefone}
+            onChange={(event) =>
+              setForm((current) => ({ ...current, telefone: event.target.value }))
+            }
+            className={inputClassName}
+          />
+        </label>
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className="mt-1 rounded-lg bg-secondary px-5 py-3 text-sm font-semibold text-secondary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {status === "loading" ? "Enviando solicitação…" : "Enviar solicitação"}
+        </button>
+        <div aria-live="polite" className="min-h-5 text-sm">
+          {status === "success" ? (
+            <p className="font-medium text-green-700">Solicitação enviada com sucesso.</p>
+          ) : null}
+          {status === "error" ? (
+            <p className="font-medium text-destructive">
+              Não foi possível enviar. Confira os campos e tente novamente.
+            </p>
+          ) : null}
+        </div>
+      </form>
+    </Card>
   );
 }

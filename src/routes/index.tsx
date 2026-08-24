@@ -61,7 +61,7 @@ function Home() {
             </div>
           </div>
           <img
-            src={get("home.hero.foto") || heroImg}
+            src={heroImg}
             width={1600}
             height={1008}
             alt="Microempreendedores de Foz do Iguaçu reunidos em um encontro da AEIFI"

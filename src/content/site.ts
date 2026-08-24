@@ -15,7 +15,6 @@ export const org = {
   redes: [
     { nome: "Instagram", url: TBD },
     { nome: "Facebook", url: TBD },
-    { nome: "LinkedIn", url: TBD },
   ],
   missao:
     "Apoiar, representar e conectar microempreendedores individuais e pequenos negócios de Foz do Iguaçu, criando oportunidades reais de desenvolvimento para quem empreende na cidade.",

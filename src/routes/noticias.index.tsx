@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import capacitacaoImg from "@/assets/capacitacao.jpg";
 import { Card, PageHero, Section, Value } from "@/components/site/ui";
 import { useSite } from "@/content/useSite";
 
@@ -35,14 +34,6 @@ function Page() {
       />
 
       <Section>
-        <img
-          src={capacitacaoImg}
-          width={1400}
-          height={900}
-          loading="lazy"
-          alt="Participantes em atividade de capacitação promovida pela AEIFI"
-          className="mb-10 w-full rounded-2xl object-cover shadow-card"
-        />
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {noticias.map((n, idx) => (
             <Card key={n.slug}>

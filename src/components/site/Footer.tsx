@@ -1,9 +1,25 @@
 import { Link } from "@tanstack/react-router";
-import { org } from "@/content/site";
+import { TBD } from "@/content/site";
 import { useSite } from "@/content/useSite";
+
+function visible(value: string) {
+  const trimmed = value?.trim();
+  return trimmed && trimmed !== TBD ? trimmed : null;
+}
 
 export function Footer() {
   const { org } = useSite();
+  const details = [
+    ["Razão social", visible(org.razaoSocial)],
+    ["CNPJ", visible(org.cnpj)],
+    ["Endereço", visible(org.sede)],
+    ["Telefone", visible(org.telefone)],
+    ["E-mail", visible(org.email)],
+  ].filter((detail): detail is [string, string] => Boolean(detail[1]));
+  const socialLinks = org.redes
+    .map((network) => ({ ...network, url: visible(network.url) }))
+    .filter((network) => Boolean(network.url));
+
   return (
     <footer className="mt-20 bg-ink text-ink-foreground">
       <div className="container-page grid gap-10 py-14 md:grid-cols-4">
@@ -12,31 +28,31 @@ export function Footer() {
           <p className="mt-1 max-w-sm text-sm text-ink-foreground/80">
             Associação dos Empreendedores Individuais de Foz do Iguaçu
           </p>
-          <dl className="mt-6 space-y-1.5 text-sm text-ink-foreground/80">
-            <div className="flex flex-wrap gap-2">
-              <dt className="font-semibold text-ink-foreground">Razão social:</dt>
-              <dd>{org.razaoSocial}</dd>
+          {details.length ? (
+            <dl className="mt-6 space-y-1.5 text-sm text-ink-foreground/80">
+              {details.map(([label, value]) => (
+                <div key={label} className="flex flex-wrap gap-2">
+                  <dt className="font-semibold text-ink-foreground">{label}:</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : null}
+          {socialLinks.length ? (
+            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm text-ink-foreground/80">
+              {socialLinks.map((network) => (
+                <a
+                  key={network.nome}
+                  href={network.url ?? undefined}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-accent hover:underline"
+                >
+                  {network.nome}
+                </a>
+              ))}
             </div>
-            <div className="flex flex-wrap gap-2">
-              <dt className="font-semibold text-ink-foreground">CNPJ:</dt>
-              <dd>{org.cnpj}</dd>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <dt className="font-semibold text-ink-foreground">Endereço:</dt>
-              <dd>{org.sede}</dd>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <dt className="font-semibold text-ink-foreground">Telefone / WhatsApp:</dt>
-              <dd>{org.whatsapp}</dd>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <dt className="font-semibold text-ink-foreground">E-mail:</dt>
-              <dd>{org.email}</dd>
-            </div>
-          </dl>
-          <p className="mt-4 text-sm text-ink-foreground/80">
-            Redes sociais: {org.redes.map((r) => r.nome).join(" · ")} — {org.redes[0]?.url}
-          </p>
+          ) : null}
         </div>
 
         <nav aria-label="Links institucionais">
@@ -48,7 +64,7 @@ export function Footer() {
             <li><Link to="/noticias" className="hover:text-accent">Notícias</Link></li>
             <li><Link to="/transparencia" className="hover:text-accent">Transparência</Link></li>
             <li><Link to="/parceiros" className="hover:text-accent">Parceiros</Link></li>
-            <li><Link to="/associe-se" className="hover:text-accent">Associe-se</Link></li>
+            <li><Link to="/associe-se" className="hover:text-accent">Quero me associar</Link></li>
             <li><Link to="/contato" className="hover:text-accent">Contato</Link></li>
             <li><Link to="/politica-de-privacidade" className="hover:text-accent">Política de Privacidade</Link></li>
           </ul>
