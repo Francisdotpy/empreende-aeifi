@@ -13,6 +13,33 @@ import {
 
 export type Overrides = Record<string, string>;
 
+export const WHATSAPP_CONTACTS_KEY = "whatsapp.contatos";
+
+export type WhatsAppContact = {
+  nome: string;
+  funcao: string;
+  numero: string;
+};
+
+export function parseWhatsAppContacts(value: string): WhatsAppContact[] {
+  if (!value.trim()) return [];
+  try {
+    const parsed: unknown = JSON.parse(value);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.flatMap((entry) => {
+      if (!entry || typeof entry !== "object") return [];
+      const contact = entry as Partial<WhatsAppContact>;
+      const nome = typeof contact.nome === "string" ? contact.nome.trim() : "";
+      const funcao = typeof contact.funcao === "string" ? contact.funcao.trim() : "";
+      const numero = typeof contact.numero === "string" ? contact.numero.replace(/\D/g, "") : "";
+      if (!nome || !funcao || numero.length < 10 || numero.length > 15) return [];
+      return [{ nome, funcao, numero }];
+    });
+  } catch {
+    return [];
+  }
+}
+
 export const siteContentQuery = {
   queryKey: ["site_content"],
   queryFn: async (): Promise<Overrides> => {
@@ -35,7 +62,6 @@ export type EditableField = {
   label: string;
   multiline?: boolean;
   kind?: FieldKind;
-  hint?: string;
 };
 
 /** Lista de campos editáveis na área administrativa. */
@@ -56,22 +82,6 @@ export const editableFields: EditableField[] = [
   { group: "Contato", key: "org.horario", label: "Horário de atendimento" },
   { group: "Redes sociais", key: "org.redes.0", label: "Instagram (URL)" },
   { group: "Redes sociais", key: "org.redes.1", label: "Facebook (URL)" },
-  { group: "WhatsApp flutuante", key: "whatsapp.contatos.0.nome", label: "Contato 1 — nome" },
-  { group: "WhatsApp flutuante", key: "whatsapp.contatos.0.cargo", label: "Contato 1 — função" },
-  {
-    group: "WhatsApp flutuante",
-    key: "whatsapp.contatos.0.telefone",
-    label: "Contato 1 — telefone com DDI",
-    hint: "Exemplo: 5545999999999",
-  },
-  { group: "WhatsApp flutuante", key: "whatsapp.contatos.1.nome", label: "Contato 2 — nome" },
-  { group: "WhatsApp flutuante", key: "whatsapp.contatos.1.cargo", label: "Contato 2 — função" },
-  {
-    group: "WhatsApp flutuante",
-    key: "whatsapp.contatos.1.telefone",
-    label: "Contato 2 — telefone com DDI",
-    hint: "Exemplo: 5545999999999",
-  },
   ...impactoBase.map((i, idx) => ({ group: "Números de impacto", key: `impacto.${idx}`, label: i.rotulo })),
   ...diretoriaBase.map((d) => ({ group: "Diretoria", key: `diretoria.${d.id}`, label: d.cargo })),
 

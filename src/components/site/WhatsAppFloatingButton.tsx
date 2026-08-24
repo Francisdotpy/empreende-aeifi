@@ -1,26 +1,11 @@
 import { MessageCircle, X } from "lucide-react";
 import { useState } from "react";
-import { useSite } from "@/content/useSite";
-
-const defaultContacts = [
-  { nome: "Ederaldo", cargo: "Contador" },
-  { nome: "Guilherme", cargo: "Programador" },
-];
-
-function phoneDigits(value: string) {
-  return value.replace(/\D/g, "");
-}
+import { parseWhatsAppContacts, useSite, WHATSAPP_CONTACTS_KEY } from "@/content/useSite";
 
 export function WhatsAppFloatingButton() {
   const [open, setOpen] = useState(false);
   const { get } = useSite();
-  const contacts = defaultContacts
-    .map((fallback, index) => ({
-      nome: get(`whatsapp.contatos.${index}.nome`).trim() || fallback.nome,
-      cargo: get(`whatsapp.contatos.${index}.cargo`).trim() || fallback.cargo,
-      telefone: phoneDigits(get(`whatsapp.contatos.${index}.telefone`)),
-    }))
-    .filter((contact) => contact.telefone.length >= 10);
+  const contacts = parseWhatsAppContacts(get(WHATSAPP_CONTACTS_KEY));
 
   return (
     <div className="fixed bottom-4 right-4 z-40 flex max-w-[calc(100vw-2rem)] flex-col items-end gap-2 sm:bottom-6 sm:right-6">
@@ -35,17 +20,17 @@ export function WhatsAppFloatingButton() {
         {contacts.length ? (
           contacts.map((contact) => (
             <a
-              key={`${contact.nome}-${contact.telefone}`}
-              href={`https://wa.me/${contact.telefone}`}
+              key={`${contact.nome}-${contact.numero}`}
+              href={`https://wa.me/${contact.numero}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex max-w-full items-center gap-3 rounded-full border border-border bg-background py-2 pl-4 pr-2 text-sm font-semibold text-foreground shadow-lift transition-transform hover:-translate-y-0.5"
               tabIndex={open ? 0 : -1}
-              aria-label={`Conversar com ${contact.nome}, ${contact.cargo}, pelo WhatsApp`}
+              aria-label={`Conversar com ${contact.nome}, ${contact.funcao}, pelo WhatsApp`}
             >
               <span className="min-w-0 truncate">
                 {contact.nome}{" "}
-                <span className="font-normal text-muted-foreground">— {contact.cargo}</span>
+                <span className="font-normal text-muted-foreground">— {contact.funcao}</span>
               </span>
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white">
                 <MessageCircle className="h-5 w-5" aria-hidden="true" />

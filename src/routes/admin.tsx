@@ -3,8 +3,13 @@ import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
-import { editableFields, siteContentQuery } from "@/content/useSite";
-import type { EditableField } from "@/content/useSite";
+import {
+  editableFields,
+  parseWhatsAppContacts,
+  siteContentQuery,
+  WHATSAPP_CONTACTS_KEY,
+} from "@/content/useSite";
+import type { EditableField, WhatsAppContact } from "@/content/useSite";
 import { uploadSiteFile } from "@/lib/uploads.functions";
 import { claimAdmin } from "@/lib/admin.functions";
 import { Card, PageHero, Section } from "@/components/site/ui";
@@ -191,6 +196,11 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
         <CustomTexts data={data ?? {}} />
       </Card>
 
+      <WhatsAppContactsEditor
+        value={values[WHATSAPP_CONTACTS_KEY] ?? ""}
+        onChange={(next) => setValues((current) => ({ ...current, [WHATSAPP_CONTACTS_KEY]: next }))}
+      />
+
       {groups.map(([group, fields]) => (
         <Card key={group}>
           <h2 className="font-display text-lg font-semibold text-primary">{group}</h2>
@@ -218,6 +228,171 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
         {status ? <span className="text-sm text-muted-foreground">{status}</span> : null}
       </div>
     </div>
+  );
+}
+
+function WhatsAppContactsEditor({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  const queryClient = useQueryClient();
+  const contacts = parseWhatsAppContacts(value);
+  const [draft, setDraft] = useState<WhatsAppContact>({ nome: "", funcao: "", numero: "" });
+  const [busy, setBusy] = useState<string | null>(null);
+  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  async function publish(next: WhatsAppContact[], operation: string) {
+    setBusy(operation);
+    setMessage(null);
+    const encoded = JSON.stringify(next);
+    const { error } = await supabase
+      .from("site_content")
+      .upsert([{ key: WHATSAPP_CONTACTS_KEY, value: encoded }], { onConflict: "key" });
+
+    if (error) {
+      setMessage({
+        type: "error",
+        text: "Não foi possível atualizar os contatos. Verifique seu acesso e tente novamente.",
+      });
+      setBusy(null);
+      return false;
+    }
+
+    onChange(encoded);
+    await queryClient.invalidateQueries({ queryKey: ["site_content"] });
+    setBusy(null);
+    return true;
+  }
+
+  async function addContact(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const contact = {
+      nome: draft.nome.trim(),
+      funcao: draft.funcao.trim(),
+      numero: draft.numero.replace(/\D/g, ""),
+    };
+
+    if (!contact.nome || !contact.funcao || contact.numero.length < 10 || contact.numero.length > 15) {
+      setMessage({
+        type: "error",
+        text: "Preencha nome, função e um número internacional válido com 10 a 15 dígitos.",
+      });
+      return;
+    }
+    if (contacts.some((item) => item.numero === contact.numero)) {
+      setMessage({ type: "error", text: "Este número já está cadastrado." });
+      return;
+    }
+
+    if (await publish([...contacts, contact], "add")) {
+      setDraft({ nome: "", funcao: "", numero: "" });
+      setMessage({ type: "success", text: "Contato adicionado e publicado no WhatsApp flutuante." });
+    }
+  }
+
+  async function removeContact(index: number) {
+    if (await publish(contacts.filter((_, current) => current !== index), `remove-${index}`)) {
+      setMessage({ type: "success", text: "Contato removido do WhatsApp flutuante." });
+    }
+  }
+
+  const inputClassName =
+    "rounded-lg border border-input bg-card px-3 py-2.5 text-sm font-normal text-foreground shadow-sm hover:border-primary/30 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20";
+
+  return (
+    <Card>
+      <h2 className="font-display text-lg font-semibold text-primary">WhatsApp flutuante</h2>
+      <p className="mt-2 text-sm text-muted-foreground">
+        Cadastre os contatos que serão exibidos no botão flutuante. Use o número com DDI e DDD.
+      </p>
+
+      <form
+        onSubmit={addContact}
+        className="mt-5 grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_auto] md:items-end"
+      >
+        <label className="grid gap-1.5 text-sm font-medium text-primary">
+          Nome
+          <input
+            required
+            value={draft.nome}
+            onChange={(event) => setDraft((current) => ({ ...current, nome: event.target.value }))}
+            className={inputClassName}
+          />
+        </label>
+        <label className="grid gap-1.5 text-sm font-medium text-primary">
+          Função
+          <input
+            required
+            value={draft.funcao}
+            onChange={(event) => setDraft((current) => ({ ...current, funcao: event.target.value }))}
+            className={inputClassName}
+          />
+        </label>
+        <label className="grid gap-1.5 text-sm font-medium text-primary">
+          Número
+          <input
+            required
+            type="tel"
+            inputMode="numeric"
+            placeholder="5545999999999"
+            value={draft.numero}
+            onChange={(event) => setDraft((current) => ({ ...current, numero: event.target.value }))}
+            className={inputClassName}
+          />
+        </label>
+        <button
+          type="submit"
+          disabled={busy !== null}
+          className="rounded-lg bg-secondary px-5 py-2.5 text-sm font-semibold text-secondary-foreground shadow-sm transition-all hover:bg-secondary/90 hover:shadow-md active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
+        >
+          {busy === "add" ? "Adicionando…" : "Adicionar"}
+        </button>
+      </form>
+
+      {message ? (
+        <p
+          className={`mt-3 text-sm font-medium ${
+            message.type === "error" ? "text-destructive" : "text-green-700"
+          }`}
+          aria-live="polite"
+        >
+          {message.text}
+        </p>
+      ) : null}
+
+      {contacts.length ? (
+        <ul className="mt-5 grid gap-2">
+          {contacts.map((contact, index) => (
+            <li
+              key={`${contact.numero}-${index}`}
+              className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-muted/35 px-4 py-3"
+            >
+              <div className="min-w-0">
+                <p className="font-semibold text-primary">{contact.nome}</p>
+                <p className="text-sm text-muted-foreground">
+                  {contact.funcao} · +{contact.numero}
+                </p>
+              </div>
+              <button
+                type="button"
+                disabled={busy !== null}
+                onClick={() => void removeContact(index)}
+                className="rounded-lg border border-destructive/30 bg-card px-3 py-2 text-sm font-semibold text-destructive transition-colors hover:bg-destructive/10 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {busy === `remove-${index}` ? "Removendo…" : "Remover"}
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mt-5 rounded-xl border border-dashed border-border bg-muted/30 px-4 py-3 text-sm text-muted-foreground">
+          Nenhum contato cadastrado.
+        </p>
+      )}
+    </Card>
   );
 }
 
@@ -306,9 +481,6 @@ function FieldEditor({
           className="rounded-lg border border-input bg-card px-3 py-2.5 text-sm font-normal text-foreground shadow-sm hover:border-primary/30 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20"
         />
       )}
-      {field.hint ? (
-        <span className="text-xs font-normal text-muted-foreground">{field.hint}</span>
-      ) : null}
     </label>
   );
 }
