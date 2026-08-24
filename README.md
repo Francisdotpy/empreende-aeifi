@@ -1,488 +1,531 @@
-# AEIFI: Empreendedores em Foco
+# AEIFI — Empreendedores em Foco
 
-Crie/reestruture o site www.aeifi.com.br com foco prioritário no fortalecimento institucional da:
+Site institucional da **AEIFI — Associação dos Empreendedores Individuais de Foz do Iguaçu**.
 
-AEIFI – Associação dos Empreendedores Individuais de Foz do Iguaçu
+O projeto tem como objetivo consolidar a presença digital da associação, apresentar sua atuação de forma clara e fortalecer sua imagem como uma instituição organizada, confiável e comprometida com o desenvolvimento dos microempreendedores e pequenos negócios de Foz do Iguaçu.
 
-O site deve transmitir imediatamente que a AEIFI é uma instituição ativa, organizada, confiável e comprometida com o desenvolvimento dos microempreendedores e pequenos negócios.
+**Site:** [www.aeifi.com.br](http://www.aeifi.com.br)
 
-O BuscaMEI (www.buscamei.com.br) é um produto da AEIFI e deve ser apresentado dessa forma. Ele é importante, mas não deve substituir ou competir com a identidade institucional da associação.
+---
 
-1. Objetivo principal do site
+## Sobre o projeto
 
-O visitante deve conseguir responder rapidamente:
+O site da AEIFI funciona como o principal canal institucional da associação na internet.
 
-O que é a AEIFI?
+A experiência foi estruturada para que qualquer visitante consiga compreender rapidamente:
 
-Qual é sua missão?
+* o que é a AEIFI;
+* qual é sua missão;
+* quem a associação representa;
+* quais atividades desenvolve;
+* quais projetos e iniciativas mantém;
+* qual impacto gera na comunidade;
+* como se associar;
+* como empresas e instituições podem se tornar parceiras;
+* como entrar em contato com a associação.
 
-Quem ela representa e beneficia?
+Além da comunicação institucional, o projeto considera requisitos relacionados a **SEO, acessibilidade, experiência mobile, desempenho e Google Ad Grants**.
 
-O que a AEIFI faz?
+---
 
-Quais projetos, produtos e ações desenvolve?
+## Posicionamento institucional
 
-Qual impacto gera?
+A AEIFI é a marca principal de todo o projeto.
 
-Como posso participar?
+A estrutura de comunicação segue esta hierarquia:
 
-Como posso me associar?
+**AEIFI**
+→ Missão institucional
+→ Áreas de atuação
+→ Projetos, ações e produtos
+→ BuscaMEI e demais iniciativas
+→ Resultados e impacto
 
-Como uma empresa ou instituição pode ser parceira?
+Projetos desenvolvidos pela associação devem sempre ser apresentados como parte da atuação institucional da AEIFI.
 
-O site também deverá possuir conteúdo e qualidade suficientes para atender aos requisitos do Google Ad Grants.
+### BuscaMEI
 
-2. Hierarquia da marca
+O **BuscaMEI** é um produto desenvolvido pela AEIFI e possui papel importante dentro do ecossistema da associação.
 
-A comunicação deve seguir esta hierarquia:
+Sua comunicação utiliza prioritariamente a identificação:
 
-AEIFI
-↓
-Missão institucional
-↓
-Áreas de atuação
-↓
-Projetos, ações e produtos
-↓
-BuscaMEI e outras iniciativas
-↓
-Resultados e impacto
+> **BuscaMEI — um produto da AEIFI**
 
-Nunca apresentar o BuscaMEI como se fosse uma instituição separada ou mais importante que a própria AEIFI.
+O BuscaMEI não é tratado como uma organização independente e não deve assumir protagonismo maior que a própria associação dentro do site institucional.
 
-Apresentá-lo como:
+---
 
-BuscaMEI — um produto da AEIFI
+# Objetivos
 
-3. Página inicial
+## Objetivo principal
 
-Criar uma página inicial institucional forte.
+Fortalecer a presença institucional da AEIFI e tornar sua atuação compreensível para empreendedores, associados, potenciais parceiros e comunidade em geral.
 
-O primeiro bloco deve apresentar uma mensagem semelhante a:
+O site deve transmitir principalmente:
 
-Fortalecemos quem empreende. Desenvolvemos nossa comunidade.
+* credibilidade;
+* organização;
+* representatividade;
+* proximidade com o empreendedor;
+* desenvolvimento econômico local;
+* colaboração;
+* inovação;
+* impacto social e econômico.
 
-A AEIFI trabalha para apoiar, conectar, representar e criar oportunidades para microempreendedores e pequenos negócios de Foz do Iguaçu.
+## Objetivos secundários
 
-Botões:
+O projeto também busca:
 
-Conheça a AEIFI
-Quero me associar
+* aumentar a visibilidade das ações realizadas pela associação;
+* facilitar novos pedidos de associação;
+* aproximar potenciais parceiros institucionais;
+* organizar documentos e informações de transparência;
+* divulgar eventos, capacitações e oportunidades;
+* apresentar projetos desenvolvidos pela AEIFI;
+* fortalecer a presença da associação nas buscas locais;
+* criar uma estrutura adequada para campanhas do Google Ad Grants.
 
-Em seguida, apresentar:
+---
 
-O que fazemos
+# Estrutura do site
 
-Mostrar as principais áreas de atuação da AEIFI, utilizando somente atividades efetivamente realizadas pela instituição.
+A navegação principal é organizada da seguinte forma:
 
-Possíveis áreas:
+**Início | A AEIFI | O que fazemos | Projetos e Iniciativas | BuscaMEI | Notícias | Transparência | Associe-se | Contato**
 
-Representatividade
+O BuscaMEI pode receber destaque visual na navegação, desde que a identidade principal do site permaneça claramente vinculada à AEIFI.
+
+---
+
+# Página inicial
+
+A página inicial funciona como uma apresentação resumida da associação e direciona o visitante para as principais áreas do site.
+
+## Hero
+
+Mensagem institucional principal:
+
+> **Fortalecemos quem empreende. Desenvolvemos nossa comunidade.**
+
+Texto de apoio:
+
+> A AEIFI trabalha para apoiar, conectar, representar e criar oportunidades para microempreendedores e pequenos negócios de Foz do Iguaçu.
+
+Principais chamadas:
+
+* **Conheça a AEIFI**
+* **Quero me associar**
+
+---
+
+## O que fazemos
+
+A home apresenta de maneira resumida as principais frentes de atuação da associação.
+
+As categorias devem representar somente atividades efetivamente realizadas pela AEIFI.
+
+### Representatividade
+
 Fortalecimento e representação dos interesses dos empreendedores.
 
-Capacitação
-Cursos, palestras, oficinas e iniciativas para desenvolvimento dos empreendedores.
+### Capacitação
 
-Conexões
+Cursos, palestras, oficinas e outras iniciativas voltadas ao desenvolvimento dos empreendedores.
+
+### Conexões
+
 Aproximação entre empreendedores, consumidores, empresas, instituições e parceiros.
 
-Oportunidades
-Criação e divulgação de oportunidades para fortalecimento dos pequenos negócios.
+### Oportunidades
 
-Projetos e inovação
-Desenvolvimento de soluções que contribuam para o crescimento dos empreendedores.
+Criação e divulgação de oportunidades que contribuam para o fortalecimento dos pequenos negócios.
 
-4. Quem Somos
+### Projetos e inovação
 
-Criar uma página institucional robusta sobre a AEIFI contendo:
+Desenvolvimento de soluções, produtos e projetos relacionados à missão da associação.
 
-história;
+---
 
-missão;
+# A AEIFI
 
-visão;
+A área institucional reúne as principais informações sobre a associação e sua trajetória.
 
-valores;
+Entre os conteúdos previstos estão:
 
-objetivos;
+* história;
+* missão;
+* visão;
+* valores;
+* objetivos institucionais;
+* público atendido;
+* razão social;
+* CNPJ;
+* sede;
+* diretoria;
+* áreas de atuação;
+* trajetória da associação;
+* documentos institucionais.
 
-público atendido;
+Essa área possui papel importante na demonstração de legitimidade, transparência e credibilidade da organização.
 
-CNPJ;
+---
 
-sede;
+# Projetos e iniciativas
 
-diretoria;
+A seção **Nossas iniciativas** reúne projetos, produtos, programas, eventos e ações desenvolvidos pela AEIFI.
 
-atuação;
+Sempre que houver informações disponíveis, cada iniciativa poderá apresentar:
 
-documentos institucionais;
+* contexto ou problema identificado;
+* objetivo;
+* público beneficiado;
+* funcionamento;
+* resultados;
+* registros fotográficos;
+* parceiros envolvidos;
+* formas de participação.
 
-trajetória da associação.
+A estrutura permite que novos projetos sejam adicionados conforme a atuação da associação evolua.
 
-Essa página deve transmitir legitimidade, credibilidade e transparência.
+---
 
-5. Projetos, produtos e iniciativas da AEIFI
+# BuscaMEI
 
-Criar uma área específica:
+O BuscaMEI possui uma página própria dentro do site institucional:
 
-Nossas iniciativas
+**[www.aeifi.com.br/buscamei](http://www.aeifi.com.br/buscamei)**
 
-Apresentar os projetos, produtos, eventos, programas e ações desenvolvidos pela AEIFI.
+A página explica o projeto antes de direcionar o visitante para a plataforma externa.
 
-Cada iniciativa deverá explicar:
-
-problema que procura resolver;
-
-objetivo;
-
-público beneficiado;
-
-funcionamento;
-
-resultados;
-
-fotos;
-
-parceiros envolvidos, quando houver.
-
-6. BuscaMEI — Produto da AEIFI
-
-Dar destaque ao BuscaMEI dentro da área de iniciativas.
-
-Utilizar claramente:
-
-BuscaMEI
-
-Um produto da AEIFI
-
-Texto-base:
+## Sobre o BuscaMEI
 
 O BuscaMEI é uma iniciativa desenvolvida pela AEIFI para ampliar a visibilidade dos microempreendedores e facilitar a conexão entre quem oferece e quem procura produtos e serviços.
 
-Explicar que o BuscaMEI faz parte das ações da AEIFI voltadas ao fortalecimento do empreendedorismo.
+A plataforma faz parte das ações da associação voltadas ao fortalecimento do empreendedorismo local.
 
-Apresentar benefícios concretos da plataforma sem fazer promessas que não possam ser comprovadas.
+### Para empreendedores
 
-Criar chamadas como:
+A comunicação pode apresentar chamadas como:
 
-Você é MEI?
-Conheça uma ferramenta criada pela AEIFI para ajudar a ampliar sua presença e facilitar que novos clientes encontrem seu negócio.
+> **Você é MEI?**
+> Conheça uma ferramenta criada pela AEIFI para ajudar a ampliar sua presença e facilitar que novos clientes encontrem seu negócio.
 
-Está procurando um produto ou serviço?
-Encontre microempreendedores por meio do BuscaMEI.
+### Para consumidores
 
-Botão:
+> **Está procurando um produto ou serviço?**
+> Encontre microempreendedores por meio do BuscaMEI.
 
-Acessar o BuscaMEI →
+### Página institucional do BuscaMEI
 
-Direcionamento:
+A página interna aborda:
 
-https://www.buscamei.com.br
+* por que o BuscaMEI foi criado;
+* quais problemas busca solucionar;
+* seu objetivo;
+* como funciona;
+* quem pode participar;
+* benefícios para empreendedores;
+* benefícios para a comunidade;
+* relação do produto com a missão da AEIFI;
+* resultados alcançados;
+* formas de acesso.
 
-Também criar uma página interna:
+Após a apresentação institucional, o usuário pode acessar:
 
-www.aeifi.com.br/buscamei
+**[www.buscamei.com.br](http://www.buscamei.com.br)**
 
-Essa página deve possuir conteúdo original e completo explicando:
+CTA sugerido:
 
-por que a AEIFI criou o BuscaMEI;
+**Acessar o BuscaMEI →**
 
-objetivo do produto;
+---
 
-como funciona;
+# Impacto
 
-quem pode participar;
+A seção **Nosso impacto** apresenta os resultados da atuação da associação.
 
-benefícios para os empreendedores;
+Indicadores possíveis incluem:
 
-benefícios para a comunidade;
+* número de empreendedores apoiados;
+* quantidade de associados;
+* capacitações realizadas;
+* eventos e ações promovidos;
+* parceiros envolvidos;
+* empreendedores cadastrados no BuscaMEI.
 
-relação com a missão da AEIFI;
+Além de indicadores quantitativos, a seção pode apresentar:
 
-resultados já alcançados, quando disponíveis;
+* histórias de empreendedores;
+* depoimentos;
+* casos reais;
+* resultados de projetos;
+* registros de atividades.
 
-como acessar.
+Todos os números apresentados publicamente devem possuir origem verificável.
 
-Somente depois dessas informações apresentar o direcionamento para www.buscamei.com.br.
+Quando uma informação ainda não estiver disponível, utiliza-se temporariamente:
 
-7. Impacto da AEIFI
+`[INFORMAÇÃO A SER FORNECIDA PELA AEIFI]`
 
-Criar uma seção de destaque:
+---
 
-Nosso impacto
+# Notícias e atividades
 
-Utilizar somente dados reais e comprováveis.
+A área de notícias registra a atuação contínua da associação e mantém o site atualizado.
 
-Exemplos:
+Entre os conteúdos que podem ser publicados estão:
 
-+ [X] empreendedores apoiados
+* eventos;
+* capacitações;
+* reuniões;
+* novas parcerias;
+* ações institucionais;
+* projetos;
+* novidades do BuscaMEI;
+* oportunidades;
+* participação em eventos;
+* histórias de empreendedores;
+* resultados alcançados.
 
-[X] associados
+Sempre que possível, são priorizados conteúdos, fotografias e registros próprios da AEIFI.
 
-[X] capacitações realizadas
+---
 
-[X] eventos e ações
+# Transparência
 
-[X] parceiros
+A área de transparência centraliza informações institucionais e documentos públicos da associação.
 
-[X] empreendedores presentes no BuscaMEI
+Pode incluir:
 
-Adicionar também histórias reais, depoimentos e casos de empreendedores beneficiados pelas ações da associação.
+* razão social;
+* CNPJ;
+* estatuto;
+* composição da diretoria;
+* documentos institucionais;
+* relatórios de atividades;
+* prestação de contas, quando aplicável;
+* informações relacionadas à governança da associação.
 
-Não inventar números.
+A seção contribui diretamente para a credibilidade institucional da AEIFI.
 
-8. Notícias e atividades
+---
 
-Criar uma seção dinâmica mostrando que a AEIFI está ativa.
+# Parceiros
 
-Publicar conteúdos sobre:
+Empresas, entidades, universidades, órgãos públicos e outras organizações podem colaborar com projetos e iniciativas da associação.
 
-eventos;
+A área de parceiros apresenta:
 
-capacitações;
+* parceiros atuais;
+* modalidades de colaboração;
+* iniciativas desenvolvidas em conjunto;
+* benefícios institucionais da parceria;
+* canal para contato.
 
-reuniões;
+CTA principal:
 
-novas parcerias;
+**Seja parceiro da AEIFI**
 
-ações institucionais;
+---
 
-projetos;
+# Associe-se
 
-BuscaMEI;
+A página **Faça parte da AEIFI** centraliza as informações relacionadas ao processo de associação.
 
-oportunidades;
+O conteúdo explica:
 
-participação em eventos;
+* quem pode participar;
+* funcionamento da associação;
+* benefícios oferecidos;
+* formas de participação;
+* processo de solicitação;
+* canais de atendimento.
 
-histórias de empreendedores;
+CTA principal:
 
-resultados alcançados.
+**Quero me associar**
 
-Priorizar textos e fotos próprios da AEIFI.
+---
 
-9. Transparência
+# Rodapé
 
-Criar:
+O rodapé mantém as principais informações institucionais acessíveis em todas as páginas.
 
-Transparência
+Informações previstas:
 
-Apresentar de forma organizada:
+**AEIFI — Associação dos Empreendedores Individuais de Foz do Iguaçu**
 
-razão social;
+* razão social;
+* CNPJ;
+* endereço;
+* telefone/WhatsApp;
+* e-mail;
+* redes sociais;
+* links institucionais;
+* transparência;
+* política de privacidade;
+* contato.
 
-CNPJ;
+Também é apresentada a identificação:
 
-estatuto;
+> **BuscaMEI — um produto da AEIFI**
 
-diretoria;
+com acesso para **[www.buscamei.com.br](http://www.buscamei.com.br)**.
 
-documentos institucionais;
+---
 
-relatórios de atividades;
+# Identidade visual
 
-prestação de contas, quando aplicável;
+A interface busca transmitir uma combinação de:
 
-demais informações que demonstrem transparência e governança.
+**instituição + credibilidade + empreendedorismo + união + desenvolvimento + inovação + impacto local**
 
-10. Parceiros
+O design deve possuir caráter institucional, mas sem parecer excessivamente burocrático.
 
-Criar uma área institucional para parceiros.
+A proposta visual deve evitar características que façam o projeto parecer:
 
-Explicar que empresas, entidades, universidades, poder público e outras organizações podem colaborar com iniciativas da AEIFI.
+* uma landing page comercial;
+* um blog genérico sobre MEI;
+* uma página promocional do BuscaMEI;
+* um catálogo de links;
+* um site construído exclusivamente para publicidade.
 
-Adicionar:
+A AEIFI permanece como protagonista visual e institucional em todas as páginas.
 
-Seja parceiro da AEIFI
+---
 
-Criar um canal específico para contato de potenciais parceiros.
+# Google Ad Grants
 
-11. Associe-se
+A arquitetura de conteúdo também considera os critérios de qualidade normalmente esperados em organizações que utilizam o Google Ad Grants.
 
-Criar uma página forte:
+Entre os principais pontos considerados estão:
 
-Faça parte da AEIFI
+* missão institucional claramente apresentada;
+* conteúdo próprio e relevante;
+* descrição das atividades realizadas;
+* projetos reais;
+* demonstração de impacto;
+* informações institucionais e de transparência;
+* navegação clara;
+* HTTPS;
+* boa experiência em dispositivos móveis;
+* carregamento rápido;
+* ausência de links quebrados;
+* páginas com conteúdo suficiente;
+* atualização periódica.
 
-Explicar:
+O site institucional não possui como finalidade principal redirecionar visitantes ao BuscaMEI.
 
-quem pode participar;
+O BuscaMEI é apresentado como uma das iniciativas concretas desenvolvidas pela associação para cumprir sua missão.
 
-por que se associar;
+---
 
-benefícios;
+# SEO
 
-funcionamento da associação;
+O projeto considera uma estratégia de SEO institucional e local voltada principalmente para Foz do Iguaçu.
 
-como solicitar associação;
+Alguns dos principais termos relacionados ao conteúdo são:
 
-canais de atendimento.
+* AEIFI;
+* associação de empreendedores em Foz do Iguaçu;
+* empreendedorismo em Foz do Iguaçu;
+* MEI em Foz do Iguaçu;
+* microempreendedor individual;
+* apoio ao empreendedor;
+* capacitação para empreendedores;
+* pequenos negócios;
+* BuscaMEI.
 
-CTA:
+As palavras-chave são utilizadas de forma contextual e natural, sem repetição artificial ou criação de páginas apenas para mecanismos de busca.
 
-Quero me associar
+---
 
-12. Estrutura do menu
+# Conteúdo e dados institucionais
 
-Priorizar a instituição no menu:
+Nenhum dado sobre a AEIFI deve ser presumido ou criado apenas para preencher espaço.
 
-Início | A AEIFI | O que fazemos | Projetos e Iniciativas | BuscaMEI | Notícias | Transparência | Associe-se | Contato
+Isso inclui principalmente:
 
-O BuscaMEI pode ter destaque visual, mas a navegação e a identidade principal devem continuar sendo da AEIFI.
+* CNPJ;
+* endereço;
+* datas;
+* história;
+* nomes de dirigentes;
+* quantidade de associados;
+* número de empreendedores atendidos;
+* eventos realizados;
+* parceiros;
+* resultados;
+* projetos;
+* indicadores de impacto.
 
-13. Rodapé institucional
+Enquanto determinado dado não estiver disponível, o projeto utiliza o marcador:
 
-Exibir:
-
-AEIFI – Associação dos Empreendedores Individuais de Foz do Iguaçu
-
-Incluir:
-
-CNPJ;
-
-endereço;
-
-telefone/WhatsApp;
-
-e-mail;
-
-redes sociais;
-
-links institucionais;
-
-Transparência;
-
-Política de Privacidade;
-
-contato.
-
-Adicionar:
-
-BuscaMEI — um produto da AEIFI
-
-com acesso para www.buscamei.com.br.
-
-14. Identidade visual
-
-O design deve transmitir:
-
-instituição + credibilidade + empreendedorismo + união + desenvolvimento + inovação + impacto local
-
-Evitar que o site pareça:
-
-uma landing page comercial;
-
-um blog genérico sobre MEI;
-
-apenas uma propaganda do BuscaMEI;
-
-um catálogo de links;
-
-um site criado somente para conseguir Google Ad Grants.
-
-A AEIFI deve ser claramente a protagonista.
-
-15. Google Ad Grants
-
-Estruturar todo o projeto considerando as políticas de qualidade do Google Ad Grants.
-
-Priorizar:
-
-missão claramente identificável;
-
-conteúdo institucional original;
-
-descrição detalhada das atividades;
-
-projetos reais;
-
-impacto demonstrável;
-
-informações de transparência;
-
-navegação simples;
-
-HTTPS;
-
-excelente experiência mobile;
-
-carregamento rápido;
-
-links funcionando;
-
-páginas completas;
-
-conteúdo atualizado.
-
-O site da AEIFI não deve existir principalmente para encaminhar tráfego para o BuscaMEI.
-
-O BuscaMEI deve aparecer como evidência concreta de uma iniciativa criada pela AEIFI para cumprir sua missão institucional.
-
-16. SEO local e institucional
-
-Trabalhar de maneira natural conteúdos relacionados a:
-
-AEIFI;
-
-associação de empreendedores em Foz do Iguaçu;
-
-empreendedorismo em Foz do Iguaçu;
-
-MEI em Foz do Iguaçu;
-
-microempreendedor individual;
-
-apoio ao empreendedor;
-
-capacitação para empreendedores;
-
-pequenos negócios;
-
-BuscaMEI.
-
-Não utilizar repetição artificial de palavras-chave.
-
-17. Regra fundamental
-
-Não invente informações sobre a AEIFI.
-
-Quando faltar CNPJ, história, números, projetos, datas, nomes, parceiros, resultados ou qualquer outra informação, utilizar:
-
+```text
 [INFORMAÇÃO A SER FORNECIDA PELA AEIFI]
-
-18. Antes de criar o site
-
-Antes de desenvolver o layout final, entregue:
-
-diagnóstico da estrutura atual;
-
-novo mapa do site;
-
-wireframe textual da página inicial;
-
-estrutura de cada página;
-
-sugestão dos textos institucionais;
-
-lista das informações que precisamos fornecer;
-
-estratégia de apresentação do BuscaMEI;
-
-recomendações para Google Ad Grants;
-
-recomendações de SEO;
-
-recomendações de desempenho e experiência mobile.
-
-O resultado deve fazer com que alguém que nunca ouviu falar da associação entre em www.aeifi.com.br e, em poucos segundos, entenda quem é a AEIFI, o que ela faz, por que seu trabalho é importante e como participar.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
 ```
+
+Isso permite que a estrutura seja desenvolvida sem publicar informações institucionais incorretas.
+
+---
+
+# Critérios de experiência
+
+O projeto prioriza:
+
+* navegação simples;
+* hierarquia visual clara;
+* responsividade;
+* acessibilidade;
+* carregamento rápido;
+* conteúdo legível;
+* CTAs objetivos;
+* boa experiência mobile;
+* consistência entre páginas;
+* SEO técnico;
+* semântica HTML adequada;
+* facilidade de manutenção.
+
+A experiência ideal permite que uma pessoa que nunca ouviu falar da AEIFI compreenda, em poucos segundos:
+
+1. quem é a associação;
+2. o que ela faz;
+3. quem ela ajuda;
+4. por que sua atuação é relevante;
+5. quais iniciativas desenvolve;
+6. como participar.
+
+---
+
+# Informações pendentes
+
+Algumas áreas dependem de conteúdo oficial fornecido pela associação.
+
+Entre os principais dados a serem levantados estão:
+
+* história completa da AEIFI;
+* ano de fundação;
+* missão oficial;
+* visão;
+* valores;
+* razão social;
+* CNPJ;
+* endereço;
+* telefone;
+* WhatsApp;
+* e-mail institucional;
+* composição da diretoria;
+* estatuto;
+* documentos institucionais;
+* projetos já realizados;
+* projetos atualmente ativos;
+* quantidade de associados;
+* número de empreendedores impactados;
+* capacitações realizadas;
+* eventos promovidos;
+* parceiros;
+* resultados do BuscaMEI;
+* depoimentos;
+* casos de sucesso;
+* fotografias institucionais;
+* redes sociais oficiais.
