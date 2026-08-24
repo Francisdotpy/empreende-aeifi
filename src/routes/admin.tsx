@@ -100,7 +100,7 @@ function LoginForm() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="rounded-lg border border-input bg-background px-3 py-2 text-sm font-normal text-foreground"
+            className="rounded-lg border border-input bg-card px-3 py-2.5 text-sm font-normal text-foreground shadow-sm hover:border-primary/30 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20"
           />
         </label>
         <label className="grid gap-1.5 text-sm font-medium text-primary">
@@ -110,14 +110,14 @@ function LoginForm() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="rounded-lg border border-input bg-background px-3 py-2 text-sm font-normal text-foreground"
+            className="rounded-lg border border-input bg-card px-3 py-2.5 text-sm font-normal text-foreground shadow-sm hover:border-primary/30 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20"
           />
         </label>
         {error ? <p className="text-sm text-destructive">{error}</p> : null}
         <button
           type="submit"
           disabled={loading}
-          className="rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
+          className="rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
         >
           {loading ? "Entrando…" : "Entrar"}
         </button>
@@ -175,7 +175,7 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
         </p>
         <button
           onClick={onSignOut}
-          className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-semibold text-primary hover:bg-muted"
+          className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-semibold text-primary shadow-sm transition-colors hover:border-primary/25 hover:bg-muted"
         >
           Sair
         </button>
@@ -211,7 +211,7 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
         <button
           onClick={save}
           disabled={saving}
-          className="rounded-lg bg-secondary px-5 py-3 text-sm font-semibold text-secondary-foreground hover:opacity-90 disabled:opacity-60"
+          className="rounded-lg bg-secondary px-5 py-3 text-sm font-semibold text-secondary-foreground shadow-sm transition-all hover:bg-secondary/90 hover:shadow-md active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
         >
           {saving ? "Salvando…" : "Salvar e publicar"}
         </button>
@@ -269,7 +269,7 @@ function FieldEditor({
             const file = e.target.files?.[0];
             if (file) void handleFile(file);
           }}
-          className="rounded-lg border border-input bg-background px-3 py-2 text-sm font-normal text-foreground"
+          className="rounded-lg border border-input bg-card px-3 py-2.5 text-sm font-normal text-foreground shadow-sm hover:border-primary/30 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20"
         />
         {uploading ? <span className="text-xs text-muted-foreground">Enviando…</span> : null}
         {uploadError ? <span className="text-xs text-destructive">{uploadError}</span> : null}
@@ -297,13 +297,13 @@ function FieldEditor({
           rows={3}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="rounded-lg border border-input bg-background px-3 py-2 text-sm font-normal text-foreground"
+          className="rounded-lg border border-input bg-card px-3 py-2.5 text-sm font-normal text-foreground shadow-sm hover:border-primary/30 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20"
         />
       ) : (
         <input
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="rounded-lg border border-input bg-background px-3 py-2 text-sm font-normal text-foreground"
+          className="rounded-lg border border-input bg-card px-3 py-2.5 text-sm font-normal text-foreground shadow-sm hover:border-primary/30 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20"
         />
       )}
       {field.hint ? (
@@ -343,7 +343,7 @@ function CustomTexts({ data }: { data: Record<string, string> }) {
   return (
     <ul className="mt-4 grid gap-3">
       {items.map((item) => (
-        <li key={item.key} className="rounded-xl border border-border p-4">
+        <li key={item.key} className="rounded-xl border border-border bg-card p-4 shadow-sm">
           {item.original ? (
             <p className="text-xs text-muted-foreground line-through">{item.original}</p>
           ) : null}

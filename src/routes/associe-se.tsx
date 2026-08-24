@@ -51,7 +51,10 @@ function Page() {
       <Section tone="muted" title="Quem pode participar">
         <ul className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {org.publico.map((p) => (
-            <li key={p} className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
+            <li
+              key={p}
+              className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground shadow-sm"
+            >
               {p}
             </li>
           ))}
@@ -152,7 +155,7 @@ function AssociationForm() {
   }
 
   const inputClassName =
-    "rounded-lg border border-input bg-background px-3 py-2.5 text-sm font-normal text-foreground";
+    "rounded-lg border border-input bg-card px-3 py-2.5 text-sm font-normal text-foreground shadow-sm hover:border-primary/30 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20";
 
   return (
     <Card className="max-w-2xl">
@@ -197,7 +200,7 @@ function AssociationForm() {
         <button
           type="submit"
           disabled={status === "loading"}
-          className="mt-1 rounded-lg bg-secondary px-5 py-3 text-sm font-semibold text-secondary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+          className="mt-1 rounded-lg bg-secondary px-5 py-3 text-sm font-semibold text-secondary-foreground shadow-sm transition-all hover:bg-secondary/90 hover:shadow-md active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
         >
           {status === "loading" ? "Enviando solicitação…" : "Enviar solicitação"}
         </button>

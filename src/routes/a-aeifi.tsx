@@ -94,7 +94,10 @@ function Page() {
       <Section title="Objetivos institucionais">
         <ul className="grid gap-3 md:grid-cols-2">
           {org.objetivos.map((o) => (
-            <li key={o} className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
+            <li
+              key={o}
+              className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground shadow-sm"
+            >
               {o}
             </li>
           ))}
@@ -104,7 +107,10 @@ function Page() {
       <Section tone="muted" title="Quem atendemos">
         <ul className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {org.publico.map((p) => (
-            <li key={p} className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">
+            <li
+              key={p}
+              className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground shadow-sm"
+            >
               {p}
             </li>
           ))}

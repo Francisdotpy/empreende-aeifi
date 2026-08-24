@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
-import buscameiImg from "@/assets/buscamei.jpg";
 import { Card, CtaLink, ExternalCta, PageHero, Section, Value } from "@/components/site/ui";
 import { useSite } from "@/content/useSite";
 
@@ -37,33 +36,23 @@ function Page() {
       />
 
       <Section title="Por que a AEIFI criou o BuscaMEI">
-        <div className="grid gap-8 lg:grid-cols-2">
-          <div className="space-y-4 text-base leading-relaxed text-muted-foreground">
-            <p>
-              No atendimento diário aos empreendedores, a associação identificou um problema
-              recorrente: negócios sérios, com bom produto e bom serviço, permaneciam praticamente
-              invisíveis para o público. Sem site, sem estrutura de divulgação e sem tempo para
-              gerenciar presença digital, muitos MEIs dependiam apenas do boca a boca.
-            </p>
-            <p>
-              Ao mesmo tempo, moradores da cidade relatavam dificuldade em encontrar prestadores de
-              serviço e pequenos produtores locais. Havia oferta e havia procura — faltava um lugar
-              organizado onde as duas se encontrassem.
-            </p>
-            <p>
-              O BuscaMEI é a resposta da AEIFI a esse problema. Não é um negócio à parte: é uma
-              ferramenta institucional, mantida pela associação, dentro da sua frente de projetos e
-              inovação.
-            </p>
-          </div>
-          <img
-            src={buscameiImg}
-            width={1400}
-            height={900}
-            loading="lazy"
-            alt="Empreendedora consultando a plataforma BuscaMEI pelo celular em seu comércio"
-            className="w-full rounded-2xl object-cover shadow-card"
-          />
+        <div className="max-w-3xl space-y-4 text-base leading-relaxed text-muted-foreground">
+          <p>
+            No atendimento diário aos empreendedores, a associação identificou um problema
+            recorrente: negócios sérios, com bom produto e bom serviço, permaneciam praticamente
+            invisíveis para o público. Sem site, sem estrutura de divulgação e sem tempo para
+            gerenciar presença digital, muitos MEIs dependiam apenas do boca a boca.
+          </p>
+          <p>
+            Ao mesmo tempo, moradores da cidade relatavam dificuldade em encontrar prestadores de
+            serviço e pequenos produtores locais. Havia oferta e havia procura — faltava um lugar
+            organizado onde as duas se encontrassem.
+          </p>
+          <p>
+            O BuscaMEI é a resposta da AEIFI a esse problema. Não é um negócio à parte: é uma
+            ferramenta institucional, mantida pela associação, dentro da sua frente de projetos e
+            inovação.
+          </p>
         </div>
       </Section>
 

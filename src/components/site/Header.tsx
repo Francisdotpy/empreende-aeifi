@@ -18,7 +18,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-border bg-card/95 shadow-sm backdrop-blur">
       <div className="container-page flex h-18 items-center justify-between gap-4 py-3">
         <Link to="/" className="flex items-center" onClick={() => setOpen(false)}>
           <img
@@ -34,8 +34,8 @@ export function Header() {
               key={item.to}
               to={item.to}
               activeOptions={{ exact: item.to === "/" }}
-              activeProps={{ className: "bg-muted text-primary" }}
-              className="whitespace-nowrap rounded-md px-2.5 py-2 text-[0.82rem] font-medium text-foreground/80 transition-colors hover:bg-muted hover:text-primary"
+              activeProps={{ className: "bg-muted text-primary shadow-sm" }}
+              className="whitespace-nowrap rounded-md px-2.5 py-2 text-[0.82rem] font-medium text-foreground/80 transition-all hover:bg-muted hover:text-primary"
             >
               {item.label}
             </Link>
@@ -45,7 +45,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <Link
             to="/associe-se"
-            className="hidden rounded-md bg-secondary px-4 py-2.5 text-sm font-semibold text-secondary-foreground transition-opacity hover:opacity-90 sm:inline-flex"
+            className="hidden rounded-md bg-secondary px-4 py-2.5 text-sm font-semibold text-secondary-foreground shadow-sm transition-all hover:bg-secondary/90 hover:shadow-md active:translate-y-px sm:inline-flex"
           >
             Quero me associar
           </Link>
@@ -54,7 +54,7 @@ export function Header() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-label={open ? "Fechar menu" : "Abrir menu"}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border text-foreground xl:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-card text-foreground shadow-sm transition-colors hover:bg-muted xl:hidden"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -62,7 +62,7 @@ export function Header() {
       </div>
 
       {open && (
-        <nav className="border-t border-border bg-background xl:hidden" aria-label="Navegação principal (mobile)">
+        <nav className="border-t border-border bg-card shadow-md xl:hidden" aria-label="Navegação principal (mobile)">
           <div className="container-page grid gap-1 py-3">
             {nav.map((item) => (
               <Link
@@ -70,8 +70,8 @@ export function Header() {
                 to={item.to}
                 onClick={() => setOpen(false)}
                 activeOptions={{ exact: item.to === "/" }}
-                activeProps={{ className: "bg-muted text-primary" }}
-                className="rounded-md px-3 py-3 text-base font-medium text-foreground/85"
+                activeProps={{ className: "bg-muted text-primary shadow-sm" }}
+                className="rounded-md px-3 py-3 text-base font-medium text-foreground/85 transition-colors hover:bg-muted"
               >
                 {item.label}
               </Link>

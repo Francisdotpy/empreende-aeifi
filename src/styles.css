@@ -39,13 +39,17 @@
   --color-highlight-foreground: var(--highlight-foreground);
   --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Fraunces", "Figtree", ui-serif, Georgia, serif;
-  --shadow-card: 0 1px 2px oklch(0.303 0.093 257.4 / 0.08), 0 12px 32px -18px oklch(0.303 0.093 257.4 / 0.35);
-  --shadow-lift: 0 2px 6px oklch(0.303 0.093 257.4 / 0.1), 0 24px 48px -24px oklch(0.303 0.093 257.4 / 0.45);
+  --shadow-sm: 0 1px 2px oklch(0.303 0.093 257.4 / 0.07), 0 2px 5px oklch(0.303 0.093 257.4 / 0.04);
+  --shadow-md: 0 2px 5px oklch(0.303 0.093 257.4 / 0.07), 0 10px 24px -14px oklch(0.303 0.093 257.4 / 0.25);
+  --shadow-lg: 0 4px 10px oklch(0.303 0.093 257.4 / 0.08), 0 20px 42px -20px oklch(0.303 0.093 257.4 / 0.32);
+  --shadow-xl: 0 8px 20px oklch(0.303 0.093 257.4 / 0.11), 0 32px 70px -28px oklch(0.303 0.093 257.4 / 0.42);
+  --shadow-card: var(--shadow-md);
+  --shadow-lift: var(--shadow-lg);
 }
 
 :root {
   --radius: 0.75rem;
-  --background: oklch(1 0 0);
+  --background: oklch(0.976 0.004 264.5);
   --foreground: oklch(0.21 0.032 264.7);
 
   --card: oklch(1 0 0);
@@ -61,7 +65,7 @@
   --secondary: oklch(0.546 0.215 262.9);
   --secondary-foreground: oklch(0.985 0.005 250);
 
-  --muted: oklch(0.967 0.003 264.5);
+  --muted: oklch(0.945 0.006 264.5);
   --muted-foreground: oklch(0.551 0.023 264.4);
 
   /* Amarelo BuscaMEI (#FFC72C) */
@@ -71,7 +75,7 @@
   --highlight: oklch(0.965 0.05 92);
   --highlight-foreground: oklch(0.38 0.09 80);
 
-  --surface: oklch(0.967 0.006 264.5);
+  --surface: oklch(0.952 0.008 257.4);
   --surface-foreground: oklch(0.303 0.093 257.4);
 
   --ink: oklch(0.303 0.093 257.4);
@@ -80,8 +84,8 @@
   --destructive: oklch(0.55 0.2 27);
   --destructive-foreground: oklch(0.98 0.01 20);
 
-  --border: oklch(0.928 0.006 264.5);
-  --input: oklch(0.928 0.006 264.5);
+  --border: oklch(0.885 0.012 264.5);
+  --input: oklch(0.84 0.016 264.5);
   --ring: oklch(0.546 0.215 262.9);
 }
 
@@ -106,6 +110,26 @@
     outline: 2px solid var(--color-ring);
     outline-offset: 2px;
   }
+
+  input,
+  textarea,
+  select {
+    transition-property: border-color, box-shadow, background-color;
+    transition-duration: 150ms;
+  }
+
+  input:hover:not(:disabled),
+  textarea:hover:not(:disabled),
+  select:hover:not(:disabled) {
+    border-color: color-mix(in oklch, var(--color-primary) 34%, var(--color-input));
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: var(--color-ring);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-ring) 18%, transparent);
+  }
 }
 
 @utility container-page {
@@ -116,7 +140,7 @@
 }
 
 @utility section-y {
-  padding-block: 4rem;
+  padding-block: 4.5rem;
 }
 
 @utility text-balance-tight {

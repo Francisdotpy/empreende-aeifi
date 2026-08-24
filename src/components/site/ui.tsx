@@ -41,7 +41,10 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className={tone === "muted" ? "bg-surface" : undefined}>
+    <section
+      id={id}
+      className={tone === "muted" ? "border-y border-border/70 bg-surface" : undefined}
+    >
       <div className="container-page section-y">
         {title ? (
           <header className="max-w-2xl">
@@ -57,7 +60,11 @@ export function Section({
 
 export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <div className={`rounded-2xl border border-border bg-card p-6 shadow-card ${className}`}>{children}</div>
+    <div
+      className={`rounded-2xl border border-border/90 bg-card p-6 shadow-card transition-[box-shadow,border-color] duration-200 ${className}`}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -120,14 +127,15 @@ export function CtaLink({
   variant?: "primary" | "secondary" | "ghost";
 }) {
   const styles: Record<string, string> = {
-    primary: "bg-primary text-primary-foreground hover:opacity-90",
-    secondary: "bg-secondary text-secondary-foreground hover:opacity-90",
-    ghost: "border border-border bg-card text-primary hover:bg-muted",
+    primary: "bg-primary text-primary-foreground shadow-sm hover:bg-primary/92 hover:shadow-md",
+    secondary:
+      "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/90 hover:shadow-md",
+    ghost: "border border-border bg-card text-primary shadow-sm hover:border-primary/25 hover:bg-muted",
   };
   return (
     <Link
       to={to as never}
-      className={`inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition-opacity ${styles[variant]}`}
+      className={`inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition-all active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${styles[variant]}`}
     >
       {children}
     </Link>
@@ -140,7 +148,7 @@ export function ExternalCta({ href, children }: { href: string; children: ReactN
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground transition-opacity hover:opacity-90"
+      className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground shadow-sm transition-all hover:brightness-95 hover:shadow-md active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     >
       {children}
     </a>
@@ -149,7 +157,7 @@ export function ExternalCta({ href, children }: { href: string; children: ReactN
 
 export function DataRow({ term, value }: { term: string; value: ReactNode }) {
   return (
-    <div className="grid grid-cols-1 gap-1 border-b border-border py-3 last:border-0 sm:grid-cols-[minmax(0,9rem)_minmax(0,1fr)] sm:gap-4 md:gap-6">
+    <div className="grid grid-cols-1 gap-1 border-b border-border/80 px-2 py-3.5 transition-colors last:border-0 hover:bg-muted/45 sm:grid-cols-[minmax(0,9rem)_minmax(0,1fr)] sm:gap-4 md:gap-6">
       <dt className="text-sm font-semibold text-primary">{term}</dt>
       <dd className="min-w-0 whitespace-normal break-words text-sm text-muted-foreground">{value}</dd>
     </div>

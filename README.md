@@ -476,16 +476,6 @@ recomendações de desempenho e experiência mobile.
 
 O resultado deve fazer com que alguém que nunca ouviu falar da associação entre em www.aeifi.com.br e, em poucos segundos, entenda quem é a AEIFI, o que ela faz, por que seu trabalho é importante e como participar.
 
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/09411ae2-f1d8-4348-9031-f5649d7fdb9d).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
 ## Development
 
 Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
