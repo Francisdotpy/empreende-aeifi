@@ -17,6 +17,12 @@ dist-ssr
 .nitro
 *.local
 
+# Environment variables and local Supabase state
+.env
+.env.*
+!.env.example
+supabase/.temp/
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars

@@ -13,6 +13,7 @@ import type { EditableField, WhatsAppContact } from "@/content/useSite";
 import { uploadSiteFile } from "@/lib/uploads.functions";
 import { claimAdmin } from "@/lib/admin.functions";
 import { Card, PageHero, Section } from "@/components/site/ui";
+import { EditaisAdmin } from "@/components/admin/EditaisAdmin";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -143,8 +144,10 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
   }, [data]);
 
   useEffect(() => {
-    claimAdmin().catch(() => undefined);
-  }, []);
+    claimAdmin()
+      .then(() => queryClient.invalidateQueries({ queryKey: ["editais"] }))
+      .catch(() => undefined);
+  }, [queryClient]);
 
   const groups = useMemo(() => {
     const map = new Map<string, typeof editableFields>();
@@ -200,6 +203,8 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
         value={values[WHATSAPP_CONTACTS_KEY] ?? ""}
         onChange={(next) => setValues((current) => ({ ...current, [WHATSAPP_CONTACTS_KEY]: next }))}
       />
+
+      <EditaisAdmin />
 
       {groups.map(([group, fields]) => (
         <Card key={group}>

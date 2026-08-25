@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      downloads_editais: {
+        Row: {
+          created_at: string
+          data_publicacao: string
+          id: string
+          imagem_url: string
+          pdf_url: string
+          status: "publicado" | "rascunho"
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          data_publicacao?: string
+          id?: string
+          imagem_url: string
+          pdf_url: string
+          status?: "publicado" | "rascunho"
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          data_publicacao?: string
+          id?: string
+          imagem_url?: string
+          pdf_url?: string
+          status?: "publicado" | "rascunho"
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       admin_allowlist: {
         Row: {
           created_at: string

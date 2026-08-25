@@ -10,6 +10,7 @@ const nav = [
   { to: "/iniciativas", label: "Projetos e Iniciativas" },
   { to: "/buscamei", label: "BuscaMEI" },
   { to: "/noticias", label: "Notícias" },
+  { to: "/downloads", label: "Editais" },
   { to: "/transparencia", label: "Transparência" },
   { to: "/contato", label: "Contato" },
 ] as const;
