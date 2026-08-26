@@ -14,8 +14,7 @@ export const Route = createFileRoute("/o-que-fazemos")({
       { property: "og:title", content: "O que fazemos — áreas de atuação da AEIFI" },
       {
         property: "og:description",
-        content:
-          "As cinco frentes de trabalho da associação e como cada uma acontece na prática.",
+        content: "As cinco frentes de trabalho da associação e como cada uma acontece na prática.",
       },
       { property: "og:url", content: "/o-que-fazemos" },
     ],
@@ -29,12 +28,17 @@ function Page() {
     <>
       <PageHero
         eyebrow="Áreas de atuação"
-        title="O que a AEIFI faz pelos empreendedores de Foz do Iguaçu"
+        title="O que a AEIFI faz pelos empreendedores"
         lead="Nossa atuação é organizada em cinco frentes. Cada uma responde a uma necessidade concreta de quem toca um pequeno negócio na cidade."
       />
 
       {areas.map((area, i) => (
-        <Section key={area.slug} id={area.slug} tone={i % 2 === 1 ? "muted" : "default"} title={area.titulo}>
+        <Section
+          key={area.slug}
+          id={area.slug}
+          tone={i % 2 === 1 ? "muted" : "default"}
+          title={area.titulo}
+        >
           <div className="grid gap-8 lg:grid-cols-3">
             <div className="space-y-4 text-base leading-relaxed text-muted-foreground lg:col-span-2">
               <p className="text-lg text-foreground">{area.resumo}</p>

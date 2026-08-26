@@ -1,12 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  Handshake,
-  GraduationCap,
-  Megaphone,
-  Lightbulb,
-  Sparkles,
-  ArrowRight,
-} from "lucide-react";
+import { Handshake, GraduationCap, Megaphone, Lightbulb, Sparkles, ArrowRight } from "lucide-react";
 import heroImg from "@/assets/hero-aeifi.jpg";
 import { areas, impacto, iniciativas, noticias, org, depoimentos, TBD } from "@/content/site";
 import { Card, CtaLink, Section, Value } from "@/components/site/ui";
@@ -44,7 +37,7 @@ function Home() {
         <div className="container-page grid items-center gap-10 py-14 md:py-20 lg:grid-cols-2">
           <div>
             <p className="inline-flex rounded-full bg-highlight px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-highlight-foreground">
-              Associação de Foz do Iguaçu
+              Associação de Empreendedores
             </p>
             <h1 className="mt-5 font-display text-4xl font-semibold text-primary text-balance-tight md:text-5xl lg:text-[3.4rem] lg:leading-[1.05]">
               Fortalecemos quem empreende. Desenvolvemos nossa comunidade.
@@ -60,14 +53,6 @@ function Home() {
               </CtaLink>
             </div>
           </div>
-          <img
-            src={heroImg}
-            width={1600}
-            height={1008}
-            alt="Microempreendedores de Foz do Iguaçu reunidos em um encontro da AEIFI"
-            className="aspect-[16/10] w-full rounded-3xl object-cover shadow-lift"
-          />
-
         </div>
       </section>
 
@@ -92,7 +77,9 @@ function Home() {
                 <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-muted text-secondary">
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </span>
-                <h3 className="mt-4 font-display text-xl font-semibold text-primary">{area.titulo}</h3>
+                <h3 className="mt-4 font-display text-xl font-semibold text-primary">
+                  {area.titulo}
+                </h3>
                 <p className="mt-2 text-sm text-muted-foreground">{area.resumo}</p>
               </Card>
             );
@@ -116,8 +103,8 @@ function Home() {
           <p className="text-xl leading-relaxed text-foreground lg:col-span-2">{org.missao}</p>
           <div>
             <p className="text-sm text-muted-foreground">
-              A AEIFI é uma associação sem fins lucrativos sediada em Foz do Iguaçu, constituída para
-              representar e desenvolver a base empreendedora da cidade.
+              A AEIFI é uma associação sem fins lucrativos sediada em Foz do Iguaçu, constituída
+              para representar e desenvolver a base empreendedora da cidade.
             </p>
             <div className="mt-5">
               <CtaLink to="/a-aeifi" variant="ghost">
@@ -138,7 +125,9 @@ function Home() {
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-secondary">
                 {ini.etiqueta}
               </p>
-              <h3 className="mt-2 font-display text-2xl font-semibold text-primary">{ini.titulo}</h3>
+              <h3 className="mt-2 font-display text-2xl font-semibold text-primary">
+                {ini.titulo}
+              </h3>
               <p className="mt-3 text-sm text-muted-foreground">{ini.resumo}</p>
               <Link
                 to={ini.slug === "buscamei" ? "/buscamei" : "/iniciativas"}
@@ -151,7 +140,11 @@ function Home() {
         </div>
       </Section>
 
-      <Section tone="muted" title="Nosso impacto" lead="Resultados da atuação da associação em Foz do Iguaçu.">
+      <Section
+        tone="muted"
+        title="Nosso impacto"
+        lead="Resultados da atuação da associação em Foz do Iguaçu."
+      >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {impacto.map((item) => (
             <Card key={item.rotulo}>
@@ -207,7 +200,11 @@ function Home() {
         </div>
       </Section>
 
-      <Section tone="muted" title="Parceiros" lead="A AEIFI constrói suas ações com empresas, entidades, universidades e poder público.">
+      <Section
+        tone="muted"
+        title="Parceiros"
+        lead="A AEIFI constrói suas ações com empresas, entidades, universidades e poder público."
+      >
         <div className="flex flex-wrap items-center gap-4">
           <Value
             value={get("parceiros.lista")}
@@ -223,8 +220,7 @@ function Home() {
         <div className="container-page section-y text-center">
           <h2 className="font-display text-3xl font-semibold md:text-4xl">Faça parte da AEIFI</h2>
           <p className="mx-auto mt-4 max-w-2xl text-ink-foreground/85">
-            Associe-se e participe de uma rede que representa, capacita e conecta quem empreende em
-            Foz do Iguaçu.
+            Associe-se e participe de uma rede que representa, capacita e conecta quem empreende.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <CtaLink to="/associe-se" variant="secondary">

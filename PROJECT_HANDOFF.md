@@ -1,6 +1,6 @@
 # Continuidade do projeto AEIFI
 
-Atualizado em: 24 de agosto de 2026.
+Atualizado em: 25 de agosto de 2026.
 
 Este documento registra o estado técnico do projeto e as decisões tomadas nas últimas alterações. Leia este arquivo antes de modificar a aplicação.
 
@@ -18,7 +18,7 @@ Este documento registra o estado técnico do projeto e as decisões tomadas nas 
 ### Header e imagens institucionais
 
 - O header exibe somente a logo, sem os textos “AEIFI” ou o nome completo ao lado dela.
-- A logo usada pelo header é `src/assets/logo-header.jpeg`.
+- A logo usada pelo header é `src/assets/logo-header.png`.
 - A mesma imagem é usada como favicon em `src/routes/__root.tsx`.
 - A imagem principal da home é `src/assets/hero-aeifi.jpg`.
 - A página `/buscamei` não possui imagem estática.
@@ -142,6 +142,57 @@ Nunca registre valores dessas variáveis neste arquivo ou no repositório.
 - Uma busca no working tree não encontrou referências restantes.
 - Nomes de autores em commits antigos são metadados do Git. Removê-los exigiria reescrever o histórico publicado, o que não deve ser feito neste projeto.
 
+## Editais de credenciamento
+
+- A rota pública `/downloads` exibe somente editais publicados, ordenados da data mais recente para a mais antiga.
+- A composição usa cards institucionais responsivos: imagem, título, data de publicação e botão para abrir o PDF.
+- O estado sem publicações informa que não há editais disponíveis.
+- O header e o sitemap passaram a incluir a página de Editais.
+- O painel `/admin` possui a seção “Downloads / Editais” com cadastro, edição, exclusão, publicação/rascunho, preview de imagem e visualização do PDF.
+- Na edição, imagem e PDF existentes são preservados quando nenhum arquivo novo é enviado.
+- Uploads de imagens aceitam JPG, JPEG, PNG e WEBP até 5 MB; PDFs aceitam somente PDF até 10 MB.
+- A validação ocorre também no servidor e confere extensão, MIME e assinatura binária.
+- Os arquivos usam o bucket privado existente `arquivos`, nos prefixos `editais/images/` e `editais/pdfs/`.
+- A existência do bucket `arquivos` deve ser confirmada em cada novo projeto Supabase; as migrations atuais aplicam políticas, mas não criam o bucket.
+
+Banco de dados:
+
+- Tabela: `downloads_editais`.
+- Migration: `supabase/migrations/20260825120000_create_downloads_editais.sql`.
+- Campos: `id`, `titulo`, `imagem_url`, `pdf_url`, `data_publicacao`, `status`, `created_at` e `updated_at`.
+- Status válidos: `publicado` e `rascunho`.
+- RLS permite leitura pública somente de registros publicados e restringe todo o gerenciamento a administradores.
+- Em 25/08/2026, `supabase migration list` confirmou que todas as migrations locais, inclusive a de editais, estavam aplicadas no projeto remoto vinculado.
+
+Arquivos principais desse fluxo:
+
+- `src/routes/downloads.tsx`
+- `src/components/admin/EditaisAdmin.tsx`
+- `src/lib/editais.ts`
+- `src/lib/uploads.functions.ts`
+- `src/routes/admin.tsx`
+- `src/integrations/supabase/types.ts`
+
+## Migração e configuração do Supabase
+
+- O projeto foi trocado para um novo Supabase. A referência vigente deve ser consultada em `supabase/config.toml`; não copie IDs ou chaves para este documento.
+- Uma auditoria no working tree em 25/08/2026 não encontrou referências ao projeto Supabase anterior.
+- `.env`, `.env.*` e `supabase/.temp/` estão ignorados pelo Git; `.env.example` permanece permitido.
+- A publishable key pode ser usada pelo cliente, mas a secret key deve existir somente como `SUPABASE_SERVICE_ROLE_KEY`, sem prefixo `VITE_`.
+- Para desenvolvimento local, mantenha a secret key em `.env` ou `.env.local`, ambos não versionados.
+- O upload administrativo depende de `SUPABASE_SERVICE_ROLE_KEY`: sem ela, `claimAdmin()` não consegue atribuir o papel e o painel termina exibindo “Sem permissão para enviar arquivos”.
+- O usuário autorizado inicialmente é `aeififoz@gmail.com`, cadastrado em `admin_allowlist` pela migration base. Depois de configurar a secret key, saia e entre novamente no `/admin` para que `user_roles` receba o papel `admin`.
+- O servidor local que estava na porta `8080` foi encerrado ao final da auditoria de 25/08/2026.
+
+## Incidente de chave no Git
+
+- Uma secret key do Supabase foi adicionada por engano à `.env` no commit local `6df74b6`.
+- O GitHub Push Protection bloqueou o envio; esse commit nunca foi publicado.
+- O commit local foi recriado sem `.env` e sem `supabase/.temp/`, resultando no commit sanitizado `9a3c3e6`.
+- O push de `main` para `origin/main` foi concluído com sucesso após a sanitização.
+- A chave que apareceu no commit bloqueado deve ser considerada exposta, revogada no Supabase e substituída localmente e nos ambientes de deploy.
+- Nunca use o link de desbloqueio do GitHub para permitir o envio de uma chave real.
+
 ## Validação já realizada
 
 As últimas alterações foram verificadas com:
@@ -174,3 +225,6 @@ Avisos conhecidos que não impediram o build:
 5. Não versione `.vercel/output`, `.output`, `.wrangler` ou outros artefatos de build.
 6. Preserve os fluxos dinâmicos do painel; não reintroduza contatos de WhatsApp ou dados do footer fixos no frontend.
 7. Rode TypeScript e build antes de finalizar mudanças.
+8. Nunca volte a versionar `.env`, `.env.local` ou `supabase/.temp/`.
+9. Ao trocar de projeto Supabase, reinicie o Vite e limpe a sessão de Auth do projeto anterior no navegador.
+10. Antes de diagnosticar permissões de upload, confirme: secret key no servidor, usuário na `admin_allowlist`, papel em `user_roles` e bucket `arquivos` existente.

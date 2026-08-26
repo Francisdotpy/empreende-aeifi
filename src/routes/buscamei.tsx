@@ -66,7 +66,9 @@ function Page() {
             </p>
           </Card>
           <Card>
-            <h3 className="font-display text-lg font-semibold text-primary">Facilitar o encontro</h3>
+            <h3 className="font-display text-lg font-semibold text-primary">
+              Facilitar o encontro
+            </h3>
             <p className="mt-2 text-sm text-muted-foreground">
               Permitir que consumidores localizem produtos e serviços por tipo de atividade e entrem
               em contato diretamente.
@@ -91,7 +93,9 @@ function Page() {
             "O contato é feito diretamente entre o consumidor e o empreendedor, sem intermediação.",
           ].map((step, i) => (
             <li key={step} className="rounded-2xl border border-border bg-card p-5 shadow-card">
-              <span className="font-display text-sm font-semibold text-secondary">Passo {i + 1}</span>
+              <span className="font-display text-sm font-semibold text-secondary">
+                Passo {i + 1}
+              </span>
               <p className="mt-2 text-sm text-muted-foreground">{step}</p>
             </li>
           ))}
@@ -102,9 +106,9 @@ function Page() {
         <div className="grid gap-8 lg:grid-cols-2">
           <div>
             <p className="text-base text-muted-foreground">
-              O BuscaMEI foi pensado para microempreendedores individuais e pequenos negócios que
-              atuam em Foz do Iguaçu e região, de qualquer setor: alimentação, serviços, reformas,
-              beleza, artesanato, tecnologia, comércio e muitos outros.
+              O BuscaMEI foi pensado para microempreendedores individuais e pequenos negócios de
+              qualquer setor: alimentação, serviços, reformas, beleza, artesanato, tecnologia,
+              comércio e muitos outros.
             </p>
             <p className="mt-4 text-base text-muted-foreground">
               Regras específicas de participação, documentos exigidos e eventuais condições:{" "}
@@ -134,9 +138,13 @@ function Page() {
       <Section title="Benefícios">
         <div className="grid gap-5 md:grid-cols-2">
           <Card>
-            <h3 className="font-display text-xl font-semibold text-primary">Para os empreendedores</h3>
+            <h3 className="font-display text-xl font-semibold text-primary">
+              Para os empreendedores
+            </h3>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li>Um espaço digital organizado para apresentar o negócio, sem precisar criar um site.</li>
+              <li>
+                Um espaço digital organizado para apresentar o negócio, sem precisar criar um site.
+              </li>
               <li>Mais chances de ser encontrado por quem procura aquele produto ou serviço.</li>
               <li>Contato direto com o interessado, sem intermediários.</li>
               <li>Participação em uma iniciativa mantida por uma associação da própria cidade.</li>
@@ -145,7 +153,10 @@ function Page() {
           <Card>
             <h3 className="font-display text-xl font-semibold text-primary">Para a comunidade</h3>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li>Facilidade para localizar produtos e serviços oferecidos por pequenos negócios locais.</li>
+              <li>
+                Facilidade para localizar produtos e serviços oferecidos por pequenos negócios
+                locais.
+              </li>
               <li>Acesso a uma variedade de empreendedores que antes eram pouco visíveis.</li>
               <li>Estímulo ao consumo local e à circulação de renda dentro de Foz do Iguaçu.</li>
               <li>Aproximação entre moradores e a base empreendedora da cidade.</li>
@@ -159,9 +170,9 @@ function Page() {
           A missão da AEIFI é apoiar, representar e conectar quem empreende em Foz do Iguaçu. O
           BuscaMEI cumpre diretamente a parte de <strong>conexão</strong> e{" "}
           <strong>oportunidade</strong> dessa missão: é a tradução prática de uma associação que não
-          se limita a discursos, mas desenvolve ferramentas para resolver dificuldades reais dos seus
-          associados. Ele integra a frente de projetos e inovação e convive com as demais ações —
-          representatividade, capacitação e articulação de parcerias.
+          se limita a discursos, mas desenvolve ferramentas para resolver dificuldades reais dos
+          seus associados. Ele integra a frente de projetos e inovação e convive com as demais ações
+          — representatividade, capacitação e articulação de parcerias.
         </p>
       </Section>
 

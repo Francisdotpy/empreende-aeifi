@@ -58,27 +58,73 @@ export function Footer() {
         <nav aria-label="Links institucionais">
           <p className="text-sm font-semibold uppercase tracking-wide text-accent">Institucional</p>
           <ul className="mt-4 space-y-2 text-sm text-ink-foreground/85">
-            <li><Link to="/a-aeifi" className="hover:text-accent">A AEIFI</Link></li>
-            <li><Link to="/o-que-fazemos" className="hover:text-accent">O que fazemos</Link></li>
-            <li><Link to="/iniciativas" className="hover:text-accent">Projetos e iniciativas</Link></li>
-            <li><Link to="/noticias" className="hover:text-accent">Notícias</Link></li>
-            <li><Link to="/transparencia" className="hover:text-accent">Transparência</Link></li>
-            <li><Link to="/parceiros" className="hover:text-accent">Parceiros</Link></li>
-            <li><Link to="/associe-se" className="hover:text-accent">Quero me associar</Link></li>
-            <li><Link to="/contato" className="hover:text-accent">Contato</Link></li>
-            <li><Link to="/politica-de-privacidade" className="hover:text-accent">Política de Privacidade</Link></li>
+            <li>
+              <Link to="/a-aeifi" className="hover:text-accent">
+                A AEIFI
+              </Link>
+            </li>
+            <li>
+              <Link to="/o-que-fazemos" className="hover:text-accent">
+                O que fazemos
+              </Link>
+            </li>
+            <li>
+              <Link to="/iniciativas" className="hover:text-accent">
+                Projetos e iniciativas
+              </Link>
+            </li>
+            <li>
+              <Link to="/noticias" className="hover:text-accent">
+                Notícias
+              </Link>
+            </li>
+            <li>
+              <Link to="/transparencia" className="hover:text-accent">
+                Transparência
+              </Link>
+            </li>
+            <li>
+              <Link to="/parceiros" className="hover:text-accent">
+                Parceiros
+              </Link>
+            </li>
+            <li>
+              <Link to="/associe-se" className="hover:text-accent">
+                Quero me associar
+              </Link>
+            </li>
+            <li>
+              <Link to="/contato" className="hover:text-accent">
+                Contato
+              </Link>
+            </li>
+            <li>
+              <Link to="/politica-de-privacidade" className="hover:text-accent">
+                Política de Privacidade
+              </Link>
+            </li>
+            <li>
+              <Link to="/downloads" className="hover:text-accent">
+                Editais
+              </Link>
+            </li>
           </ul>
         </nav>
 
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-accent">Nossas iniciativas</p>
+          <p className="text-sm font-semibold uppercase tracking-wide text-accent">
+            Nossas iniciativas
+          </p>
           <div className="mt-4 rounded-xl border border-ink-foreground/15 p-4">
             <p className="font-display text-lg font-semibold">BuscaMEI</p>
             <p className="text-xs uppercase tracking-wide text-accent">Um produto da AEIFI</p>
             <p className="mt-2 text-sm text-ink-foreground/80">
               Plataforma criada pela associação para ampliar a visibilidade dos microempreendedores.
             </p>
-            <Link to="/buscamei" className="mt-3 inline-block text-sm font-semibold text-accent hover:underline">
+            <Link
+              to="/buscamei"
+              className="mt-3 inline-block text-sm font-semibold text-accent hover:underline"
+            >
               Conheça o BuscaMEI
             </Link>
             <a
@@ -95,7 +141,10 @@ export function Footer() {
 
       <div className="border-t border-ink-foreground/15">
         <div className="container-page flex flex-col gap-1 py-6 text-xs text-ink-foreground/70 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} AEIFI – Associação dos Empreendedores Individuais de Foz do Iguaçu.</p>
+          <p>
+            © {new Date().getFullYear()} AEIFI – Associação dos Empreendedores Individuais de Foz do
+            Iguaçu.
+          </p>
           <p>Foz do Iguaçu, Paraná — Brasil</p>
         </div>
       </div>

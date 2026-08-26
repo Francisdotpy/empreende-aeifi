@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import logoHeader from "@/assets/logo-header.jpeg";
+import logoHeader from "@/assets/logo-header.png";
 
 const nav = [
   { to: "/", label: "Início" },
@@ -25,7 +25,7 @@ export function Header() {
           <img
             src={logoHeader}
             alt="Logotipo da AEIFI"
-            className="h-11 w-11 rounded-xl object-contain"
+            className="w-32 max-w-none rounded-xl object-contain"
           />
         </Link>
 
@@ -63,7 +63,10 @@ export function Header() {
       </div>
 
       {open && (
-        <nav className="border-t border-border bg-card shadow-md xl:hidden" aria-label="Navegação principal (mobile)">
+        <nav
+          className="border-t border-border bg-card shadow-md xl:hidden"
+          aria-label="Navegação principal (mobile)"
+        >
           <div className="container-page grid gap-1 py-3">
             {nav.map((item) => (
               <Link

@@ -14,7 +14,8 @@ export const Route = createFileRoute("/noticias/")({
       { property: "og:title", content: "Notícias e atividades da AEIFI" },
       {
         property: "og:description",
-        content: "Acompanhe o trabalho da associação: capacitações, encontros, parcerias e projetos.",
+        content:
+          "Acompanhe o trabalho da associação: capacitações, encontros, parcerias e projetos.",
       },
       { property: "og:url", content: "/noticias" },
     ],
@@ -30,7 +31,7 @@ function Page() {
       <PageHero
         eyebrow="Notícias"
         title="O que a AEIFI tem realizado"
-        lead="Registro das atividades, projetos, parcerias e conquistas da associação junto aos microempreendedores de Foz do Iguaçu."
+        lead="Registro das atividades, projetos, parcerias e conquistas da associação junto aos microempreendedores."
       />
 
       <Section>
@@ -64,8 +65,8 @@ function Page() {
           ))}
         </div>
         <p className="mt-8 text-sm text-muted-foreground">
-          Novas publicações são acrescentadas conforme as atividades da associação acontecem. Textos e
-          fotos são de produção própria da AEIFI.
+          Novas publicações são acrescentadas conforme as atividades da associação acontecem. Textos
+          e fotos são de produção própria da AEIFI.
         </p>
       </Section>
     </>

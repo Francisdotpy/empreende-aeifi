@@ -2,7 +2,7 @@ export const TBD = "[INFORMAÇÃO A SER FORNECIDA PELA AEIFI]";
 
 export const org = {
   sigla: "AEIFI",
-  nome: "Associação dos Empreendedores Individuais de Foz do Iguaçu",
+  nome: "Associação dos Empreendedores Individuais",
   razaoSocial: TBD,
   cnpj: TBD,
   fundacao: TBD,
@@ -17,9 +17,9 @@ export const org = {
     { nome: "Facebook", url: TBD },
   ],
   missao:
-    "Apoiar, representar e conectar microempreendedores individuais e pequenos negócios de Foz do Iguaçu, criando oportunidades reais de desenvolvimento para quem empreende na cidade.",
+    "Apoiar, representar e conectar microempreendedores individuais e pequenos negócios, criando oportunidades reais de desenvolvimento para quem empreende na cidade.",
   visao:
-    "Ser a referência associativa do microempreendedorismo em Foz do Iguaçu, reconhecida pela seriedade, pela capacidade de articulação e pelo impacto concreto na vida de quem empreende.",
+    "Ser a referência associativa do microempreendedorismo, reconhecida pela seriedade, pela capacidade de articulação e pelo impacto concreto na vida de quem empreende.",
   valores: [
     {
       titulo: "Coletividade",
@@ -76,8 +76,7 @@ export const areas: Area[] = [
   {
     slug: "representatividade",
     titulo: "Representatividade",
-    resumo:
-      "Fortalecimento e representação dos interesses dos empreendedores de Foz do Iguaçu.",
+    resumo: "Fortalecimento e representação dos interesses dos empreendedores.",
     descricao:
       "A AEIFI existe para que o microempreendedor individual não precise falar sozinho. Reunimos demandas comuns, organizamos a pauta do segmento e levamos essa voz a espaços de decisão, entidades e instituições que influenciam o dia a dia de quem empreende na cidade.",
     praticas: [
@@ -90,8 +89,7 @@ export const areas: Area[] = [
   {
     slug: "capacitacao",
     titulo: "Capacitação",
-    resumo:
-      "Cursos, palestras, oficinas e iniciativas para o desenvolvimento dos empreendedores.",
+    resumo: "Cursos, palestras, oficinas e iniciativas para o desenvolvimento dos empreendedores.",
     descricao:
       "Conhecimento aplicado é o que separa uma ideia de um negócio que se sustenta. A AEIFI promove e viabiliza ações formativas voltadas à realidade do microempreendedor: gestão simples, formalização, atendimento, precificação, presença digital e organização financeira.",
     praticas: [
@@ -104,8 +102,7 @@ export const areas: Area[] = [
   {
     slug: "conexoes",
     titulo: "Conexões",
-    resumo:
-      "Aproximação entre empreendedores, consumidores, empresas, instituições e parceiros.",
+    resumo: "Aproximação entre empreendedores, consumidores, empresas, instituições e parceiros.",
     descricao:
       "Boa parte das oportunidades nasce de um encontro. A associação cria pontes: entre empreendedores que podem comprar e vender entre si, entre pequenos negócios e consumidores da cidade, e entre a base empreendedora e instituições capazes de apoiá-la.",
     praticas: [
@@ -118,8 +115,7 @@ export const areas: Area[] = [
   {
     slug: "oportunidades",
     titulo: "Oportunidades",
-    resumo:
-      "Criação e divulgação de oportunidades para o fortalecimento dos pequenos negócios.",
+    resumo: "Criação e divulgação de oportunidades para o fortalecimento dos pequenos negócios.",
     descricao:
       "Identificamos, organizamos e divulgamos oportunidades que muitas vezes não chegam ao microempreendedor: editais, feiras, ações de divulgação, chamadas de parceiros e espaços de comercialização.",
     praticas: [
@@ -132,8 +128,7 @@ export const areas: Area[] = [
   {
     slug: "projetos-e-inovacao",
     titulo: "Projetos e inovação",
-    resumo:
-      "Desenvolvimento de soluções que contribuam para o crescimento dos empreendedores.",
+    resumo: "Desenvolvimento de soluções que contribuam para o crescimento dos empreendedores.",
     descricao:
       "A AEIFI desenvolve projetos e ferramentas próprias quando identifica um problema concreto que o mercado não resolve. É desse trabalho que nasceu o BuscaMEI, plataforma criada pela associação para ampliar a visibilidade dos microempreendedores da cidade.",
     praticas: [
@@ -170,7 +165,7 @@ export const iniciativas: Iniciativa[] = [
     problema:
       "Muitos microempreendedores prestam serviços de qualidade, mas são pouco encontrados por quem procura. A ausência de presença digital organizada limita o alcance do negócio.",
     objetivo:
-      "Ampliar a visibilidade dos microempreendedores de Foz do Iguaçu e facilitar que consumidores encontrem produtos e serviços locais.",
+      "Ampliar a visibilidade dos microempreendedores e facilitar que consumidores encontrem produtos e serviços locais.",
     publico:
       "Microempreendedores individuais e pequenos negócios; e a comunidade que procura produtos e serviços na cidade.",
     funcionamento: [
@@ -210,8 +205,7 @@ export const iniciativas: Iniciativa[] = [
     etiqueta: "Rede",
     resumo:
       "Reuniões periódicas para troca de experiências, apresentação de oportunidades e construção coletiva da pauta da associação.",
-    problema:
-      "Empreender sozinho gera isolamento e reduz o acesso a informação e oportunidades.",
+    problema: "Empreender sozinho gera isolamento e reduz o acesso a informação e oportunidades.",
     objetivo:
       "Manter uma rede ativa de empreendedores que se conhecem, se indicam e decidem juntos os rumos da associação.",
     publico: "Associados da AEIFI e empreendedores interessados em participar.",
@@ -278,7 +272,7 @@ export const noticias: Noticia[] = [
     resumo:
       "A associação apresentou aos associados a plataforma desenvolvida para ampliar a visibilidade dos microempreendedores da cidade.",
     corpo: [
-      "A AEIFI apresentou aos seus associados o BuscaMEI, plataforma desenvolvida pela própria associação para ampliar a visibilidade dos microempreendedores de Foz do Iguaçu e facilitar a conexão entre quem oferece e quem procura produtos e serviços.",
+      "A AEIFI apresentou aos seus associados o BuscaMEI, plataforma desenvolvida pela própria associação para ampliar a visibilidade dos microempreendedores e facilitar a conexão entre quem oferece e quem procura produtos e serviços.",
       "Durante o encontro foram explicados o funcionamento do cadastro, as informações que ficam visíveis para quem faz a busca e a forma como a ferramenta se articula com as demais ações da associação.",
       `Detalhes da atividade, data, local e número de participantes: ${TBD}.`,
     ],
@@ -318,14 +312,38 @@ export const diretoria = [
   { id: "conselho-fiscal", cargo: "Conselho fiscal", nome: TBD },
 ];
 
-
 export const documentos = [
-  { nome: "Estatuto Social", descricao: "Documento que define a finalidade, a estrutura e as regras de funcionamento da associação.", situacao: TBD },
-  { nome: "Ata de fundação", descricao: "Registro da constituição formal da AEIFI.", situacao: TBD },
-  { nome: "Ata de eleição da diretoria vigente", descricao: "Registro da composição atual da diretoria e do conselho fiscal.", situacao: TBD },
-  { nome: "Cartão CNPJ", descricao: "Comprovante de inscrição e situação cadastral da associação.", situacao: TBD },
-  { nome: "Relatório anual de atividades", descricao: "Resumo das ações, projetos e resultados do período.", situacao: TBD },
-  { nome: "Prestação de contas", descricao: "Demonstração das receitas e despesas do exercício, quando aplicável.", situacao: TBD },
+  {
+    nome: "Estatuto Social",
+    descricao:
+      "Documento que define a finalidade, a estrutura e as regras de funcionamento da associação.",
+    situacao: TBD,
+  },
+  {
+    nome: "Ata de fundação",
+    descricao: "Registro da constituição formal da AEIFI.",
+    situacao: TBD,
+  },
+  {
+    nome: "Ata de eleição da diretoria vigente",
+    descricao: "Registro da composição atual da diretoria e do conselho fiscal.",
+    situacao: TBD,
+  },
+  {
+    nome: "Cartão CNPJ",
+    descricao: "Comprovante de inscrição e situação cadastral da associação.",
+    situacao: TBD,
+  },
+  {
+    nome: "Relatório anual de atividades",
+    descricao: "Resumo das ações, projetos e resultados do período.",
+    situacao: TBD,
+  },
+  {
+    nome: "Prestação de contas",
+    descricao: "Demonstração das receitas e despesas do exercício, quando aplicável.",
+    situacao: TBD,
+  },
 ];
 
 export const beneficiosAssociado = [
@@ -339,8 +357,22 @@ export const beneficiosAssociado = [
 ];
 
 export const formatosParceria = [
-  { titulo: "Apoio a capacitações", texto: "Ceder instrutores, conteúdo, espaço ou estrutura para oficinas, cursos e palestras." },
-  { titulo: "Projetos conjuntos", texto: "Desenvolver com a AEIFI projetos voltados ao fortalecimento do pequeno negócio local." },
-  { titulo: "Oportunidades para associados", texto: "Oferecer condições, serviços, espaços de comercialização ou vagas de compra a empreendedores associados." },
-  { titulo: "Apoio institucional", texto: "Somar-se às ações da associação com apoio técnico, articulação ou patrocínio de iniciativas." },
+  {
+    titulo: "Apoio a capacitações",
+    texto: "Ceder instrutores, conteúdo, espaço ou estrutura para oficinas, cursos e palestras.",
+  },
+  {
+    titulo: "Projetos conjuntos",
+    texto: "Desenvolver com a AEIFI projetos voltados ao fortalecimento do pequeno negócio local.",
+  },
+  {
+    titulo: "Oportunidades para associados",
+    texto:
+      "Oferecer condições, serviços, espaços de comercialização ou vagas de compra a empreendedores associados.",
+  },
+  {
+    titulo: "Apoio institucional",
+    texto:
+      "Somar-se às ações da associação com apoio técnico, articulação ou patrocínio de iniciativas.",
+  },
 ];

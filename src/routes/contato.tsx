@@ -31,7 +31,7 @@ function Page() {
       <PageHero
         eyebrow="Contato"
         title="Fale com a AEIFI"
-        lead="Estamos à disposição de empreendedores, associados, parceiros, imprensa e de toda a comunidade de Foz do Iguaçu."
+        lead="Estamos à disposição de empreendedores, associados, parceiros, imprensa e de toda a comunidade."
       />
 
       <Section>
@@ -65,7 +65,9 @@ function Page() {
               </div>
             </Card>
             <Card>
-              <h2 className="font-display text-xl font-semibold text-primary">Propostas de parceria</h2>
+              <h2 className="font-display text-xl font-semibold text-primary">
+                Propostas de parceria
+              </h2>
               <p className="mt-2 text-sm text-muted-foreground">
                 Empresas, entidades, universidades e órgãos públicos podem apresentar propostas de
                 colaboração com as iniciativas da AEIFI.
@@ -77,7 +79,9 @@ function Page() {
               </div>
             </Card>
             <Card>
-              <h2 className="font-display text-xl font-semibold text-primary">Dúvidas sobre o BuscaMEI</h2>
+              <h2 className="font-display text-xl font-semibold text-primary">
+                Dúvidas sobre o BuscaMEI
+              </h2>
               <p className="mt-2 text-sm text-muted-foreground">
                 O BuscaMEI é um produto da AEIFI. Orientações sobre cadastro e uso da plataforma
                 também são prestadas pelos canais da associação.

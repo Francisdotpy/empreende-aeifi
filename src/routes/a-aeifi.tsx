@@ -31,18 +31,18 @@ function Page() {
     <>
       <PageHero
         eyebrow="Quem somos"
-        title="Uma associação construída por quem empreende em Foz do Iguaçu"
-        lead="A AEIFI reúne microempreendedores individuais e pequenos negócios da cidade em torno de um objetivo comum: ter representação, formação e oportunidades de crescimento."
+        title="Uma associação construída por quem empreende"
+        lead="A AEIFI reúne microempreendedores individuais e pequenos negócios em torno de um objetivo comum: ter representação, formação e oportunidades de crescimento."
       />
 
       <Section title="Nossa história">
         <div className="grid gap-8 lg:grid-cols-3">
           <div className="space-y-4 text-base leading-relaxed text-muted-foreground lg:col-span-2">
             <p>
-              A AEIFI nasceu da percepção de que o microempreendedor individual, apesar de representar
-              parcela expressiva da economia de Foz do Iguaçu, atuava de forma isolada: sem canal de
-              representação, com pouco acesso a formação e com dificuldade de ser encontrado por
-              clientes.
+              A AEIFI nasceu da percepção de que o microempreendedor individual, apesar de
+              representar parcela expressiva da economia de Foz do Iguaçu, atuava de forma isolada:
+              sem canal de representação, com pouco acesso a formação e com dificuldade de ser
+              encontrado por clientes.
             </p>
             <p>
               A associação foi constituída formalmente como entidade sem fins lucrativos para
@@ -51,7 +51,8 @@ function Page() {
               articulação de parcerias e desenvolvimento de projetos próprios.
             </p>
             <p>
-              Data de fundação, marcos da trajetória e principais conquistas: <Value value={get("org.historia")} />
+              Data de fundação, marcos da trajetória e principais conquistas:{" "}
+              <Value value={get("org.historia")} />
             </p>
           </div>
           <Card className="h-fit overflow-hidden p-5 md:p-6">
@@ -117,11 +118,16 @@ function Page() {
         </ul>
       </Section>
 
-      <Section title="Diretoria" lead="A AEIFI é dirigida por associados eleitos em assembleia, conforme o Estatuto Social.">
+      <Section
+        title="Diretoria"
+        lead="A AEIFI é dirigida por associados eleitos em assembleia, conforme o Estatuto Social."
+      >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {diretoria.map((d) => (
             <Card key={d.cargo}>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-secondary">{d.cargo}</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-secondary">
+                {d.cargo}
+              </p>
               <p className="mt-2">
                 <Value value={d.nome} label="[NOME A SER FORNECIDO PELA AEIFI]" />
               </p>
