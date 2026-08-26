@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "A AEIFI apoia, capacita, representa e conecta microempreendedores individuais e pequenos negócios de Foz do Iguaçu. Conheça a associação e associe-se.",
+          "A AEIFI apoia, capacita, representa e conecta microempreendedores individuais. Conheça a associação e associe-se.",
       },
       { property: "og:title", content: "AEIFI — Associação de Empreendedores de Foz do Iguaçu" },
       {
@@ -44,7 +44,7 @@ function Home() {
             </h1>
             <p className="mt-6 max-w-xl text-lg text-muted-foreground">
               A AEIFI trabalha para apoiar, conectar, representar e criar oportunidades para
-              microempreendedores e pequenos negócios de Foz do Iguaçu.
+              microempreendedores e pequenos negócios.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <CtaLink to="/a-aeifi">Conheça a AEIFI</CtaLink>
@@ -60,7 +60,7 @@ function Home() {
         <div className="container-page py-6 text-sm md:text-base">
           <p>
             <strong className="font-semibold">Quem representamos:</strong> microempreendedores
-            individuais, pequenos negócios e profissionais autônomos de Foz do Iguaçu.
+            individuais, pequenos negócios e profissionais autônomos.
           </p>
         </div>
       </div>
@@ -140,11 +140,7 @@ function Home() {
         </div>
       </Section>
 
-      <Section
-        tone="muted"
-        title="Nosso impacto"
-        lead="Resultados da atuação da associação em Foz do Iguaçu."
-      >
+      <Section tone="muted" title="Nosso impacto" lead="Resultados da atuação da associação.">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {impacto.map((item) => (
             <Card key={item.rotulo}>

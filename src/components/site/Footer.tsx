@@ -26,7 +26,7 @@ export function Footer() {
         <div className="md:col-span-2">
           <p className="font-display text-xl font-semibold">AEIFI</p>
           <p className="mt-1 max-w-sm text-sm text-ink-foreground/80">
-            Associação dos Empreendedores Individuais de Foz do Iguaçu
+            Associação dos Empreendedores Individuais
           </p>
           {details.length ? (
             <dl className="mt-6 space-y-1.5 text-sm text-ink-foreground/80">

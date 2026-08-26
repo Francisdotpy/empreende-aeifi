@@ -285,7 +285,7 @@ export const noticias: Noticia[] = [
     resumo:
       "Atividade formativa abordou temas práticos de gestão para quem toca um pequeno negócio na cidade.",
     corpo: [
-      "A AEIFI realizou mais uma atividade de capacitação voltada a microempreendedores individuais e pequenos negócios de Foz do Iguaçu, dentro do seu programa permanente de formação.",
+      "A AEIFI realizou mais uma atividade de capacitação voltada a microempreendedores individuais, dentro do seu programa permanente de formação.",
       "A programação tratou de temas práticos do dia a dia do empreendedor, como organização financeira, atendimento ao cliente e presença digital.",
       `Data, local, conteúdo programático, parceiros e número de participantes: ${TBD}.`,
     ],
