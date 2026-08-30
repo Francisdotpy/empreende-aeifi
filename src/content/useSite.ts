@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { tryGetSupabase } from "@/integrations/supabase/client";
 import {
   TBD,
   depoimentos as depoimentosBase,
@@ -44,7 +44,9 @@ export const siteContentQuery = {
   queryFn: async (): Promise<Overrides> => {
     let data: { key: string; value: string | null }[] | null = null;
     try {
-      const result = await supabase.from("site_content").select("key,value");
+      const client = tryGetSupabase();
+      if (!client) return {};
+      const result = await client.from("site_content").select("key,value");
       if (result.error) throw result.error;
       data = result.data;
     } catch (error) {

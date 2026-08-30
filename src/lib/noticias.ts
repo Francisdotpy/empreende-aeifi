@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, tryGetSupabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
 export type NoticiaPublicada = Tables<"noticias">;
@@ -9,7 +9,9 @@ export const noticiasPublicadasQuery = queryOptions({
   queryKey: ["noticias", "publicadas"],
   queryFn: async (): Promise<NoticiaPublicada[]> => {
     try {
-      const { data, error } = await supabase
+      const client = tryGetSupabase();
+      if (!client) return [];
+      const { data, error } = await client
         .from("noticias")
         .select("*")
         .eq("status", "publicado")
@@ -43,7 +45,9 @@ export function noticiaPublicadaPorSlugQuery(slug: string) {
     queryKey: ["noticias", "publicadas", slug],
     queryFn: async (): Promise<NoticiaPublicada | null> => {
       try {
-        const { data, error } = await supabase
+        const client = tryGetSupabase();
+        if (!client) return null;
+        const { data, error } = await client
           .from("noticias")
           .select("*")
           .eq("slug", slug)

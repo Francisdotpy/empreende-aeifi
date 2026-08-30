@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, tryGetSupabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
 export type Edital = Tables<"downloads_editais">;
@@ -9,7 +9,9 @@ export const editaisPublicadosQuery = queryOptions({
   queryKey: ["editais", "publicados"],
   queryFn: async (): Promise<Edital[]> => {
     try {
-      const { data, error } = await supabase
+      const client = tryGetSupabase();
+      if (!client) return [];
+      const { data, error } = await client
         .from("downloads_editais")
         .select("*")
         .eq("status", "publicado")
