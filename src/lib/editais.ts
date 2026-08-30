@@ -8,14 +8,19 @@ export type EditalStatus = Edital["status"];
 export const editaisPublicadosQuery = queryOptions({
   queryKey: ["editais", "publicados"],
   queryFn: async (): Promise<Edital[]> => {
-    const { data, error } = await supabase
-      .from("downloads_editais")
-      .select("*")
-      .eq("status", "publicado")
-      .order("data_publicacao", { ascending: false })
-      .order("created_at", { ascending: false });
-    if (error) throw error;
-    return data ?? [];
+    try {
+      const { data, error } = await supabase
+        .from("downloads_editais")
+        .select("*")
+        .eq("status", "publicado")
+        .order("data_publicacao", { ascending: false })
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data ?? [];
+    } catch (error) {
+      console.error("[Supabase] Could not load public downloads.", error);
+      return [];
+    }
   },
   staleTime: 60_000,
 });

@@ -42,8 +42,15 @@ export function parseWhatsAppContacts(value: string): WhatsAppContact[] {
 export const siteContentQuery = {
   queryKey: ["site_content"],
   queryFn: async (): Promise<Overrides> => {
-    const { data, error } = await supabase.from("site_content").select("key,value");
-    if (error) throw error;
+    let data: { key: string; value: string | null }[] | null = null;
+    try {
+      const result = await supabase.from("site_content").select("key,value");
+      if (result.error) throw result.error;
+      data = result.data;
+    } catch (error) {
+      console.error("[Supabase] Could not load public site content.", error);
+      return {};
+    }
     const map: Overrides = {};
     for (const row of data ?? []) {
       if (row.value && row.value.trim()) map[row.key] = row.value.trim();

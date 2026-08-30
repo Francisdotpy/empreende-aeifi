@@ -8,14 +8,19 @@ export type NoticiaStatus = NoticiaPublicada["status"];
 export const noticiasPublicadasQuery = queryOptions({
   queryKey: ["noticias", "publicadas"],
   queryFn: async (): Promise<NoticiaPublicada[]> => {
-    const { data, error } = await supabase
-      .from("noticias")
-      .select("*")
-      .eq("status", "publicado")
-      .order("data_noticia", { ascending: false })
-      .order("created_at", { ascending: false });
-    if (error) throw error;
-    return data ?? [];
+    try {
+      const { data, error } = await supabase
+        .from("noticias")
+        .select("*")
+        .eq("status", "publicado")
+        .order("data_noticia", { ascending: false })
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data ?? [];
+    } catch (error) {
+      console.error("[Supabase] Could not load public news.", error);
+      return [];
+    }
   },
   staleTime: 60_000,
 });
@@ -37,14 +42,19 @@ export function noticiaPublicadaPorSlugQuery(slug: string) {
   return queryOptions({
     queryKey: ["noticias", "publicadas", slug],
     queryFn: async (): Promise<NoticiaPublicada | null> => {
-      const { data, error } = await supabase
-        .from("noticias")
-        .select("*")
-        .eq("slug", slug)
-        .eq("status", "publicado")
-        .maybeSingle();
-      if (error) throw error;
-      return data;
+      try {
+        const { data, error } = await supabase
+          .from("noticias")
+          .select("*")
+          .eq("slug", slug)
+          .eq("status", "publicado")
+          .maybeSingle();
+        if (error) throw error;
+        return data;
+      } catch (error) {
+        console.error("[Supabase] Could not load public news article.", error);
+        return null;
+      }
     },
     staleTime: 60_000,
   });
