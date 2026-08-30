@@ -42,7 +42,9 @@ function Page() {
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-secondary">
                 {ini.etiqueta}
               </p>
-              <h2 className="mt-2 font-display text-3xl font-semibold text-primary">{ini.titulo}</h2>
+              <h2 className="mt-2 break-words font-display text-[clamp(1.75rem,7vw,1.875rem)] font-semibold text-primary md:text-3xl">
+                {ini.titulo}
+              </h2>
               <p className="mt-4 text-lg text-foreground">{ini.resumo}</p>
 
               <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground">

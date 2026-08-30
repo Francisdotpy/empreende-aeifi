@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Card, PageHero, Section, Value } from "@/components/site/ui";
-import { useSite } from "@/content/useSite";
+import { useQuery } from "@tanstack/react-query";
+import { Card, PageHero, Section } from "@/components/site/ui";
+import { responsiveImageProps } from "@/lib/responsive-images";
+import { formatarDataNoticia, noticiasPublicadasQuery } from "@/lib/noticias";
 
 export const Route = createFileRoute("/noticias/")({
   head: () => ({
@@ -25,7 +27,8 @@ export const Route = createFileRoute("/noticias/")({
 });
 
 function Page() {
-  const { noticias, get } = useSite();
+  const { data: noticiasPublicadas = [], isLoading, isError } = useQuery(noticiasPublicadasQuery);
+
   return (
     <>
       <PageHero
@@ -35,39 +38,59 @@ function Page() {
       />
 
       <Section>
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {noticias.map((n, idx) => (
-            <Card key={n.slug}>
-              {get(`noticias.${idx}.foto`) ? (
+        {isLoading ? (
+          <p className="text-center text-sm text-muted-foreground" aria-live="polite">
+            Carregando publicações…
+          </p>
+        ) : isError ? (
+          <div className="border border-destructive/25 bg-card px-5 py-4 text-center text-sm text-destructive shadow-sm">
+            Não foi possível carregar as publicações. Tente novamente em alguns instantes.
+          </div>
+        ) : noticiasPublicadas.length === 0 ? (
+          <div className="border border-border bg-card px-6 py-10 text-center shadow-sm">
+            <p className="font-display text-xl font-semibold text-primary">
+              Nenhuma notícia publicada no momento.
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Novas atividades da AEIFI serão divulgadas nesta página.
+            </p>
+          </div>
+        ) : (
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {noticiasPublicadas.map((noticia) => (
+              <Card key={noticia.id}>
                 <img
-                  src={get(`noticias.${idx}.foto`)}
-                  alt={n.titulo}
+                  {...responsiveImageProps(
+                    noticia.capa_url,
+                    "(min-width: 1280px) 24rem, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, calc(100vw - 2.5rem)",
+                  )}
+                  alt={`Capa da notícia ${noticia.titulo}`}
                   loading="lazy"
-                  className="mb-4 w-full rounded-xl object-cover"
+                  className="mb-4 aspect-[16/9] w-full rounded-xl object-cover"
                 />
-              ) : null}
-              <div className="flex items-center gap-3 text-xs">
-                <span className="font-semibold uppercase tracking-[0.14em] text-secondary">
-                  {n.categoria}
-                </span>
-                <Value value={n.data} label="[DATA]" />
-              </div>
-              <h2 className="mt-3 font-display text-xl font-semibold text-primary">{n.titulo}</h2>
-              <p className="mt-2 text-sm text-muted-foreground">{n.resumo}</p>
-              <Link
-                to="/noticias/$slug"
-                params={{ slug: n.slug }}
-                className="mt-4 inline-block text-sm font-semibold text-secondary hover:underline"
-              >
-                Ler notícia completa
-              </Link>
-            </Card>
-          ))}
-        </div>
-        <p className="mt-8 text-sm text-muted-foreground">
-          Novas publicações são acrescentadas conforme as atividades da associação acontecem. Textos
-          e fotos são de produção própria da AEIFI.
-        </p>
+                <div className="flex flex-wrap items-center gap-3 text-xs">
+                  <span className="min-w-0 break-words font-semibold uppercase tracking-[0.14em] text-secondary [overflow-wrap:anywhere]">
+                    {noticia.categoria}
+                  </span>
+                  <span className="text-muted-foreground">
+                    {formatarDataNoticia(noticia.data_noticia)}
+                  </span>
+                </div>
+                <h2 className="mt-3 break-words font-display text-xl font-semibold text-primary">
+                  {noticia.titulo}
+                </h2>
+                <p className="mt-2 text-sm text-muted-foreground">{noticia.subtitulo}</p>
+                <Link
+                  to="/noticias/$slug"
+                  params={{ slug: noticia.slug }}
+                  className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-secondary hover:underline"
+                >
+                  Ler notícia completa
+                </Link>
+              </Card>
+            ))}
+          </div>
+        )}
       </Section>
     </>
   );

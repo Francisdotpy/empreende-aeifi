@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Download } from "lucide-react";
 import { PageHero, Section } from "@/components/site/ui";
+import { responsiveImageProps } from "@/lib/responsive-images";
 import { editaisPublicadosQuery, formatarDataPublicacao } from "@/lib/editais";
 
 export const Route = createFileRoute("/downloads")({
@@ -61,7 +62,10 @@ function DownloadsPage() {
               >
                 <div className="aspect-[4/3] overflow-hidden border-b border-border/80 bg-muted">
                   <img
-                    src={edital.imagem_url}
+                    {...responsiveImageProps(
+                      edital.imagem_url,
+                      "(min-width: 1280px) 18rem, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, calc(100vw - 2.5rem)",
+                    )}
                     alt={`Imagem de destaque do ${edital.titulo}`}
                     loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.015]"

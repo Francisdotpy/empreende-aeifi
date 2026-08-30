@@ -247,14 +247,14 @@ export function InlineTextEditor() {
   return (
     <div
       data-inline-edit-ui
-      className="fixed bottom-4 left-4 z-50 flex max-w-[min(92vw,26rem)] flex-wrap items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3 shadow-lift"
+      className="fixed bottom-24 left-4 z-50 flex max-h-[calc(100dvh-7rem)] max-w-[min(92vw,26rem)] flex-wrap items-center gap-3 overflow-y-auto rounded-2xl border border-border bg-card px-4 py-3 shadow-lift sm:bottom-[max(1.5rem,env(safe-area-inset-bottom))]"
     >
       <button
         onClick={() => {
           setStatus(null);
           setEditing((v) => !v);
         }}
-        className={`rounded-lg px-4 py-2 text-sm font-semibold ${
+        className={`min-h-11 rounded-lg px-4 py-2 text-sm font-semibold ${
           editing
             ? "bg-secondary text-secondary-foreground"
             : "border border-border bg-background text-primary"

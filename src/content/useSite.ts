@@ -7,7 +7,6 @@ import {
   documentos as documentosBase,
   impacto as impactoBase,
   iniciativas as iniciativasBase,
-  noticias as noticiasBase,
   org as orgBase,
 } from "@/content/site";
 
@@ -66,6 +65,12 @@ export type EditableField = {
 
 /** Lista de campos editáveis na área administrativa. */
 export const editableFields: EditableField[] = [
+  {
+    group: "Página inicial",
+    key: "home.imagemPrincipal",
+    label: "Imagem do destaque inicial",
+    kind: "image",
+  },
   { group: "Identificação", key: "org.razaoSocial", label: "Razão social" },
   { group: "Identificação", key: "org.cnpj", label: "CNPJ" },
   { group: "Identificação", key: "org.fundacao", label: "Data de fundação" },
@@ -82,7 +87,11 @@ export const editableFields: EditableField[] = [
   { group: "Contato", key: "org.horario", label: "Horário de atendimento" },
   { group: "Redes sociais", key: "org.redes.0", label: "Instagram (URL)" },
   { group: "Redes sociais", key: "org.redes.1", label: "Facebook (URL)" },
-  ...impactoBase.map((i, idx) => ({ group: "Números de impacto", key: `impacto.${idx}`, label: i.rotulo })),
+  ...impactoBase.map((i, idx) => ({
+    group: "Números de impacto",
+    key: `impacto.${idx}`,
+    label: i.rotulo,
+  })),
   ...diretoriaBase.map((d) => ({ group: "Diretoria", key: `diretoria.${d.id}`, label: d.cargo })),
 
   ...documentosBase.map((d, idx) => ({
@@ -108,23 +117,22 @@ export const editableFields: EditableField[] = [
     label: "Prestação de contas — arquivo",
     kind: "file",
   },
-  { group: "Depoimentos", key: "depoimentos.0.texto", label: "Depoimento 1 — texto", multiline: true },
+  {
+    group: "Depoimentos",
+    key: "depoimentos.0.texto",
+    label: "Depoimento 1 — texto",
+    multiline: true,
+  },
   { group: "Depoimentos", key: "depoimentos.0.autor", label: "Depoimento 1 — autor" },
   { group: "Depoimentos", key: "depoimentos.0.negocio", label: "Depoimento 1 — negócio" },
-  { group: "Depoimentos", key: "depoimentos.1.texto", label: "Depoimento 2 — texto", multiline: true },
+  {
+    group: "Depoimentos",
+    key: "depoimentos.1.texto",
+    label: "Depoimento 2 — texto",
+    multiline: true,
+  },
   { group: "Depoimentos", key: "depoimentos.1.autor", label: "Depoimento 2 — autor" },
   { group: "Depoimentos", key: "depoimentos.1.negocio", label: "Depoimento 2 — negócio" },
-  ...noticiasBase.map((n, idx) => ({
-    group: "Notícias (datas)",
-    key: `noticias.${idx}.data`,
-    label: n.titulo,
-  })),
-  ...noticiasBase.map((n, idx) => ({
-    group: "Notícias (fotos)",
-    key: `noticias.${idx}.foto`,
-    label: `${n.titulo} — foto`,
-    kind: "image" as const,
-  })),
   ...iniciativasBase.flatMap((i) => [
     {
       group: "Iniciativas",
@@ -197,7 +205,6 @@ export function buildSite(map: Overrides) {
       autor: pick(map, `depoimentos.${idx}.autor`, d.autor),
       negocio: pick(map, `depoimentos.${idx}.negocio`, d.negocio),
     })),
-    noticias: noticiasBase.map((n, idx) => ({ ...n, data: pick(map, `noticias.${idx}.data`, n.data) })),
     /** Valor bruto de qualquer chave editável (string vazia quando não preenchida). */
     get: (key: string) => map[key] ?? "",
   };

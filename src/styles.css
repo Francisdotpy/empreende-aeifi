@@ -140,7 +140,13 @@
 }
 
 @utility section-y {
-  padding-block: 4.5rem;
+  padding-block: 3.5rem;
+}
+
+@media (min-width: 48rem) {
+  .section-y {
+    padding-block: 4.5rem;
+  }
 }
 
 @utility text-balance-tight {

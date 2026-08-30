@@ -13,7 +13,9 @@ import type { EditableField, WhatsAppContact } from "@/content/useSite";
 import { uploadSiteFile } from "@/lib/uploads.functions";
 import { claimAdmin } from "@/lib/admin.functions";
 import { Card, PageHero, Section } from "@/components/site/ui";
+import { formControlClassName } from "@/components/site/form-styles";
 import { EditaisAdmin } from "@/components/admin/EditaisAdmin";
+import { NoticiasAdmin } from "@/components/admin/NoticiasAdmin";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -106,7 +108,7 @@ function LoginForm() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="rounded-lg border border-input bg-card px-3 py-2.5 text-sm font-normal text-foreground shadow-sm hover:border-primary/30 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20"
+            className={formControlClassName}
           />
         </label>
         <label className="grid gap-1.5 text-sm font-medium text-primary">
@@ -116,7 +118,7 @@ function LoginForm() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="rounded-lg border border-input bg-card px-3 py-2.5 text-sm font-normal text-foreground shadow-sm hover:border-primary/30 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20"
+            className={formControlClassName}
           />
         </label>
         {error ? <p className="text-sm text-destructive">{error}</p> : null}
@@ -145,7 +147,12 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
 
   useEffect(() => {
     claimAdmin()
-      .then(() => queryClient.invalidateQueries({ queryKey: ["editais"] }))
+      .then(() =>
+        Promise.all([
+          queryClient.invalidateQueries({ queryKey: ["editais"] }),
+          queryClient.invalidateQueries({ queryKey: ["noticias"] }),
+        ]),
+      )
       .catch(() => undefined);
   }, [queryClient]);
 
@@ -183,7 +190,7 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
         </p>
         <button
           onClick={onSignOut}
-          className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-semibold text-primary shadow-sm transition-colors hover:border-primary/25 hover:bg-muted"
+          className="min-h-11 rounded-lg border border-border bg-card px-4 py-2 text-sm font-semibold text-primary shadow-sm transition-colors hover:border-primary/25 hover:bg-muted"
         >
           Sair
         </button>
@@ -192,9 +199,10 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
       <Card>
         <h2 className="font-display text-lg font-semibold text-primary">Textos das páginas</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Para reescrever qualquer texto do site, navegue até a página desejada com o seu login ativo e clique
-          em <strong>“Editar textos da página”</strong>, no canto inferior esquerdo. Depois é só clicar sobre o
-          trecho e digitar. Abaixo ficam registradas as alterações já feitas.
+          Para reescrever qualquer texto do site, navegue até a página desejada com o seu login
+          ativo e clique em <strong>“Editar textos da página”</strong>, no canto inferior esquerdo.
+          Depois é só clicar sobre o trecho e digitar. Abaixo ficam registradas as alterações já
+          feitas.
         </p>
         <CustomTexts data={data ?? {}} />
       </Card>
@@ -203,6 +211,8 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
         value={values[WHATSAPP_CONTACTS_KEY] ?? ""}
         onChange={(next) => setValues((current) => ({ ...current, [WHATSAPP_CONTACTS_KEY]: next }))}
       />
+
+      <NoticiasAdmin />
 
       <EditaisAdmin />
 
@@ -222,7 +232,7 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
         </Card>
       ))}
 
-      <div className="sticky bottom-4 flex flex-wrap items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-lift">
+      <div className="sticky bottom-[max(1rem,env(safe-area-inset-bottom))] z-30 flex flex-wrap items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-lift">
         <button
           onClick={save}
           disabled={saving}
@@ -280,7 +290,12 @@ function WhatsAppContactsEditor({
       numero: draft.numero.replace(/\D/g, ""),
     };
 
-    if (!contact.nome || !contact.funcao || contact.numero.length < 10 || contact.numero.length > 15) {
+    if (
+      !contact.nome ||
+      !contact.funcao ||
+      contact.numero.length < 10 ||
+      contact.numero.length > 15
+    ) {
       setMessage({
         type: "error",
         text: "Preencha nome, função e um número internacional válido com 10 a 15 dígitos.",
@@ -294,18 +309,25 @@ function WhatsAppContactsEditor({
 
     if (await publish([...contacts, contact], "add")) {
       setDraft({ nome: "", funcao: "", numero: "" });
-      setMessage({ type: "success", text: "Contato adicionado e publicado no WhatsApp flutuante." });
+      setMessage({
+        type: "success",
+        text: "Contato adicionado e publicado no WhatsApp flutuante.",
+      });
     }
   }
 
   async function removeContact(index: number) {
-    if (await publish(contacts.filter((_, current) => current !== index), `remove-${index}`)) {
+    if (
+      await publish(
+        contacts.filter((_, current) => current !== index),
+        `remove-${index}`,
+      )
+    ) {
       setMessage({ type: "success", text: "Contato removido do WhatsApp flutuante." });
     }
   }
 
-  const inputClassName =
-    "rounded-lg border border-input bg-card px-3 py-2.5 text-sm font-normal text-foreground shadow-sm hover:border-primary/30 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20";
+  const inputClassName = formControlClassName;
 
   return (
     <Card>
@@ -332,7 +354,9 @@ function WhatsAppContactsEditor({
           <input
             required
             value={draft.funcao}
-            onChange={(event) => setDraft((current) => ({ ...current, funcao: event.target.value }))}
+            onChange={(event) =>
+              setDraft((current) => ({ ...current, funcao: event.target.value }))
+            }
             className={inputClassName}
           />
         </label>
@@ -344,14 +368,16 @@ function WhatsAppContactsEditor({
             inputMode="numeric"
             placeholder="5545999999999"
             value={draft.numero}
-            onChange={(event) => setDraft((current) => ({ ...current, numero: event.target.value }))}
+            onChange={(event) =>
+              setDraft((current) => ({ ...current, numero: event.target.value }))
+            }
             className={inputClassName}
           />
         </label>
         <button
           type="submit"
           disabled={busy !== null}
-          className="rounded-lg bg-secondary px-5 py-2.5 text-sm font-semibold text-secondary-foreground shadow-sm transition-all hover:bg-secondary/90 hover:shadow-md active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
+          className="min-h-11 rounded-lg bg-secondary px-5 py-2.5 text-sm font-semibold text-secondary-foreground shadow-sm transition-all hover:bg-secondary/90 hover:shadow-md active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
         >
           {busy === "add" ? "Adicionando…" : "Adicionar"}
         </button>
@@ -385,7 +411,7 @@ function WhatsAppContactsEditor({
                 type="button"
                 disabled={busy !== null}
                 onClick={() => void removeContact(index)}
-                className="rounded-lg border border-destructive/30 bg-card px-3 py-2 text-sm font-semibold text-destructive transition-colors hover:bg-destructive/10 disabled:cursor-not-allowed disabled:opacity-50"
+                className="min-h-11 rounded-lg border border-destructive/30 bg-card px-3 py-2 text-sm font-semibold text-destructive transition-colors hover:bg-destructive/10 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {busy === `remove-${index}` ? "Removendo…" : "Remover"}
               </button>
@@ -449,16 +475,25 @@ function FieldEditor({
             const file = e.target.files?.[0];
             if (file) void handleFile(file);
           }}
-          className="rounded-lg border border-input bg-card px-3 py-2.5 text-sm font-normal text-foreground shadow-sm hover:border-primary/30 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20"
+          className={formControlClassName}
         />
         {uploading ? <span className="text-xs text-muted-foreground">Enviando…</span> : null}
         {uploadError ? <span className="text-xs text-destructive">{uploadError}</span> : null}
         {value ? (
-          <span className="flex items-center gap-3 text-xs font-normal">
-            <a href={value} target="_blank" rel="noopener noreferrer" className="text-secondary underline">
+          <span className="flex flex-wrap items-center gap-2 text-xs font-normal">
+            <a
+              href={value}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center text-secondary underline"
+            >
               Ver arquivo atual
             </a>
-            <button type="button" onClick={() => onChange("")} className="text-destructive underline">
+            <button
+              type="button"
+              onClick={() => onChange("")}
+              className="inline-flex min-h-11 items-center text-destructive underline"
+            >
               Remover
             </button>
           </span>
@@ -477,13 +512,13 @@ function FieldEditor({
           rows={3}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="rounded-lg border border-input bg-card px-3 py-2.5 text-sm font-normal text-foreground shadow-sm hover:border-primary/30 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20"
+          className={formControlClassName}
         />
       ) : (
         <input
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="rounded-lg border border-input bg-card px-3 py-2.5 text-sm font-normal text-foreground shadow-sm hover:border-primary/30 focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/20"
+          className={formControlClassName}
         />
       )}
     </label>
@@ -529,7 +564,7 @@ function CustomTexts({ data }: { data: Record<string, string> }) {
             type="button"
             disabled={busy === item.key}
             onClick={() => void reset(item.key)}
-            className="mt-2 text-xs font-semibold text-destructive underline disabled:opacity-60"
+          className="mt-2 inline-flex min-h-11 items-center text-xs font-semibold text-destructive underline disabled:opacity-60"
           >
             {busy === item.key ? "Restaurando…" : "Restaurar texto original"}
           </button>

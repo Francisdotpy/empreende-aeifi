@@ -1,6 +1,6 @@
 # Continuidade do projeto AEIFI
 
-Atualizado em: 25 de agosto de 2026.
+Atualizado em: 29 de agosto de 2026.
 
 Este documento registra o estado técnico do projeto e as decisões tomadas nas últimas alterações. Leia este arquivo antes de modificar a aplicação.
 
@@ -20,9 +20,10 @@ Este documento registra o estado técnico do projeto e as decisões tomadas nas 
 - O header exibe somente a logo, sem os textos “AEIFI” ou o nome completo ao lado dela.
 - A logo usada pelo header é `src/assets/logo-header.png`.
 - A mesma imagem é usada como favicon em `src/routes/__root.tsx`.
-- A imagem principal da home é `src/assets/hero-aeifi.jpg`.
+- A imagem padrão do destaque inicial da home é `src/assets/foto-inicial.webp`, exibida na coluna direita ao lado do título principal.
+- O painel possui o grupo “Página inicial”, com o campo de imagem `home.imagemPrincipal`; quando vazio, a home usa a imagem padrão do projeto.
 - A página `/buscamei` não possui imagem estática.
-- A página `/noticias` não possui imagem estática de abertura. Fotos individuais de notícias ainda podem ser exibidas de forma condicional quando cadastradas no painel, pelas chaves `noticias.{indice}.foto`.
+- A página `/noticias` não possui imagem estática de abertura. Cada notícia usa a capa cadastrada no sistema administrável.
 
 ### Footer e conteúdo administrativo
 
@@ -40,17 +41,42 @@ Este documento registra o estado técnico do projeto e as decisões tomadas nas 
 
 - A chamada principal do header é “Quero me associar” e aponta para `/associe-se`.
 - O botão redundante “Associe-se” foi removido.
-- O formulário contém Nome, CNPJ e Telefone/WhatsApp, todos obrigatórios.
-- Há estado de carregamento, bloqueio de envio duplicado, sucesso e erro.
-- O envio é realizado no servidor por `src/lib/association.functions.ts`, usando a API da Resend.
-- Destinatário fixado pela regra de negócio: `aeififoz@gmail.com`.
-- Assunto: `Nova solicitação de associação`.
-- Nenhuma credencial de e-mail é exposta no frontend.
+- O formulário contém Nome e CNPJ, ambos obrigatórios.
+- Ao enviar, o navegador abre `https://wa.me/5545998460809` com uma mensagem de interesse já preenchida com os dados informados.
+- O formulário não persiste os dados e não depende de serviço de e-mail nem de credenciais no servidor.
 
-Variáveis necessárias para o envio:
+### Notícias administráveis
 
-- `RESEND_API_KEY`
-- `RESEND_FROM_EMAIL`
+- O painel `/admin` possui a seção “Notícias” com cadastro, edição e exclusão de publicações.
+- Os campos são Título, Subtítulo, Capa, Texto, Links das fontes, Data da notícia, Categoria e Status.
+- Os links de fontes são opcionais, aceitam um endereço HTTP/HTTPS por linha e aparecem em “Fontes:” ao fim da notícia.
+- O status pode ser `publicado` ou `rascunho`; somente notícias publicadas são visíveis ao público.
+- A tabela `noticias` é a única fonte de gestão e publicação de notícias.
+- As notícias fixas anteriores e os campos “Notícias (datas)” e “Notícias (fotos)” foram removidos do código e do painel.
+- A rota `/noticias`, a rota `/noticias/$slug` e o bloco de notícias da home consomem exclusivamente as notícias publicadas desse sistema.
+- Na página individual `/noticias/$slug`, a capa aparece acima da categoria, da data e do título; os cards de `/noticias` mantêm a composição própria.
+- Chaves legadas `noticias.*` que já existam em `site_content` não são mais lidas nem exibidas; elas não foram apagadas do banco.
+- A capa é obrigatória no cadastro e opcional na edição; uma nova capa substitui e remove a anterior.
+- As capas aceitam JPG, JPEG, PNG e WEBP até 5 MB, com validação de extensão, MIME e assinatura binária no servidor.
+- Os arquivos usam o bucket privado `arquivos`, no prefixo `noticias/capas/`, e são servidos por `/api/public/arquivo/`.
+
+Banco de dados:
+
+- Tabela: `noticias`.
+- Migration: `supabase/migrations/20260829120000_create_noticias.sql`.
+- Campos: `id`, `slug`, `titulo`, `subtitulo`, `capa_url`, `texto`, `fontes`, `data_noticia`, `categoria`, `status`, `created_at` e `updated_at`.
+- RLS permite leitura pública somente de registros publicados e restringe todo o gerenciamento a administradores.
+- Em 29/08/2026, `supabase db push` aplicou essa migration ao projeto remoto vinculado.
+
+Arquivos principais desse fluxo:
+
+- `src/components/admin/NoticiasAdmin.tsx`
+- `src/lib/noticias.ts`
+- `src/lib/uploads.functions.ts`
+- `src/routes/noticias.index.tsx`
+- `src/routes/noticias.$slug.tsx`
+- `src/routes/admin.tsx`
+- `src/integrations/supabase/types.ts`
 
 ### WhatsApp flutuante
 

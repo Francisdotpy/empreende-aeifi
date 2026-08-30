@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { TBD } from "@/content/site";
+import { responsiveImageProps } from "@/lib/responsive-images";
 
 export function PageHero({
   eyebrow,
@@ -15,9 +16,9 @@ export function PageHero({
 }) {
   return (
     <section className="border-b border-border bg-surface">
-      <div className="container-page py-14 md:py-20">
+      <div className="container-page py-12 md:py-20">
         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-secondary">{eyebrow}</p>
-        <h1 className="mt-3 max-w-3xl font-display text-4xl font-semibold text-primary text-balance-tight md:text-5xl">
+        <h1 className="mt-3 max-w-3xl break-words font-display text-[clamp(2rem,8vw,2.25rem)] font-semibold text-primary text-balance-tight md:text-5xl">
           {title}
         </h1>
         <p className="mt-5 max-w-2xl text-lg text-muted-foreground">{lead}</p>
@@ -48,11 +49,11 @@ export function Section({
       <div className="container-page section-y">
         {title ? (
           <header className="max-w-2xl">
-            <h2 className="font-display text-3xl font-semibold text-primary md:text-4xl">{title}</h2>
+            <h2 className="break-words font-display text-[clamp(1.75rem,7vw,1.875rem)] font-semibold text-primary md:text-4xl">{title}</h2>
             {lead ? <p className="mt-4 text-base text-muted-foreground md:text-lg">{lead}</p> : null}
           </header>
         ) : null}
-        <div className={title ? "mt-10" : undefined}>{children}</div>
+        <div className={title ? "mt-8 md:mt-10" : undefined}>{children}</div>
       </div>
     </section>
   );
@@ -61,7 +62,7 @@ export function Section({
 export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={`rounded-2xl border border-border/90 bg-card p-6 shadow-card transition-[box-shadow,border-color] duration-200 ${className}`}
+      className={`min-w-0 rounded-2xl border border-border/90 bg-card p-4 shadow-card transition-[box-shadow,border-color] duration-200 sm:p-6 ${className}`}
     >
       {children}
     </div>
@@ -90,7 +91,7 @@ export function FileValue({ value, label }: { value?: string | undefined; label?
         href={value}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sm font-semibold text-secondary underline"
+        className="inline-flex min-h-11 items-center text-sm font-semibold text-secondary underline"
       >
         Abrir documento
       </a>
@@ -111,7 +112,15 @@ export function ImageValue({
 }) {
   if (value && value.trim()) {
     return (
-      <img src={value} alt={alt} loading="lazy" className="w-full rounded-xl border border-border object-cover" />
+      <img
+        {...responsiveImageProps(
+          value,
+          "(min-width: 1280px) 24rem, (min-width: 1024px) 33vw, calc(100vw - 2.5rem)",
+        )}
+        alt={alt}
+        loading="lazy"
+        className="w-full rounded-xl border border-border object-cover"
+      />
     );
   }
   return <Pending label={label ?? "[FOTOS A SEREM FORNECIDAS PELA AEIFI]"} />;

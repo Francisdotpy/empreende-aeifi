@@ -1,9 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { Handshake, GraduationCap, Megaphone, Lightbulb, Sparkles, ArrowRight } from "lucide-react";
-import heroImg from "@/assets/hero-aeifi.jpg";
-import { areas, impacto, iniciativas, noticias, org, depoimentos, TBD } from "@/content/site";
+import fotoInicial from "@/assets/foto-inicial.webp";
+import { areas, impacto, iniciativas, org, depoimentos, TBD } from "@/content/site";
 import { Card, CtaLink, Section, Value } from "@/components/site/ui";
+import { responsiveImageProps } from "@/lib/responsive-images";
 import { useSite } from "@/content/useSite";
+import { formatarDataNoticia, noticiasPublicadasQuery } from "@/lib/noticias";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -30,7 +33,13 @@ export const Route = createFileRoute("/")({
 const icons = [Megaphone, GraduationCap, Handshake, Sparkles, Lightbulb];
 
 function Home() {
-  const { org, impacto, depoimentos, noticias, get } = useSite();
+  const { org, impacto, depoimentos, get } = useSite();
+  const {
+    data: noticiasPublicadas = [],
+    isLoading: noticiasLoading,
+    isError: noticiasError,
+  } = useQuery(noticiasPublicadasQuery);
+  const homeImage = get("home.imagemPrincipal") || fotoInicial;
   return (
     <>
       <section className="border-b border-border bg-surface">
@@ -39,7 +48,7 @@ function Home() {
             <p className="inline-flex rounded-full bg-highlight px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-highlight-foreground">
               Associação de Empreendedores
             </p>
-            <h1 className="mt-5 font-display text-4xl font-semibold text-primary text-balance-tight md:text-5xl lg:text-[3.4rem] lg:leading-[1.05]">
+            <h1 className="mt-5 break-words font-display text-[clamp(2rem,8vw,2.25rem)] font-semibold text-primary text-balance-tight md:text-5xl lg:text-[3.4rem] lg:leading-[1.05]">
               Fortalecemos quem empreende. Desenvolvemos nossa comunidade.
             </h1>
             <p className="mt-6 max-w-xl text-lg text-muted-foreground">
@@ -52,6 +61,16 @@ function Home() {
                 Quero me associar
               </CtaLink>
             </div>
+          </div>
+          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-card">
+            <img
+              {...responsiveImageProps(
+                homeImage,
+                "(min-width: 1280px) 37rem, (min-width: 1024px) 48vw, calc(100vw - 2.5rem)",
+              )}
+              alt="Encontro de empreendedores promovido pela AEIFI"
+              className="aspect-[16/10] w-full object-cover object-center md:max-h-[28rem] lg:aspect-[4/5] lg:h-full lg:max-h-[38rem]"
+            />
           </div>
         </div>
       </section>
@@ -90,7 +109,7 @@ function Home() {
             </p>
             <Link
               to="/o-que-fazemos"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-secondary hover:underline"
+              className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-secondary hover:underline"
             >
               Ver todas as áreas de atuação <ArrowRight className="h-4 w-4" />
             </Link>
@@ -131,7 +150,7 @@ function Home() {
               <p className="mt-3 text-sm text-muted-foreground">{ini.resumo}</p>
               <Link
                 to={ini.slug === "buscamei" ? "/buscamei" : "/iniciativas"}
-                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-secondary hover:underline"
+                className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-secondary hover:underline"
               >
                 Saiba mais <ArrowRight className="h-4 w-4" />
               </Link>
@@ -176,24 +195,58 @@ function Home() {
       </Section>
 
       <Section title="Notícias e atividades" lead="Acompanhe o que a AEIFI tem realizado.">
-        <div className="grid gap-5 md:grid-cols-3">
-          {noticias.map((n) => (
-            <Card key={n.slug}>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-secondary">
-                {n.categoria}
-              </p>
-              <h3 className="mt-2 font-display text-lg font-semibold text-primary">{n.titulo}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{n.resumo}</p>
-              <Link
-                to="/noticias/$slug"
-                params={{ slug: n.slug }}
-                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-secondary hover:underline"
-              >
-                Ler notícia <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Card>
-          ))}
-        </div>
+        {noticiasLoading ? (
+          <p className="text-sm text-muted-foreground" aria-live="polite">
+            Carregando notícias…
+          </p>
+        ) : noticiasError ? (
+          <p className="text-sm text-destructive">
+            Não foi possível carregar as notícias no momento.
+          </p>
+        ) : noticiasPublicadas.length ? (
+          <div className="grid gap-5 md:grid-cols-3">
+            {noticiasPublicadas.slice(0, 3).map((noticia) => (
+              <Card key={noticia.id}>
+                  <img
+                    {...responsiveImageProps(
+                      noticia.capa_url,
+                      "(min-width: 1280px) 24rem, (min-width: 768px) 33vw, calc(100vw - 2.5rem)",
+                    )}
+                  alt={`Capa da notícia ${noticia.titulo}`}
+                  loading="lazy"
+                  className="mb-4 aspect-[16/9] w-full rounded-xl object-cover"
+                />
+                <div className="flex flex-wrap items-center gap-2 text-xs">
+                  <span className="font-semibold uppercase tracking-[0.14em] text-secondary">
+                    {noticia.categoria}
+                  </span>
+                  <span className="text-muted-foreground">
+                    {formatarDataNoticia(noticia.data_noticia)}
+                  </span>
+                </div>
+                <h3 className="mt-2 break-words font-display text-lg font-semibold text-primary">
+                  {noticia.titulo}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground">{noticia.subtitulo}</p>
+                <Link
+                  to="/noticias/$slug"
+                  params={{ slug: noticia.slug }}
+                  className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-secondary hover:underline"
+                >
+                  Ler notícia <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground">Nenhuma notícia publicada no momento.</p>
+        )}
+        <Link
+          to="/noticias"
+          className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-secondary hover:underline"
+        >
+          Ver todas as notícias <ArrowRight className="h-4 w-4" />
+        </Link>
       </Section>
 
       <Section

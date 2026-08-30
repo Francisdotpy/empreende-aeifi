@@ -21,8 +21,8 @@ export function Footer() {
     .filter((network) => Boolean(network.url));
 
   return (
-    <footer className="mt-20 bg-ink text-ink-foreground">
-      <div className="container-page grid gap-10 py-14 md:grid-cols-4">
+    <footer className="mt-16 bg-ink text-ink-foreground md:mt-20">
+      <div className="container-page grid gap-10 py-10 md:grid-cols-4 md:py-14">
         <div className="md:col-span-2">
           <p className="font-display text-xl font-semibold">AEIFI</p>
           <p className="mt-1 max-w-sm text-sm text-ink-foreground/80">
@@ -31,9 +31,9 @@ export function Footer() {
           {details.length ? (
             <dl className="mt-6 space-y-1.5 text-sm text-ink-foreground/80">
               {details.map(([label, value]) => (
-                <div key={label} className="flex flex-wrap gap-2">
+                <div key={label} className="flex min-w-0 flex-wrap gap-2">
                   <dt className="font-semibold text-ink-foreground">{label}:</dt>
-                  <dd>{value}</dd>
+                  <dd className="min-w-0 break-words [overflow-wrap:anywhere]">{value}</dd>
                 </div>
               ))}
             </dl>
@@ -46,7 +46,7 @@ export function Footer() {
                   href={network.url ?? undefined}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-accent hover:underline"
+                  className="inline-flex min-h-11 items-center hover:text-accent hover:underline"
                 >
                   {network.nome}
                 </a>
@@ -57,54 +57,54 @@ export function Footer() {
 
         <nav aria-label="Links institucionais">
           <p className="text-sm font-semibold uppercase tracking-wide text-accent">Institucional</p>
-          <ul className="mt-4 space-y-2 text-sm text-ink-foreground/85">
+          <ul className="mt-3 text-sm text-ink-foreground/85">
             <li>
-              <Link to="/a-aeifi" className="hover:text-accent">
+              <Link to="/a-aeifi" className="inline-flex min-h-11 items-center hover:text-accent">
                 A AEIFI
               </Link>
             </li>
             <li>
-              <Link to="/o-que-fazemos" className="hover:text-accent">
+              <Link to="/o-que-fazemos" className="inline-flex min-h-11 items-center hover:text-accent">
                 O que fazemos
               </Link>
             </li>
             <li>
-              <Link to="/iniciativas" className="hover:text-accent">
+              <Link to="/iniciativas" className="inline-flex min-h-11 items-center hover:text-accent">
                 Projetos e iniciativas
               </Link>
             </li>
             <li>
-              <Link to="/noticias" className="hover:text-accent">
+              <Link to="/noticias" className="inline-flex min-h-11 items-center hover:text-accent">
                 Notícias
               </Link>
             </li>
             <li>
-              <Link to="/transparencia" className="hover:text-accent">
+              <Link to="/transparencia" className="inline-flex min-h-11 items-center hover:text-accent">
                 Transparência
               </Link>
             </li>
             <li>
-              <Link to="/parceiros" className="hover:text-accent">
+              <Link to="/parceiros" className="inline-flex min-h-11 items-center hover:text-accent">
                 Parceiros
               </Link>
             </li>
             <li>
-              <Link to="/associe-se" className="hover:text-accent">
+              <Link to="/associe-se" className="inline-flex min-h-11 items-center hover:text-accent">
                 Quero me associar
               </Link>
             </li>
             <li>
-              <Link to="/contato" className="hover:text-accent">
+              <Link to="/contato" className="inline-flex min-h-11 items-center hover:text-accent">
                 Contato
               </Link>
             </li>
             <li>
-              <Link to="/politica-de-privacidade" className="hover:text-accent">
+              <Link to="/politica-de-privacidade" className="inline-flex min-h-11 items-center hover:text-accent">
                 Política de Privacidade
               </Link>
             </li>
             <li>
-              <Link to="/downloads" className="hover:text-accent">
+              <Link to="/downloads" className="inline-flex min-h-11 items-center hover:text-accent">
                 Editais
               </Link>
             </li>
@@ -123,7 +123,7 @@ export function Footer() {
             </p>
             <Link
               to="/buscamei"
-              className="mt-3 inline-block text-sm font-semibold text-accent hover:underline"
+              className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold text-accent hover:underline"
             >
               Conheça o BuscaMEI
             </Link>
@@ -131,7 +131,7 @@ export function Footer() {
               href="https://www.buscamei.com.br"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-1 block text-sm text-ink-foreground/70 hover:text-accent"
+              className="inline-flex min-h-11 max-w-full items-center break-all text-sm text-ink-foreground/70 hover:text-accent"
             >
               www.buscamei.com.br
             </a>

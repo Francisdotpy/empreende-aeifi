@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import logoHeader from "@/assets/logo-header.png";
 
 const nav = [
@@ -17,6 +17,28 @@ const nav = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const firstLinkRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    firstLinkRef.current?.focus();
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      requestAnimationFrame(() => menuButtonRef.current?.focus());
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [open]);
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/95 shadow-sm backdrop-blur">
@@ -25,6 +47,9 @@ export function Header() {
           <img
             src={logoHeader}
             alt="Logotipo da AEIFI"
+            width={1774}
+            height={887}
+            sizes="128px"
             className="w-32 max-w-none rounded-xl object-contain"
           />
         </Link>
@@ -46,14 +71,16 @@ export function Header() {
         <div className="flex items-center gap-2">
           <Link
             to="/associe-se"
-            className="hidden rounded-md bg-secondary px-4 py-2.5 text-sm font-semibold text-secondary-foreground shadow-sm transition-all hover:bg-secondary/90 hover:shadow-md active:translate-y-px sm:inline-flex"
+            className="hidden min-h-11 items-center rounded-md bg-secondary px-4 py-2.5 text-sm font-semibold text-secondary-foreground shadow-sm transition-all hover:bg-secondary/90 hover:shadow-md active:translate-y-px sm:inline-flex"
           >
             Quero me associar
           </Link>
           <button
             type="button"
+            ref={menuButtonRef}
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
+            aria-controls="mobile-navigation"
             aria-label={open ? "Fechar menu" : "Abrir menu"}
             className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-card text-foreground shadow-sm transition-colors hover:bg-muted xl:hidden"
           >
@@ -64,13 +91,15 @@ export function Header() {
 
       {open && (
         <nav
-          className="border-t border-border bg-card shadow-md xl:hidden"
+          id="mobile-navigation"
+          className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain border-t border-border bg-card pb-[env(safe-area-inset-bottom)] shadow-md xl:hidden"
           aria-label="Navegação principal (mobile)"
         >
           <div className="container-page grid gap-1 py-3">
             {nav.map((item) => (
               <Link
                 key={item.to}
+                ref={item.to === "/" ? firstLinkRef : undefined}
                 to={item.to}
                 onClick={() => setOpen(false)}
                 activeOptions={{ exact: item.to === "/" }}

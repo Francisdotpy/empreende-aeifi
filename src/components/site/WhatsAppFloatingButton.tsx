@@ -8,10 +8,10 @@ export function WhatsAppFloatingButton() {
   const contacts = parseWhatsAppContacts(get(WHATSAPP_CONTACTS_KEY));
 
   return (
-    <div className="fixed bottom-4 right-4 z-40 flex max-w-[calc(100vw-2rem)] flex-col items-end gap-2 sm:bottom-6 sm:right-6">
+    <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40 flex max-w-[calc(100vw-2rem)] flex-col items-end gap-2 sm:bottom-[max(1.5rem,env(safe-area-inset-bottom))] sm:right-6">
       <div
         aria-hidden={!open}
-        className={`flex origin-bottom flex-col items-end gap-2 transition-all duration-200 ${
+        className={`flex max-h-[calc(100dvh-7rem-env(safe-area-inset-bottom))] w-[min(22rem,calc(100vw-2rem))] origin-bottom flex-col items-end gap-2 overflow-y-auto overscroll-contain transition-all duration-200 ${
           open
             ? "translate-y-0 scale-100 opacity-100"
             : "pointer-events-none translate-y-2 scale-95 opacity-0"
@@ -24,7 +24,7 @@ export function WhatsAppFloatingButton() {
               href={`https://wa.me/${contact.numero}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex max-w-full items-center gap-3 rounded-full border border-border bg-background py-2 pl-4 pr-2 text-sm font-semibold text-foreground shadow-lift transition-transform hover:-translate-y-0.5"
+              className="flex min-h-13 w-full min-w-0 max-w-full items-center gap-3 rounded-full border border-border bg-background py-2 pl-4 pr-2 text-sm font-semibold text-foreground shadow-lift transition-transform hover:-translate-y-0.5"
               tabIndex={open ? 0 : -1}
               aria-label={`Conversar com ${contact.nome}, ${contact.funcao}, pelo WhatsApp`}
             >

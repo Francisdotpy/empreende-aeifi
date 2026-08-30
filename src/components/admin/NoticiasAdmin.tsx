@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { ExternalLink, FileText, Pencil, Plus, Trash2, X } from "lucide-react";
+import { ExternalLink, Pencil, Plus, Trash2, X } from "lucide-react";
 import { Card } from "@/components/site/ui";
 import { formControlClassName } from "@/components/site/form-styles";
 import { responsiveImageProps } from "@/lib/responsive-images";
 import { supabase } from "@/integrations/supabase/client";
-import { deleteEditalFiles, uploadEditalFile } from "@/lib/uploads.functions";
 import {
-  editaisAdminQuery,
-  formatarDataPublicacao,
-  type Edital,
-  type EditalStatus,
-} from "@/lib/editais";
+  formatarDataNoticia,
+  noticiasAdminQuery,
+  parseFonteLinks,
+  slugifyNoticia,
+  type NoticiaPublicada,
+  type NoticiaStatus,
+} from "@/lib/noticias";
+import { deleteNoticiaImages, uploadNoticiaImage } from "@/lib/uploads.functions";
 
 type FormState = {
   titulo: string;
-  dataPublicacao: string;
-  status: EditalStatus;
+  subtitulo: string;
+  texto: string;
+  fontes: string;
+  dataNoticia: string;
+  categoria: string;
+  status: NoticiaStatus;
   imageFile: File | null;
-  pdfFile: File | null;
   imagePreview: string;
 };
 
@@ -30,14 +35,17 @@ function today() {
   return new Date(date.getTime() - offset).toISOString().slice(0, 10);
 }
 
-function initialForm(edital?: Edital): FormState {
+function initialForm(noticia?: NoticiaPublicada): FormState {
   return {
-    titulo: edital?.titulo ?? "",
-    dataPublicacao: edital?.data_publicacao ?? today(),
-    status: edital?.status ?? "rascunho",
+    titulo: noticia?.titulo ?? "",
+    subtitulo: noticia?.subtitulo ?? "",
+    texto: noticia?.texto ?? "",
+    fontes: noticia?.fontes.join("\n") ?? "",
+    dataNoticia: noticia?.data_noticia ?? today(),
+    categoria: noticia?.categoria ?? "",
+    status: noticia?.status ?? "rascunho",
     imageFile: null,
-    pdfFile: null,
-    imagePreview: edital?.imagem_url ?? "",
+    imagePreview: noticia?.capa_url ?? "",
   };
 }
 
@@ -56,10 +64,25 @@ function readableError(error: unknown) {
   return "Não foi possível concluir a operação. Verifique sua conexão e tente novamente.";
 }
 
-export function EditaisAdmin() {
+async function createUniqueSlug(title: string) {
+  const base = slugifyNoticia(title) || "noticia";
+  for (let suffix = 1; suffix <= 50; suffix += 1) {
+    const slug = suffix === 1 ? base : `${base}-${suffix}`;
+    const { data, error } = await supabase
+      .from("noticias")
+      .select("id")
+      .eq("slug", slug)
+      .maybeSingle();
+    if (error) throw error;
+    if (!data) return slug;
+  }
+  return `${base}-${crypto.randomUUID().slice(0, 8)}`;
+}
+
+export function NoticiasAdmin() {
   const queryClient = useQueryClient();
-  const { data: editais = [], isLoading, isError } = useQuery(editaisAdminQuery);
-  const [editing, setEditing] = useState<Edital | null>(null);
+  const { data: noticias = [], isLoading, isError } = useQuery(noticiasAdminQuery);
+  const [editing, setEditing] = useState<NoticiaPublicada | null>(null);
   const [formOpen, setFormOpen] = useState(false);
   const [form, setForm] = useState<FormState>(() => initialForm());
   const [busy, setBusy] = useState(false);
@@ -79,9 +102,9 @@ export function EditaisAdmin() {
     setFormOpen(true);
   }
 
-  function openEdit(edital: Edital) {
-    setEditing(edital);
-    setForm(initialForm(edital));
+  function openEdit(noticia: NoticiaPublicada) {
+    setEditing(noticia);
+    setForm(initialForm(noticia));
     setMessage(null);
     setFormOpen(true);
   }
@@ -105,18 +128,18 @@ export function EditaisAdmin() {
       setForm((current) => ({
         ...current,
         imageFile: null,
-        imagePreview: editing?.imagem_url ?? "",
+        imagePreview: editing?.capa_url ?? "",
       }));
-      setMessage({ type: "error", text: "A imagem deve estar em JPG, JPEG, PNG ou WEBP." });
+      setMessage({ type: "error", text: "A capa deve estar em JPG, JPEG, PNG ou WEBP." });
       return;
     }
     if (file.size > 5 * 1024 * 1024) {
       setForm((current) => ({
         ...current,
         imageFile: null,
-        imagePreview: editing?.imagem_url ?? "",
+        imagePreview: editing?.capa_url ?? "",
       }));
-      setMessage({ type: "error", text: "A imagem deve ter no máximo 5 MB." });
+      setMessage({ type: "error", text: "A capa deve ter no máximo 5 MB." });
       return;
     }
     setMessage(null);
@@ -127,131 +150,121 @@ export function EditaisAdmin() {
     }));
   }
 
-  function choosePdf(file: File | undefined) {
-    if (!file) return;
-    if (file.type !== "application/pdf" || file.name.split(".").pop()?.toLowerCase() !== "pdf") {
-      setForm((current) => ({ ...current, pdfFile: null }));
-      setMessage({ type: "error", text: "O arquivo do edital deve ser um PDF." });
-      return;
-    }
-    if (file.size > 10 * 1024 * 1024) {
-      setForm((current) => ({ ...current, pdfFile: null }));
-      setMessage({ type: "error", text: "O PDF deve ter no máximo 10 MB." });
-      return;
-    }
-    setMessage(null);
-    setForm((current) => ({ ...current, pdfFile: file }));
-  }
-
-  async function upload(file: File, kind: "image" | "pdf") {
-    return uploadEditalFile({
-      data: {
-        name: file.name,
-        contentType: file.type,
-        dataBase64: await fileToBase64(file),
-        kind,
-      },
-    });
-  }
-
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (busy) return;
-    if (!form.titulo.trim() || !form.dataPublicacao) {
-      setMessage({ type: "error", text: "Preencha o título e a data de publicação." });
+
+    const required = [form.titulo, form.subtitulo, form.texto, form.dataNoticia, form.categoria];
+    if (required.some((value) => !value.trim())) {
+      setMessage({ type: "error", text: "Preencha todos os campos obrigatórios da notícia." });
       return;
     }
-    if (!editing && (!form.imageFile || !form.pdfFile)) {
-      setMessage({ type: "error", text: "Selecione a imagem de destaque e o PDF do edital." });
+    if (!editing && !form.imageFile) {
+      setMessage({ type: "error", text: "Selecione uma imagem de capa para a notícia." });
+      return;
+    }
+
+    let fontes: string[];
+    try {
+      fontes = parseFonteLinks(form.fontes);
+    } catch (error) {
+      setMessage({ type: "error", text: readableError(error) });
       return;
     }
 
     setBusy(true);
     setMessage(null);
-    const uploaded: string[] = [];
+    let uploadedUrl = "";
+    const wasEditing = Boolean(editing);
     try {
-      let imagemUrl = editing?.imagem_url ?? "";
-      let pdfUrl = editing?.pdf_url ?? "";
+      let capaUrl = editing?.capa_url ?? "";
       if (form.imageFile) {
-        imagemUrl = (await upload(form.imageFile, "image")).url;
-        uploaded.push(imagemUrl);
-      }
-      if (form.pdfFile) {
-        pdfUrl = (await upload(form.pdfFile, "pdf")).url;
-        uploaded.push(pdfUrl);
+        const uploaded = await uploadNoticiaImage({
+          data: {
+            name: form.imageFile.name,
+            contentType: form.imageFile.type,
+            dataBase64: await fileToBase64(form.imageFile),
+          },
+        });
+        capaUrl = uploaded.url;
+        uploadedUrl = uploaded.url;
       }
 
       const payload = {
         titulo: form.titulo.trim(),
-        imagem_url: imagemUrl,
-        pdf_url: pdfUrl,
-        data_publicacao: form.dataPublicacao,
+        subtitulo: form.subtitulo.trim(),
+        texto: form.texto.trim(),
+        fontes,
+        capa_url: capaUrl,
+        data_noticia: form.dataNoticia,
+        categoria: form.categoria.trim(),
         status: form.status,
       };
+
       if (editing) {
         const { error } = await supabase
-          .from("downloads_editais")
+          .from("noticias")
           .update(payload)
           .eq("id", editing.id)
           .select("id")
           .single();
         if (error) throw error;
       } else {
-        const { error } = await supabase.from("downloads_editais").insert(payload);
+        const slug = await createUniqueSlug(form.titulo);
+        const { error } = await supabase.from("noticias").insert({ ...payload, slug });
         if (error) throw error;
       }
 
-      const replaced = editing
-        ? [form.imageFile ? editing.imagem_url : "", form.pdfFile ? editing.pdf_url : ""].filter(
-            Boolean,
-          )
-        : [];
-      if (replaced.length)
-        void deleteEditalFiles({ data: { urls: replaced } }).catch(() => undefined);
+      if (editing && form.imageFile) {
+        void deleteNoticiaImages({ data: { urls: [editing.capa_url] } }).catch(() => undefined);
+      }
 
-      await queryClient.invalidateQueries({ queryKey: ["editais"] });
+      await queryClient.invalidateQueries({ queryKey: ["noticias"] });
       setFormOpen(false);
       setEditing(null);
       setForm(initialForm());
       setMessage({
         type: "success",
-        text: editing ? "Edital atualizado com sucesso." : "Edital cadastrado com sucesso.",
+        text: wasEditing ? "Notícia atualizada com sucesso." : "Notícia cadastrada com sucesso.",
       });
     } catch (error) {
-      if (uploaded.length)
-        void deleteEditalFiles({ data: { urls: uploaded } }).catch(() => undefined);
+      if (uploadedUrl) {
+        void deleteNoticiaImages({ data: { urls: [uploadedUrl] } }).catch(() => undefined);
+      }
       setMessage({ type: "error", text: readableError(error) });
     } finally {
       setBusy(false);
     }
   }
 
-  async function remove(edital: Edital) {
+  async function remove(noticia: NoticiaPublicada) {
     const confirmed = window.confirm(
-      `Excluir o edital “${edital.titulo}”? Esta ação não pode ser desfeita.`,
+      `Excluir a notícia “${noticia.titulo}”? Esta ação não pode ser desfeita.`,
     );
     if (!confirmed) return;
-    setDeletingId(edital.id);
+
+    setDeletingId(noticia.id);
     setMessage(null);
     const { error } = await supabase
-      .from("downloads_editais")
+      .from("noticias")
       .delete()
-      .eq("id", edital.id)
+      .eq("id", noticia.id)
       .select("id")
       .single();
     if (error) {
-      setMessage({ type: "error", text: "Não foi possível excluir o edital." });
+      setMessage({ type: "error", text: "Não foi possível excluir a notícia." });
       setDeletingId(null);
       return;
     }
-    await queryClient.invalidateQueries({ queryKey: ["editais"] });
+
+    await queryClient.invalidateQueries({ queryKey: ["noticias"] });
     try {
-      await deleteEditalFiles({ data: { urls: [edital.imagem_url, edital.pdf_url] } });
-      setMessage({ type: "success", text: "Edital e arquivos excluídos com sucesso." });
+      await deleteNoticiaImages({ data: { urls: [noticia.capa_url] } });
+      setMessage({ type: "success", text: "Notícia e imagem de capa excluídas com sucesso." });
     } catch {
       setMessage({
         type: "success",
-        text: "Edital excluído. A limpeza dos arquivos armazenados não pôde ser confirmada.",
+        text: "Notícia excluída. A limpeza da imagem armazenada não pôde ser confirmada.",
       });
     }
     setDeletingId(null);
@@ -261,9 +274,9 @@ export function EditaisAdmin() {
     <Card>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h2 className="font-display text-lg font-semibold text-primary">Downloads / Editais</h2>
+          <h2 className="font-display text-lg font-semibold text-primary">Notícias</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Cadastre os editais exibidos na página pública de credenciamento.
+            Cadastre e publique as notícias exibidas na página pública da AEIFI.
           </p>
         </div>
         <button
@@ -272,7 +285,7 @@ export function EditaisAdmin() {
           disabled={busy || formOpen}
           className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-secondary px-4 py-2.5 text-sm font-semibold text-secondary-foreground shadow-sm transition-all hover:bg-secondary/90 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50"
         >
-          <Plus className="h-4 w-4" /> Adicionar edital
+          <Plus className="h-4 w-4" /> Adicionar notícia
         </button>
       </div>
 
@@ -289,7 +302,7 @@ export function EditaisAdmin() {
         <form onSubmit={submit} className="mt-6 grid min-w-0 gap-5 border border-border bg-muted/30 p-4 sm:p-5">
           <div className="flex items-center justify-between gap-3">
             <h3 className="font-display text-lg font-semibold text-primary">
-              {editing ? "Editar edital" : "Novo edital"}
+              {editing ? "Editar notícia" : "Nova notícia"}
             </h3>
             <button
               type="button"
@@ -315,24 +328,60 @@ export function EditaisAdmin() {
                 className={inputClass}
               />
             </label>
-            <label className="grid gap-1.5 text-sm font-medium text-primary">
-              Data de publicação
-              <input
+            <label className="grid gap-1.5 text-sm font-medium text-primary md:col-span-2">
+              Subtítulo
+              <textarea
                 required
-                type="date"
-                value={form.dataPublicacao}
+                rows={2}
+                maxLength={320}
+                value={form.subtitulo}
                 onChange={(event) =>
-                  setForm((current) => ({ ...current, dataPublicacao: event.target.value }))
+                  setForm((current) => ({ ...current, subtitulo: event.target.value }))
                 }
                 className={inputClass}
               />
+            </label>
+            <label className="grid gap-1.5 text-sm font-medium text-primary">
+              Data da notícia
+              <input
+                required
+                type="date"
+                value={form.dataNoticia}
+                onChange={(event) =>
+                  setForm((current) => ({ ...current, dataNoticia: event.target.value }))
+                }
+                className={inputClass}
+              />
+            </label>
+            <label className="grid gap-1.5 text-sm font-medium text-primary">
+              Categoria
+              <input
+                required
+                maxLength={80}
+                list="noticia-categorias"
+                value={form.categoria}
+                onChange={(event) =>
+                  setForm((current) => ({ ...current, categoria: event.target.value }))
+                }
+                className={inputClass}
+              />
+              <datalist id="noticia-categorias">
+                <option value="Projetos" />
+                <option value="Capacitação" />
+                <option value="Parcerias" />
+                <option value="Eventos" />
+                <option value="Institucional" />
+              </datalist>
             </label>
             <label className="grid gap-1.5 text-sm font-medium text-primary">
               Status
               <select
                 value={form.status}
                 onChange={(event) =>
-                  setForm((current) => ({ ...current, status: event.target.value as EditalStatus }))
+                  setForm((current) => ({
+                    ...current,
+                    status: event.target.value as NoticiaStatus,
+                  }))
                 }
                 className={inputClass}
               >
@@ -341,7 +390,7 @@ export function EditaisAdmin() {
               </select>
             </label>
             <div className="grid gap-2 text-sm font-medium text-primary">
-              <span>Imagem de destaque {editing ? "(opcional)" : ""}</span>
+              <span>Capa {editing ? "(opcional para substituir)" : ""}</span>
               <input
                 type="file"
                 accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
@@ -356,37 +405,40 @@ export function EditaisAdmin() {
               {form.imagePreview ? (
                 <img
                   src={form.imagePreview}
-                  alt="Preview da imagem de destaque"
-                  className="mt-1 aspect-[4/3] w-full max-w-xs border border-border object-cover"
+                  alt="Preview da capa da notícia"
+                  className="mt-1 aspect-[16/9] w-full max-w-sm border border-border object-cover"
                 />
               ) : null}
             </div>
-            <div className="grid content-start gap-2 text-sm font-medium text-primary">
-              <span>Arquivo PDF {editing ? "(opcional)" : ""}</span>
-              <input
-                type="file"
-                accept=".pdf,application/pdf"
-                required={!editing}
-                disabled={busy}
-                onChange={(event) => choosePdf(event.target.files?.[0])}
+            <label className="grid gap-1.5 text-sm font-medium text-primary md:col-span-2">
+              Texto
+              <textarea
+                required
+                rows={12}
+                maxLength={50000}
+                value={form.texto}
+                onChange={(event) =>
+                  setForm((current) => ({ ...current, texto: event.target.value }))
+                }
                 className={inputClass}
+                placeholder="Separe os parágrafos com uma linha em branco."
               />
-              <span className="text-xs font-normal text-muted-foreground">PDF, até 10 MB.</span>
-              {form.pdfFile ? (
-                <span className="text-xs font-normal text-secondary">
-                  Selecionado: {form.pdfFile.name}
-                </span>
-              ) : editing ? (
-                <a
-                  href={editing.pdf_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-normal text-secondary underline"
-                >
-                  Visualizar PDF atual
-                </a>
-              ) : null}
-            </div>
+            </label>
+            <label className="grid gap-1.5 text-sm font-medium text-primary md:col-span-2">
+              Links das fontes
+              <textarea
+                rows={4}
+                value={form.fontes}
+                onChange={(event) =>
+                  setForm((current) => ({ ...current, fontes: event.target.value }))
+                }
+                className={inputClass}
+                placeholder={"https://exemplo.com/fonte-1\nhttps://exemplo.com/fonte-2"}
+              />
+              <span className="text-xs font-normal text-muted-foreground">
+                Opcional. Informe um link completo por linha; eles aparecerão ao fim da notícia.
+              </span>
+            </label>
           </div>
 
           <div className="flex flex-wrap gap-3">
@@ -395,7 +447,7 @@ export function EditaisAdmin() {
               disabled={busy}
               className="rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {busy ? "Enviando e salvando…" : editing ? "Salvar alterações" : "Cadastrar edital"}
+              {busy ? "Enviando e salvando…" : editing ? "Salvar alterações" : "Cadastrar notícia"}
             </button>
             <button
               type="button"
@@ -411,64 +463,73 @@ export function EditaisAdmin() {
 
       <div className="mt-6">
         {isLoading ? (
-          <p className="text-sm text-muted-foreground">Carregando editais…</p>
+          <p className="text-sm text-muted-foreground">Carregando notícias…</p>
         ) : isError ? (
           <p className="text-sm text-destructive">
             Não foi possível carregar a listagem. Verifique seu acesso de administrador.
           </p>
-        ) : editais.length === 0 ? (
+        ) : noticias.length === 0 ? (
           <p className="border border-dashed border-border bg-muted/30 px-4 py-5 text-sm text-muted-foreground">
-            Nenhum edital cadastrado.
+            Nenhuma notícia administrável cadastrada.
           </p>
         ) : (
           <ul className="grid gap-3">
-            {editais.map((edital) => (
+            {noticias.map((noticia) => (
               <li
-                key={edital.id}
-                className="grid min-w-0 gap-4 border border-border bg-card p-4 shadow-sm sm:grid-cols-[5rem_minmax(0,1fr)] sm:items-center lg:grid-cols-[5rem_minmax(0,1fr)_auto]"
+                key={noticia.id}
+                className="grid min-w-0 gap-4 border border-border bg-card p-4 shadow-sm sm:grid-cols-[7rem_minmax(0,1fr)] sm:items-center lg:grid-cols-[7rem_minmax(0,1fr)_auto]"
               >
                 <img
-                  {...responsiveImageProps(edital.imagem_url, "80px")}
+                  {...responsiveImageProps(noticia.capa_url, "112px")}
                   alt=""
-                  className="aspect-[4/3] w-20 border border-border object-cover"
+                  className="aspect-[16/9] w-28 border border-border object-cover"
                 />
                 <div className="min-w-0">
-                  <h3 className="break-words font-semibold text-primary">{edital.titulo}</h3>
-                  <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                    <span>{formatarDataPublicacao(edital.data_publicacao)}</span>
+                  <h3 className="break-words font-semibold text-primary">{noticia.titulo}</h3>
+                  <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
+                    {noticia.subtitulo}
+                  </p>
+                  <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                    <span>{formatarDataNoticia(noticia.data_noticia)}</span>
+                    <span aria-hidden="true">·</span>
+                    <span className="min-w-0 break-words [overflow-wrap:anywhere]">
+                      {noticia.categoria}
+                    </span>
                     <span aria-hidden="true">·</span>
                     <span
-                      className={`font-semibold ${edital.status === "publicado" ? "text-green-700" : "text-amber-700"}`}
+                      className={`font-semibold ${noticia.status === "publicado" ? "text-green-700" : "text-amber-700"}`}
                     >
-                      {edital.status === "publicado" ? "Publicado" : "Rascunho"}
+                      {noticia.status === "publicado" ? "Publicado" : "Rascunho"}
                     </span>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2 sm:col-span-2 lg:col-span-1 lg:justify-end">
                   <button
                     type="button"
-                    onClick={() => openEdit(edital)}
+                    onClick={() => openEdit(noticia)}
                     disabled={busy || deletingId !== null}
                     className="inline-flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-md border border-border px-3 py-2 text-xs font-semibold text-primary hover:bg-muted disabled:opacity-50 sm:flex-none"
                   >
                     <Pencil className="h-3.5 w-3.5" /> Editar
                   </button>
-                  <a
-                    href={edital.pdf_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-md border border-border px-3 py-2 text-xs font-semibold text-secondary hover:bg-muted sm:flex-none"
-                  >
-                    <FileText className="h-3.5 w-3.5" /> PDF <ExternalLink className="h-3 w-3" />
-                  </a>
+                  {noticia.status === "publicado" ? (
+                    <a
+                      href={`/noticias/${noticia.slug}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-md border border-border px-3 py-2 text-xs font-semibold text-secondary hover:bg-muted sm:flex-none"
+                    >
+                      Ver <ExternalLink className="h-3 w-3" />
+                    </a>
+                  ) : null}
                   <button
                     type="button"
-                    onClick={() => void remove(edital)}
+                    onClick={() => void remove(noticia)}
                     disabled={busy || deletingId !== null}
                     className="inline-flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-md border border-destructive/30 px-3 py-2 text-xs font-semibold text-destructive hover:bg-destructive/10 disabled:opacity-50 sm:flex-none"
                   >
                     <Trash2 className="h-3.5 w-3.5" />{" "}
-                    {deletingId === edital.id ? "Excluindo…" : "Excluir"}
+                    {deletingId === noticia.id ? "Excluindo…" : "Excluir"}
                   </button>
                 </div>
               </li>

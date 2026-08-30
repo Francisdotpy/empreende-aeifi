@@ -254,57 +254,6 @@ export const depoimentos = [
   { texto: TBD, autor: TBD, negocio: TBD },
 ];
 
-export type Noticia = {
-  slug: string;
-  titulo: string;
-  data: string;
-  categoria: string;
-  resumo: string;
-  corpo: string[];
-};
-
-export const noticias: Noticia[] = [
-  {
-    slug: "aeifi-apresenta-o-buscamei-aos-associados",
-    titulo: "AEIFI apresenta o BuscaMEI aos associados",
-    data: TBD,
-    categoria: "Projetos",
-    resumo:
-      "A associação apresentou aos associados a plataforma desenvolvida para ampliar a visibilidade dos microempreendedores da cidade.",
-    corpo: [
-      "A AEIFI apresentou aos seus associados o BuscaMEI, plataforma desenvolvida pela própria associação para ampliar a visibilidade dos microempreendedores e facilitar a conexão entre quem oferece e quem procura produtos e serviços.",
-      "Durante o encontro foram explicados o funcionamento do cadastro, as informações que ficam visíveis para quem faz a busca e a forma como a ferramenta se articula com as demais ações da associação.",
-      `Detalhes da atividade, data, local e número de participantes: ${TBD}.`,
-    ],
-  },
-  {
-    slug: "capacitacao-para-microempreendedores",
-    titulo: "Capacitação para microempreendedores reúne participantes em Foz do Iguaçu",
-    data: TBD,
-    categoria: "Capacitação",
-    resumo:
-      "Atividade formativa abordou temas práticos de gestão para quem toca um pequeno negócio na cidade.",
-    corpo: [
-      "A AEIFI realizou mais uma atividade de capacitação voltada a microempreendedores individuais, dentro do seu programa permanente de formação.",
-      "A programação tratou de temas práticos do dia a dia do empreendedor, como organização financeira, atendimento ao cliente e presença digital.",
-      `Data, local, conteúdo programático, parceiros e número de participantes: ${TBD}.`,
-    ],
-  },
-  {
-    slug: "aeifi-amplia-rede-de-parceiros",
-    titulo: "AEIFI amplia sua rede de parceiros institucionais",
-    data: TBD,
-    categoria: "Parcerias",
-    resumo:
-      "Novas articulações buscam ampliar as oportunidades oferecidas aos empreendedores associados.",
-    corpo: [
-      "A associação segue ampliando sua rede de parceiros com empresas, entidades, instituições de ensino e órgãos públicos interessados em contribuir com o desenvolvimento do microempreendedorismo em Foz do Iguaçu.",
-      "As parcerias viabilizam capacitações, ações de divulgação, espaços de comercialização e apoio técnico às iniciativas da AEIFI.",
-      `Relação de parceiros, escopo de cada parceria e datas: ${TBD}.`,
-    ],
-  },
-];
-
 export const diretoria = [
   { id: "presidencia", cargo: "Presidência", nome: TBD },
   { id: "secretaria", cargo: "Secretaria", nome: TBD },
