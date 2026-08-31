@@ -234,6 +234,33 @@ function pick(map: Overrides, key: string, fallback: string) {
   return map[key] ?? fallback;
 }
 
+function formatCnpj(value: string) {
+  const digits = value.replace(/\D/g, "");
+  if (digits.length !== 14) return value;
+  return digits.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
+}
+
+function formatHorario(value: string) {
+  return value.replace(/\bas\b/gi, "às");
+}
+
+function normalizeSocialUrl(networkName: string, value: string) {
+  const trimmed = value.trim();
+  if (!trimmed || trimmed === TBD) return trimmed;
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+
+  if (networkName.toLowerCase() === "instagram") {
+    const handle = trimmed.replace(/^@/, "").replace(/^instagram\.com\//i, "").replace(/\/$/, "");
+    return handle ? `https://www.instagram.com/${handle}/` : trimmed;
+  }
+
+  return trimmed;
+}
+
+function cleanEditableText(value: string) {
+  return value.replace(/\bTraver\s+sgurit\b/gi, "Traver Segurit");
+}
+
 export function buildSite(map: Overrides) {
   const orgDefaults = getOrgDefaults();
   const impactoItems = getImpactoItems();
@@ -245,14 +272,17 @@ export function buildSite(map: Overrides) {
     org: {
       ...orgDefaults,
       razaoSocial: pick(map, "org.razaoSocial", orgDefaults.razaoSocial),
-      cnpj: pick(map, "org.cnpj", orgDefaults.cnpj),
+      cnpj: formatCnpj(pick(map, "org.cnpj", orgDefaults.cnpj)),
       fundacao: pick(map, "org.fundacao", orgDefaults.fundacao),
       sede: pick(map, "org.sede", orgDefaults.sede),
       telefone: pick(map, "org.telefone", orgDefaults.telefone),
       whatsapp: pick(map, "org.whatsapp", orgDefaults.whatsapp),
       email: pick(map, "org.email", orgDefaults.email),
-      horario: pick(map, "org.horario", orgDefaults.horario),
-      redes: orgDefaults.redes.map((r, idx) => ({ ...r, url: pick(map, `org.redes.${idx}`, r.url) })),
+      horario: formatHorario(pick(map, "org.horario", orgDefaults.horario)),
+      redes: orgDefaults.redes.map((r, idx) => ({
+        ...r,
+        url: normalizeSocialUrl(r.nome, pick(map, `org.redes.${idx}`, r.url)),
+      })),
     },
     impacto: impactoItems.map((i, idx) => ({ ...i, valor: pick(map, `impacto.${idx}`, i.valor) })),
     diretoria: diretoriaItems.map((d) => ({ ...d, nome: pick(map, `diretoria.${d.id}`, d.nome) })),
@@ -266,7 +296,7 @@ export function buildSite(map: Overrides) {
       negocio: pick(map, `depoimentos.${idx}.negocio`, d.negocio),
     })),
     /** Valor bruto de qualquer chave editável (string vazia quando não preenchida). */
-    get: (key: string) => map[key] ?? "",
+    get: (key: string) => cleanEditableText(map[key] ?? ""),
   };
 }
 

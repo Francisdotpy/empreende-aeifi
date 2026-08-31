@@ -9,7 +9,11 @@ import { siteContentQuery, useSite } from "@/content/useSite";
 import { formatarDataNoticia, noticiasPublicadasQuery } from "@/lib/noticias";
 
 export const Route = createFileRoute("/")({
-  loader: ({ context }) => context.queryClient.ensureQueryData(siteContentQuery),
+  loader: ({ context }) =>
+    Promise.all([
+      context.queryClient.ensureQueryData(siteContentQuery),
+      context.queryClient.ensureQueryData(noticiasPublicadasQuery),
+    ]),
   head: () => ({
     meta: [
       { title: "AEIFI — Associação de Empreendedores de Foz do Iguaçu" },
