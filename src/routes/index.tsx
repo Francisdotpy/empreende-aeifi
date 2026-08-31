@@ -43,8 +43,8 @@ function Home() {
   return (
     <>
       <section className="border-b border-border bg-surface">
-        <div className="container-page grid items-center gap-10 py-14 md:py-20 lg:grid-cols-2">
-          <div>
+        <div className="container-page grid items-start gap-10 py-14 md:py-20 lg:grid-cols-2 lg:items-stretch">
+          <div className="lg:self-center">
             <p className="inline-flex rounded-full bg-highlight px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-highlight-foreground">
               Associação de Empreendedores
             </p>
@@ -62,14 +62,14 @@ function Home() {
               </CtaLink>
             </div>
           </div>
-          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-card">
+          <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-border bg-card shadow-card md:max-h-[28rem] lg:aspect-auto lg:max-h-none lg:self-stretch">
             <img
               {...responsiveImageProps(
                 homeImage,
                 "(min-width: 1280px) 37rem, (min-width: 1024px) 48vw, calc(100vw - 2.5rem)",
               )}
               alt="Encontro de empreendedores promovido pela AEIFI"
-              className="aspect-[16/10] w-full object-cover object-center md:max-h-[28rem] lg:aspect-[4/5] lg:h-full lg:max-h-[38rem]"
+              className="h-full w-full object-cover object-center lg:absolute lg:inset-0"
             />
           </div>
         </div>
