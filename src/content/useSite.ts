@@ -72,6 +72,23 @@ export type EditableField = {
   kind?: FieldKind;
 };
 
+const orgDefaults = orgBase ?? {
+  razaoSocial: TBD,
+  cnpj: TBD,
+  fundacao: TBD,
+  sede: TBD,
+  telefone: TBD,
+  whatsapp: TBD,
+  email: TBD,
+  horario: TBD,
+  redes: [],
+};
+const impactoItems = Array.isArray(impactoBase) ? impactoBase : [];
+const diretoriaItems = Array.isArray(diretoriaBase) ? diretoriaBase : [];
+const documentosItems = Array.isArray(documentosBase) ? documentosBase : [];
+const depoimentosItems = Array.isArray(depoimentosBase) ? depoimentosBase : [];
+const iniciativasItems = Array.isArray(iniciativasBase) ? iniciativasBase : [];
+
 /** Lista de campos editáveis na área administrativa. */
 export const editableFields: EditableField[] = [
   {
@@ -96,19 +113,19 @@ export const editableFields: EditableField[] = [
   { group: "Contato", key: "org.horario", label: "Horário de atendimento" },
   { group: "Redes sociais", key: "org.redes.0", label: "Instagram (URL)" },
   { group: "Redes sociais", key: "org.redes.1", label: "Facebook (URL)" },
-  ...impactoBase.map((i, idx) => ({
+  ...impactoItems.map((i, idx) => ({
     group: "Números de impacto",
     key: `impacto.${idx}`,
     label: i.rotulo,
   })),
-  ...diretoriaBase.map((d) => ({ group: "Diretoria", key: `diretoria.${d.id}`, label: d.cargo })),
+  ...diretoriaItems.map((d) => ({ group: "Diretoria", key: `diretoria.${d.id}`, label: d.cargo })),
 
-  ...documentosBase.map((d, idx) => ({
+  ...documentosItems.map((d, idx) => ({
     group: "Transparência (situação dos documentos)",
     key: `documentos.${idx}`,
     label: d.nome,
   })),
-  ...documentosBase.map((d, idx) => ({
+  ...documentosItems.map((d, idx) => ({
     group: "Transparência (arquivos)",
     key: `documentos.${idx}.arquivo`,
     label: `${d.nome} — arquivo (PDF/imagem)`,
@@ -142,7 +159,7 @@ export const editableFields: EditableField[] = [
   },
   { group: "Depoimentos", key: "depoimentos.1.autor", label: "Depoimento 2 — autor" },
   { group: "Depoimentos", key: "depoimentos.1.negocio", label: "Depoimento 2 — negócio" },
-  ...iniciativasBase.flatMap((i) => [
+  ...iniciativasItems.flatMap((i) => [
     {
       group: "Iniciativas",
       key: `iniciativas.${i.slug}.resultados`,
@@ -192,24 +209,24 @@ function pick(map: Overrides, key: string, fallback: string) {
 export function buildSite(map: Overrides) {
   return {
     org: {
-      ...orgBase,
-      razaoSocial: pick(map, "org.razaoSocial", orgBase.razaoSocial),
-      cnpj: pick(map, "org.cnpj", orgBase.cnpj),
-      fundacao: pick(map, "org.fundacao", orgBase.fundacao),
-      sede: pick(map, "org.sede", orgBase.sede),
-      telefone: pick(map, "org.telefone", orgBase.telefone),
-      whatsapp: pick(map, "org.whatsapp", orgBase.whatsapp),
-      email: pick(map, "org.email", orgBase.email),
-      horario: pick(map, "org.horario", orgBase.horario),
-      redes: orgBase.redes.map((r, idx) => ({ ...r, url: pick(map, `org.redes.${idx}`, r.url) })),
+      ...orgDefaults,
+      razaoSocial: pick(map, "org.razaoSocial", orgDefaults.razaoSocial),
+      cnpj: pick(map, "org.cnpj", orgDefaults.cnpj),
+      fundacao: pick(map, "org.fundacao", orgDefaults.fundacao),
+      sede: pick(map, "org.sede", orgDefaults.sede),
+      telefone: pick(map, "org.telefone", orgDefaults.telefone),
+      whatsapp: pick(map, "org.whatsapp", orgDefaults.whatsapp),
+      email: pick(map, "org.email", orgDefaults.email),
+      horario: pick(map, "org.horario", orgDefaults.horario),
+      redes: orgDefaults.redes.map((r, idx) => ({ ...r, url: pick(map, `org.redes.${idx}`, r.url) })),
     },
-    impacto: impactoBase.map((i, idx) => ({ ...i, valor: pick(map, `impacto.${idx}`, i.valor) })),
-    diretoria: diretoriaBase.map((d) => ({ ...d, nome: pick(map, `diretoria.${d.id}`, d.nome) })),
-    documentos: documentosBase.map((d, idx) => ({
+    impacto: impactoItems.map((i, idx) => ({ ...i, valor: pick(map, `impacto.${idx}`, i.valor) })),
+    diretoria: diretoriaItems.map((d) => ({ ...d, nome: pick(map, `diretoria.${d.id}`, d.nome) })),
+    documentos: documentosItems.map((d, idx) => ({
       ...d,
       situacao: pick(map, `documentos.${idx}`, d.situacao),
     })),
-    depoimentos: depoimentosBase.map((d, idx) => ({
+    depoimentos: depoimentosItems.map((d, idx) => ({
       texto: pick(map, `depoimentos.${idx}.texto`, d.texto),
       autor: pick(map, `depoimentos.${idx}.autor`, d.autor),
       negocio: pick(map, `depoimentos.${idx}.negocio`, d.negocio),
