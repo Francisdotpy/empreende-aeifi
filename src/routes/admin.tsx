@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import {
-  editableFields,
+  getEditableFields,
   parseWhatsAppContacts,
   siteContentQuery,
   WHATSAPP_CONTACTS_KEY,
@@ -137,6 +137,7 @@ function LoginForm() {
 function Editor({ onSignOut }: { onSignOut: () => void }) {
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery(siteContentQuery);
+  const editableFields = useMemo(() => getEditableFields(), []);
   const [values, setValues] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -157,14 +158,14 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
   }, [queryClient]);
 
   const groups = useMemo(() => {
-    const map = new Map<string, typeof editableFields>();
+    const map = new Map<string, EditableField[]>();
     for (const field of editableFields) {
       const list = map.get(field.group) ?? [];
       list.push(field);
       map.set(field.group, list);
     }
     return [...map.entries()];
-  }, []);
+  }, [editableFields]);
 
   async function save() {
     setSaving(true);

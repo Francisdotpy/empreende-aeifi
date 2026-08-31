@@ -72,25 +72,50 @@ export type EditableField = {
   kind?: FieldKind;
 };
 
-const orgDefaults = orgBase ?? {
-  razaoSocial: TBD,
-  cnpj: TBD,
-  fundacao: TBD,
-  sede: TBD,
-  telefone: TBD,
-  whatsapp: TBD,
-  email: TBD,
-  horario: TBD,
-  redes: [],
-};
-const impactoItems = Array.isArray(impactoBase) ? impactoBase : [];
-const diretoriaItems = Array.isArray(diretoriaBase) ? diretoriaBase : [];
-const documentosItems = Array.isArray(documentosBase) ? documentosBase : [];
-const depoimentosItems = Array.isArray(depoimentosBase) ? depoimentosBase : [];
-const iniciativasItems = Array.isArray(iniciativasBase) ? iniciativasBase : [];
+function getOrgDefaults() {
+  return (
+    orgBase ?? {
+      razaoSocial: TBD,
+      cnpj: TBD,
+      fundacao: TBD,
+      sede: TBD,
+      telefone: TBD,
+      whatsapp: TBD,
+      email: TBD,
+      horario: TBD,
+      redes: [],
+    }
+  );
+}
+
+function getImpactoItems() {
+  return Array.isArray(impactoBase) ? impactoBase : [];
+}
+
+function getDiretoriaItems() {
+  return Array.isArray(diretoriaBase) ? diretoriaBase : [];
+}
+
+function getDocumentosItems() {
+  return Array.isArray(documentosBase) ? documentosBase : [];
+}
+
+function getDepoimentosItems() {
+  return Array.isArray(depoimentosBase) ? depoimentosBase : [];
+}
+
+function getIniciativasItems() {
+  return Array.isArray(iniciativasBase) ? iniciativasBase : [];
+}
 
 /** Lista de campos editáveis na área administrativa. */
-export const editableFields: EditableField[] = [
+export function getEditableFields(): EditableField[] {
+  const impactoItems = getImpactoItems();
+  const diretoriaItems = getDiretoriaItems();
+  const documentosItems = getDocumentosItems();
+  const iniciativasItems = getIniciativasItems();
+
+  return [
   {
     group: "Página inicial",
     key: "home.imagemPrincipal",
@@ -200,13 +225,20 @@ export const editableFields: EditableField[] = [
     label: "Contribuição associativa (valores e condições)",
     multiline: true,
   },
-];
+  ];
+}
 
 function pick(map: Overrides, key: string, fallback: string) {
   return map[key] ?? fallback;
 }
 
 export function buildSite(map: Overrides) {
+  const orgDefaults = getOrgDefaults();
+  const impactoItems = getImpactoItems();
+  const diretoriaItems = getDiretoriaItems();
+  const documentosItems = getDocumentosItems();
+  const depoimentosItems = getDepoimentosItems();
+
   return {
     org: {
       ...orgDefaults,
