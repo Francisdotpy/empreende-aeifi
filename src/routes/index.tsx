@@ -43,7 +43,7 @@ function Home() {
   return (
     <>
       <section className="border-b border-border bg-surface">
-        <div className="container-page grid items-start gap-10 py-14 md:py-20 lg:grid-cols-2 lg:items-stretch">
+        <div className="container-page grid items-start gap-8 py-12 md:pt-8 md:pb-16 lg:grid-cols-2 lg:items-stretch">
           <div className="lg:self-center">
             <p className="inline-flex rounded-full bg-highlight px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-highlight-foreground">
               Associação de Empreendedores

@@ -16,7 +16,7 @@ export function PageHero({
 }) {
   return (
     <section className="border-b border-border bg-surface">
-      <div className="container-page py-12 md:py-20">
+      <div className="container-page py-11 md:pt-8 md:pb-16">
         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-secondary">{eyebrow}</p>
         <h1 className="mt-3 max-w-3xl break-words font-display text-[clamp(2rem,8vw,2.25rem)] font-semibold text-primary text-balance-tight md:text-5xl">
           {title}
