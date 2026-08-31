@@ -15,7 +15,7 @@ export function PageHero({
   children?: ReactNode;
 }) {
   return (
-    <section className="border-b border-border bg-surface">
+    <section className="border-b border-border/70 bg-surface">
       <div className="container-page py-11 md:pt-8 md:pb-16">
         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-secondary">{eyebrow}</p>
         <h1 className="mt-3 max-w-3xl break-words font-display text-[clamp(2rem,8vw,2.25rem)] font-semibold text-primary text-balance-tight md:text-5xl">
@@ -41,11 +41,13 @@ export function Section({
   tone?: "default" | "muted";
   children: ReactNode;
 }) {
+  const sectionClassName =
+    tone === "muted"
+      ? "border-y border-border/70 bg-surface"
+      : "border-b border-border/55 bg-background";
+
   return (
-    <section
-      id={id}
-      className={tone === "muted" ? "border-y border-border/70 bg-surface" : undefined}
-    >
+    <section id={id} className={sectionClassName}>
       <div className="container-page section-y">
         {title ? (
           <header className="max-w-2xl">
