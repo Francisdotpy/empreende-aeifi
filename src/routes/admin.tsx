@@ -178,6 +178,15 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
       return;
     }
     setStatus("Informações salvas e publicadas no site.");
+    queryClient.setQueryData(
+      siteContentQuery.queryKey,
+      Object.fromEntries(
+        rows.flatMap((row) => {
+          const value = row.value.trim();
+          return value ? [[row.key, value]] : [];
+        }),
+      ),
+    );
     queryClient.invalidateQueries({ queryKey: ["site_content"] });
   }
 

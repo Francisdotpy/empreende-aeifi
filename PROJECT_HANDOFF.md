@@ -42,7 +42,7 @@ Este documento registra o estado técnico do projeto e as decisões tomadas nas 
 - A chamada principal do header é “Quero me associar” e aponta para `/associe-se`.
 - O botão redundante “Associe-se” foi removido.
 - O formulário contém Nome e CNPJ, ambos obrigatórios.
-- Ao enviar, o navegador abre `https://wa.me/5545998460809` com uma mensagem de interesse já preenchida com os dados informados.
+- Ao enviar, o navegador abre `https://wa.me/5545998462423` com uma mensagem de interesse já preenchida com os dados informados.
 - O formulário não persiste os dados e não depende de serviço de e-mail nem de credenciais no servidor.
 
 ### Notícias administráveis

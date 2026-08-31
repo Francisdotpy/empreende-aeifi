@@ -5,10 +5,11 @@ import fotoInicial from "@/assets/foto-inicial.webp";
 import { areas, impacto, iniciativas, org, depoimentos, TBD } from "@/content/site";
 import { Card, CtaLink, Section, Value } from "@/components/site/ui";
 import { responsiveImageProps } from "@/lib/responsive-images";
-import { useSite } from "@/content/useSite";
+import { siteContentQuery, useSite } from "@/content/useSite";
 import { formatarDataNoticia, noticiasPublicadasQuery } from "@/lib/noticias";
 
 export const Route = createFileRoute("/")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(siteContentQuery),
   head: () => ({
     meta: [
       { title: "AEIFI — Associação de Empreendedores de Foz do Iguaçu" },
@@ -33,13 +34,14 @@ export const Route = createFileRoute("/")({
 const icons = [Megaphone, GraduationCap, Handshake, Sparkles, Lightbulb];
 
 function Home() {
-  const { org, impacto, depoimentos, get } = useSite();
+  const { org, impacto, depoimentos, get, isLoading } = useSite();
   const {
     data: noticiasPublicadas = [],
     isLoading: noticiasLoading,
     isError: noticiasError,
   } = useQuery(noticiasPublicadasQuery);
-  const homeImage = get("home.imagemPrincipal") || fotoInicial;
+  const uploadedHomeImage = get("home.imagemPrincipal");
+  const homeImage = isLoading ? "" : uploadedHomeImage || fotoInicial;
   return (
     <>
       <section className="border-b border-border bg-surface">
@@ -63,14 +65,22 @@ function Home() {
             </div>
           </div>
           <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-border bg-card shadow-card md:max-h-[28rem] lg:aspect-auto lg:max-h-none lg:self-stretch">
-            <img
-              {...responsiveImageProps(
-                homeImage,
-                "(min-width: 1280px) 37rem, (min-width: 1024px) 48vw, calc(100vw - 2.5rem)",
-              )}
-              alt="Encontro de empreendedores promovido pela AEIFI"
-              className="h-full w-full object-cover object-center lg:absolute lg:inset-0"
-            />
+            {homeImage ? (
+              <img
+                key={homeImage}
+                {...responsiveImageProps(
+                  homeImage,
+                  "(min-width: 1280px) 37rem, (min-width: 1024px) 48vw, calc(100vw - 2.5rem)",
+                )}
+                alt="Encontro de empreendedores promovido pela AEIFI"
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                className="h-full w-full object-cover object-center lg:absolute lg:inset-0"
+              />
+            ) : (
+              <div className="h-full w-full bg-muted" aria-hidden="true" />
+            )}
           </div>
         </div>
       </section>

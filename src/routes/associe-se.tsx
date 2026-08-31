@@ -146,7 +146,7 @@ function AssociationForm() {
     }
 
     const message = `Olá, meu nome é ${data.nome}, CNPJ ${data.cnpj}. Gostaria de saber mais sobre a associação com a AEIFI.`;
-    const whatsappUrl = `https://wa.me/5545998460809?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/5545998462423?text=${encodeURIComponent(message)}`;
 
     setHasError(false);
     window.location.assign(whatsappUrl);

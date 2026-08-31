@@ -59,7 +59,9 @@ export const siteContentQuery = {
     }
     return map;
   },
-  staleTime: 60_000,
+  staleTime: 0,
+  refetchOnMount: "always" as const,
+  refetchOnWindowFocus: "always" as const,
 };
 
 export type FieldKind = "text" | "multiline" | "file" | "image";
@@ -273,6 +275,10 @@ export function isPending(value: string) {
 }
 
 export function useSite() {
-  const { data } = useQuery(siteContentQuery);
-  return buildSite(data ?? {});
+  const query = useQuery(siteContentQuery);
+  return {
+    ...buildSite(query.data ?? {}),
+    isLoading: query.isLoading,
+    isFetching: query.isFetching,
+  };
 }
