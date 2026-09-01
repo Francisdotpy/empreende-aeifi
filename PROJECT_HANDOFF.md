@@ -170,11 +170,11 @@ Nunca registre valores dessas variáveis neste arquivo ou no repositório.
 
 ## Editais de credenciamento
 
-- A rota pública `/downloads` exibe somente editais publicados, ordenados da data mais recente para a mais antiga.
+- A rota pública `/editais` exibe somente editais publicados, ordenados da data mais recente para a mais antiga.
 - A composição usa cards institucionais responsivos: imagem, título, data de publicação e botão para abrir o PDF.
 - O estado sem publicações informa que não há editais disponíveis.
 - O header e o sitemap passaram a incluir a página de Editais.
-- O painel `/admin` possui a seção “Downloads / Editais” com cadastro, edição, exclusão, publicação/rascunho, preview de imagem e visualização do PDF.
+- O painel `/admin` possui a seção “Editais” com cadastro, edição, exclusão, publicação/rascunho, preview de imagem e visualização do PDF.
 - Na edição, imagem e PDF existentes são preservados quando nenhum arquivo novo é enviado.
 - Uploads de imagens aceitam JPG, JPEG, PNG e WEBP até 5 MB; PDFs aceitam somente PDF até 10 MB.
 - A validação ocorre também no servidor e confere extensão, MIME e assinatura binária.
@@ -192,7 +192,7 @@ Banco de dados:
 
 Arquivos principais desse fluxo:
 
-- `src/routes/downloads.tsx`
+- `src/routes/editais.tsx`
 - `src/components/admin/EditaisAdmin.tsx`
 - `src/lib/editais.ts`
 - `src/lib/uploads.functions.ts`

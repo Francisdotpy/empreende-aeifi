@@ -180,7 +180,7 @@ Arquivos:
 - `src/components/site/ui.tsx`
 - `src/routes/noticias.index.tsx`
 - `src/routes/noticias.$slug.tsx`
-- `src/routes/downloads.tsx`
+- `src/routes/editais.tsx`
 - `src/routes/index.tsx`
 
 Checklist:
@@ -225,7 +225,7 @@ Arquivos:
 - `src/routes/__root.tsx`
 - `src/routes/noticias.index.tsx`
 - `src/routes/noticias.$slug.tsx`
-- `src/routes/downloads.tsx`
+- `src/routes/editais.tsx`
 - `src/routes/index.tsx`
 
 Checklist:
@@ -234,7 +234,7 @@ Checklist:
 - [x] Aplicar `min-h-11` aos links do footer.
 - [x] Aplicar `min-h-11` a links de arquivo.
 - [x] Aplicar `min-h-11` a ações de erro global.
-- [x] Aplicar `min-h-11` a voltar/ler notícia/downloads.
+- [x] Aplicar `min-h-11` a voltar/ler notícia/editais.
 - [ ] Revisar `CtaLink` e `ExternalCta`: hoje têm `py-3`, mas sem `min-h-11` explícito.
 - [ ] Validar toque no header entre 640 e 1279 px.
 
@@ -263,7 +263,7 @@ Arquivos:
 - `src/routes/index.tsx`
 - `src/routes/noticias.index.tsx`
 - `src/routes/noticias.$slug.tsx`
-- `src/routes/downloads.tsx`
+- `src/routes/editais.tsx`
 - `src/components/site/ui.tsx`
 - `src/components/admin/NoticiasAdmin.tsx`
 - `src/components/admin/EditaisAdmin.tsx`

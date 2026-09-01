@@ -15,7 +15,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AssocieSeRouteImport } from './routes/associe-se'
 import { Route as BuscameiRouteImport } from './routes/buscamei'
 import { Route as ContatoRouteImport } from './routes/contato'
-import { Route as DownloadsRouteImport } from './routes/downloads'
+import { Route as EditaisRouteImport } from './routes/editais'
 import { Route as IniciativasRouteImport } from './routes/iniciativas'
 import { Route as OQueFazemosRouteImport } from './routes/o-que-fazemos'
 import { Route as ParceirosRouteImport } from './routes/parceiros'
@@ -55,9 +55,9 @@ const ContatoRoute = ContatoRouteImport.update({
   path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DownloadsRoute = DownloadsRouteImport.update({
-  id: '/downloads',
-  path: '/downloads',
+const EditaisRoute = EditaisRouteImport.update({
+  id: '/editais',
+  path: '/editais',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IniciativasRoute = IniciativasRouteImport.update({
@@ -108,7 +108,7 @@ export interface FileRoutesByFullPath {
   '/associe-se': typeof AssocieSeRoute
   '/buscamei': typeof BuscameiRoute
   '/contato': typeof ContatoRoute
-  '/downloads': typeof DownloadsRoute
+  '/editais': typeof EditaisRoute
   '/iniciativas': typeof IniciativasRoute
   '/o-que-fazemos': typeof OQueFazemosRoute
   '/parceiros': typeof ParceirosRoute
@@ -125,7 +125,7 @@ export interface FileRoutesByTo {
   '/associe-se': typeof AssocieSeRoute
   '/buscamei': typeof BuscameiRoute
   '/contato': typeof ContatoRoute
-  '/downloads': typeof DownloadsRoute
+  '/editais': typeof EditaisRoute
   '/iniciativas': typeof IniciativasRoute
   '/o-que-fazemos': typeof OQueFazemosRoute
   '/parceiros': typeof ParceirosRoute
@@ -143,7 +143,7 @@ export interface FileRoutesById {
   '/associe-se': typeof AssocieSeRoute
   '/buscamei': typeof BuscameiRoute
   '/contato': typeof ContatoRoute
-  '/downloads': typeof DownloadsRoute
+  '/editais': typeof EditaisRoute
   '/iniciativas': typeof IniciativasRoute
   '/o-que-fazemos': typeof OQueFazemosRoute
   '/parceiros': typeof ParceirosRoute
@@ -162,7 +162,7 @@ export interface FileRouteTypes {
     | '/associe-se'
     | '/buscamei'
     | '/contato'
-    | '/downloads'
+    | '/editais'
     | '/iniciativas'
     | '/o-que-fazemos'
     | '/parceiros'
@@ -179,7 +179,7 @@ export interface FileRouteTypes {
     | '/associe-se'
     | '/buscamei'
     | '/contato'
-    | '/downloads'
+    | '/editais'
     | '/iniciativas'
     | '/o-que-fazemos'
     | '/parceiros'
@@ -196,7 +196,7 @@ export interface FileRouteTypes {
     | '/associe-se'
     | '/buscamei'
     | '/contato'
-    | '/downloads'
+    | '/editais'
     | '/iniciativas'
     | '/o-que-fazemos'
     | '/parceiros'
@@ -214,7 +214,7 @@ export interface RootRouteChildren {
   AssocieSeRoute: typeof AssocieSeRoute
   BuscameiRoute: typeof BuscameiRoute
   ContatoRoute: typeof ContatoRoute
-  DownloadsRoute: typeof DownloadsRoute
+  EditaisRoute: typeof EditaisRoute
   IniciativasRoute: typeof IniciativasRoute
   OQueFazemosRoute: typeof OQueFazemosRoute
   ParceirosRoute: typeof ParceirosRoute
@@ -269,11 +269,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/downloads': {
-      id: '/downloads'
-      path: '/downloads'
-      fullPath: '/downloads'
-      preLoaderRoute: typeof DownloadsRouteImport
+    '/editais': {
+      id: '/editais'
+      path: '/editais'
+      fullPath: '/editais'
+      preLoaderRoute: typeof EditaisRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/iniciativas': {
@@ -342,7 +342,7 @@ const rootRouteChildren: RootRouteChildren = {
   AssocieSeRoute: AssocieSeRoute,
   BuscameiRoute: BuscameiRoute,
   ContatoRoute: ContatoRoute,
-  DownloadsRoute: DownloadsRoute,
+  EditaisRoute: EditaisRoute,
   IniciativasRoute: IniciativasRoute,
   OQueFazemosRoute: OQueFazemosRoute,
   ParceirosRoute: ParceirosRoute,

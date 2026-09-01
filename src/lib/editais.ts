@@ -20,7 +20,7 @@ export const editaisPublicadosQuery = queryOptions({
       if (error) throw error;
       return data ?? [];
     } catch (error) {
-      console.error("[Supabase] Could not load public downloads.", error);
+      console.error("[Supabase] Could not load public editais.", error);
       return [];
     }
   },
