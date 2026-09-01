@@ -36,7 +36,7 @@ export const uploadSiteFile = createServerFn({ method: "POST" })
     return { url: `/api/public/arquivo/${path}` };
   });
 
-type EditalUploadInput = UploadInput & { kind: "image" | "pdf" };
+type PublicacaoUploadInput = UploadInput & { kind: "image" | "pdf" };
 
 function safeFileName(name: string) {
   return name
@@ -74,9 +74,9 @@ function validateImage(name: string, contentType: string, bytes: Buffer) {
   }
 }
 
-export const uploadEditalFile = createServerFn({ method: "POST" })
+export const uploadPublicacaoFile = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .validator((data: EditalUploadInput) => {
+  .validator((data: PublicacaoUploadInput) => {
     if (!data?.name || !data?.dataBase64 || !["image", "pdf"].includes(data.kind)) {
       throw new Error("Arquivo inválido.");
     }
@@ -103,7 +103,7 @@ export const uploadEditalFile = createServerFn({ method: "POST" })
     }
 
     const folder = data.kind === "image" ? "images" : "pdfs";
-    const path = `editais/${folder}/${crypto.randomUUID()}-${safeFileName(data.name)}`;
+    const path = `publicacoes/${folder}/${crypto.randomUUID()}-${safeFileName(data.name)}`;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { error } = await supabaseAdmin.storage.from("arquivos").upload(path, bytes, {
       contentType: data.contentType,
@@ -113,7 +113,7 @@ export const uploadEditalFile = createServerFn({ method: "POST" })
     return { url: `/api/public/arquivo/${path}` };
   });
 
-export const deleteEditalFiles = createServerFn({ method: "POST" })
+export const deletePublicacaoFiles = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .validator((data: { urls: string[] }) => {
     if (!Array.isArray(data?.urls) || data.urls.length > 4) throw new Error("Lista inválida.");
@@ -127,8 +127,9 @@ export const deleteEditalFiles = createServerFn({ method: "POST" })
     if (roleError || !isAdmin) throw new Error("Sem permissão para excluir arquivos.");
 
     const prefix = "/api/public/arquivo/";
+    const allowedPrefixes = [`${prefix}publicacoes/`, `${prefix}editais/`];
     const paths = data.urls.flatMap((url) => {
-      if (!url.startsWith(`${prefix}editais/`)) return [];
+      if (!allowedPrefixes.some((allowedPrefix) => url.startsWith(allowedPrefix))) return [];
       const path = decodeURIComponent(url.slice(prefix.length));
       return path.includes("..") ? [] : [path];
     });

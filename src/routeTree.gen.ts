@@ -15,11 +15,11 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AssocieSeRouteImport } from './routes/associe-se'
 import { Route as BuscameiRouteImport } from './routes/buscamei'
 import { Route as ContatoRouteImport } from './routes/contato'
-import { Route as EditaisRouteImport } from './routes/editais'
 import { Route as IniciativasRouteImport } from './routes/iniciativas'
 import { Route as OQueFazemosRouteImport } from './routes/o-que-fazemos'
 import { Route as ParceirosRouteImport } from './routes/parceiros'
 import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-privacidade'
+import { Route as PublicacoesRouteImport } from './routes/publicacoes'
 import { Route as TransparenciaRouteImport } from './routes/transparencia'
 import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
 import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
@@ -55,11 +55,6 @@ const ContatoRoute = ContatoRouteImport.update({
   path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EditaisRoute = EditaisRouteImport.update({
-  id: '/editais',
-  path: '/editais',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IniciativasRoute = IniciativasRouteImport.update({
   id: '/iniciativas',
   path: '/iniciativas',
@@ -78,6 +73,11 @@ const ParceirosRoute = ParceirosRouteImport.update({
 const PoliticaDePrivacidadeRoute = PoliticaDePrivacidadeRouteImport.update({
   id: '/politica-de-privacidade',
   path: '/politica-de-privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublicacoesRoute = PublicacoesRouteImport.update({
+  id: '/publicacoes',
+  path: '/publicacoes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TransparenciaRoute = TransparenciaRouteImport.update({
@@ -108,11 +108,11 @@ export interface FileRoutesByFullPath {
   '/associe-se': typeof AssocieSeRoute
   '/buscamei': typeof BuscameiRoute
   '/contato': typeof ContatoRoute
-  '/editais': typeof EditaisRoute
   '/iniciativas': typeof IniciativasRoute
   '/o-que-fazemos': typeof OQueFazemosRoute
   '/parceiros': typeof ParceirosRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/publicacoes': typeof PublicacoesRoute
   '/transparencia': typeof TransparenciaRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
   '/noticias/': typeof NoticiasIndexRoute
@@ -125,11 +125,11 @@ export interface FileRoutesByTo {
   '/associe-se': typeof AssocieSeRoute
   '/buscamei': typeof BuscameiRoute
   '/contato': typeof ContatoRoute
-  '/editais': typeof EditaisRoute
   '/iniciativas': typeof IniciativasRoute
   '/o-que-fazemos': typeof OQueFazemosRoute
   '/parceiros': typeof ParceirosRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/publicacoes': typeof PublicacoesRoute
   '/transparencia': typeof TransparenciaRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
   '/noticias': typeof NoticiasIndexRoute
@@ -143,11 +143,11 @@ export interface FileRoutesById {
   '/associe-se': typeof AssocieSeRoute
   '/buscamei': typeof BuscameiRoute
   '/contato': typeof ContatoRoute
-  '/editais': typeof EditaisRoute
   '/iniciativas': typeof IniciativasRoute
   '/o-que-fazemos': typeof OQueFazemosRoute
   '/parceiros': typeof ParceirosRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/publicacoes': typeof PublicacoesRoute
   '/transparencia': typeof TransparenciaRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
   '/noticias/': typeof NoticiasIndexRoute
@@ -162,11 +162,11 @@ export interface FileRouteTypes {
     | '/associe-se'
     | '/buscamei'
     | '/contato'
-    | '/editais'
     | '/iniciativas'
     | '/o-que-fazemos'
     | '/parceiros'
     | '/politica-de-privacidade'
+    | '/publicacoes'
     | '/transparencia'
     | '/noticias/$slug'
     | '/noticias/'
@@ -179,11 +179,11 @@ export interface FileRouteTypes {
     | '/associe-se'
     | '/buscamei'
     | '/contato'
-    | '/editais'
     | '/iniciativas'
     | '/o-que-fazemos'
     | '/parceiros'
     | '/politica-de-privacidade'
+    | '/publicacoes'
     | '/transparencia'
     | '/noticias/$slug'
     | '/noticias'
@@ -196,11 +196,11 @@ export interface FileRouteTypes {
     | '/associe-se'
     | '/buscamei'
     | '/contato'
-    | '/editais'
     | '/iniciativas'
     | '/o-que-fazemos'
     | '/parceiros'
     | '/politica-de-privacidade'
+    | '/publicacoes'
     | '/transparencia'
     | '/noticias/$slug'
     | '/noticias/'
@@ -214,11 +214,11 @@ export interface RootRouteChildren {
   AssocieSeRoute: typeof AssocieSeRoute
   BuscameiRoute: typeof BuscameiRoute
   ContatoRoute: typeof ContatoRoute
-  EditaisRoute: typeof EditaisRoute
   IniciativasRoute: typeof IniciativasRoute
   OQueFazemosRoute: typeof OQueFazemosRoute
   ParceirosRoute: typeof ParceirosRoute
   PoliticaDePrivacidadeRoute: typeof PoliticaDePrivacidadeRoute
+  PublicacoesRoute: typeof PublicacoesRoute
   TransparenciaRoute: typeof TransparenciaRoute
   NoticiasSlugRoute: typeof NoticiasSlugRoute
   NoticiasIndexRoute: typeof NoticiasIndexRoute
@@ -269,13 +269,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/editais': {
-      id: '/editais'
-      path: '/editais'
-      fullPath: '/editais'
-      preLoaderRoute: typeof EditaisRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/iniciativas': {
       id: '/iniciativas'
       path: '/iniciativas'
@@ -302,6 +295,13 @@ declare module '@tanstack/react-router' {
       path: '/politica-de-privacidade'
       fullPath: '/politica-de-privacidade'
       preLoaderRoute: typeof PoliticaDePrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/publicacoes': {
+      id: '/publicacoes'
+      path: '/publicacoes'
+      fullPath: '/publicacoes'
+      preLoaderRoute: typeof PublicacoesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/transparencia': {
@@ -342,11 +342,11 @@ const rootRouteChildren: RootRouteChildren = {
   AssocieSeRoute: AssocieSeRoute,
   BuscameiRoute: BuscameiRoute,
   ContatoRoute: ContatoRoute,
-  EditaisRoute: EditaisRoute,
   IniciativasRoute: IniciativasRoute,
   OQueFazemosRoute: OQueFazemosRoute,
   ParceirosRoute: ParceirosRoute,
   PoliticaDePrivacidadeRoute: PoliticaDePrivacidadeRoute,
+  PublicacoesRoute: PublicacoesRoute,
   TransparenciaRoute: TransparenciaRoute,
   NoticiasSlugRoute: NoticiasSlugRoute,
   NoticiasIndexRoute: NoticiasIndexRoute,

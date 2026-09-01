@@ -104,8 +104,8 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link to="/editais" className="inline-flex min-h-11 items-center hover:text-accent">
-                Editais
+              <Link to="/publicacoes" className="inline-flex min-h-11 items-center hover:text-accent">
+                Publicações
               </Link>
             </li>
           </ul>

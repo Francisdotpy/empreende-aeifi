@@ -168,17 +168,18 @@ Nunca registre valores dessas variáveis neste arquivo ou no repositório.
 - Uma busca no working tree não encontrou referências restantes.
 - Nomes de autores em commits antigos são metadados do Git. Removê-los exigiria reescrever o histórico publicado, o que não deve ser feito neste projeto.
 
-## Editais de credenciamento
+## Publicações
 
-- A rota pública `/editais` exibe somente editais publicados, ordenados da data mais recente para a mais antiga.
+- A rota pública `/publicacoes` exibe somente publicações com status `publicado`, ordenadas da data mais recente para a mais antiga.
 - A composição usa cards institucionais responsivos: imagem, título, data de publicação e botão para abrir o PDF.
-- O estado sem publicações informa que não há editais disponíveis.
-- O header e o sitemap passaram a incluir a página de Editais.
-- O painel `/admin` possui a seção “Editais” com cadastro, edição, exclusão, publicação/rascunho, preview de imagem e visualização do PDF.
+- O estado sem publicações informa que não há publicações disponíveis.
+- O header e o sitemap incluem a página de Publicações.
+- O painel `/admin` possui a seção “Publicações” com cadastro, edição, exclusão, publicação/rascunho, preview de imagem e visualização do PDF.
 - Na edição, imagem e PDF existentes são preservados quando nenhum arquivo novo é enviado.
 - Uploads de imagens aceitam JPG, JPEG, PNG e WEBP até 5 MB; PDFs aceitam somente PDF até 10 MB.
 - A validação ocorre também no servidor e confere extensão, MIME e assinatura binária.
-- Os arquivos usam o bucket privado existente `arquivos`, nos prefixos `editais/images/` e `editais/pdfs/`.
+- Os novos arquivos usam o bucket privado existente `arquivos`, nos prefixos `publicacoes/images/` e `publicacoes/pdfs/`.
+- A exclusão de arquivos mantém compatibilidade com URLs antigas nos prefixos `editais/images/` e `editais/pdfs/`.
 - A existência do bucket `arquivos` deve ser confirmada em cada novo projeto Supabase; as migrations atuais aplicam políticas, mas não criam o bucket.
 
 Banco de dados:
@@ -188,13 +189,13 @@ Banco de dados:
 - Campos: `id`, `titulo`, `imagem_url`, `pdf_url`, `data_publicacao`, `status`, `created_at` e `updated_at`.
 - Status válidos: `publicado` e `rascunho`.
 - RLS permite leitura pública somente de registros publicados e restringe todo o gerenciamento a administradores.
-- Em 25/08/2026, `supabase migration list` confirmou que todas as migrations locais, inclusive a de editais, estavam aplicadas no projeto remoto vinculado.
+- Em 25/08/2026, `supabase migration list` confirmou que todas as migrations locais, inclusive a migration legada desse fluxo, estavam aplicadas no projeto remoto vinculado.
 
 Arquivos principais desse fluxo:
 
-- `src/routes/editais.tsx`
-- `src/components/admin/EditaisAdmin.tsx`
-- `src/lib/editais.ts`
+- `src/routes/publicacoes.tsx`
+- `src/components/admin/PublicacoesAdmin.tsx`
+- `src/lib/publicacoes.ts`
 - `src/lib/uploads.functions.ts`
 - `src/routes/admin.tsx`
 - `src/integrations/supabase/types.ts`

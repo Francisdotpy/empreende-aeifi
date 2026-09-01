@@ -12,7 +12,7 @@ O trabalho deve preservar:
 - [ ] Arquitetura React, TanStack Start, Tailwind CSS 4 e Supabase.
 - [ ] Dados dinâmicos administrados pelo Supabase.
 - [ ] Identidade visual azul e dourada existente.
-- [ ] Fluxos atuais de notícias, editais, associação e administração.
+- [ ] Fluxos atuais de notícias, publicações, associação e administração.
 - [ ] Deploy SSR com Nitro e Vercel.
 - [ ] Tokens de cores, bordas, raios e sombras de `src/styles.css`.
 - [ ] Ausência de artefatos de build versionados.
@@ -119,7 +119,7 @@ Arquivos:
 - `src/routes/associe-se.tsx`
 - `src/routes/admin.tsx`
 - `src/components/admin/NoticiasAdmin.tsx`
-- `src/components/admin/EditaisAdmin.tsx`
+- `src/components/admin/PublicacoesAdmin.tsx`
 
 Checklist:
 
@@ -131,7 +131,7 @@ Checklist:
 - [x] Aplicar padrão em associação.
 - [x] Aplicar padrão no login e campos gerais do admin.
 - [x] Aplicar padrão em notícias.
-- [x] Aplicar padrão em editais.
+- [x] Aplicar padrão em publicações.
 - [x] Atualizar componentes genéricos `Input`, `Textarea` e `Select`.
 - [ ] Validar Safari/iOS sem zoom ao focar inputs.
 - [ ] Validar teclado virtual aberto.
@@ -142,13 +142,13 @@ Arquivos:
 
 - `src/routes/admin.tsx`
 - `src/components/admin/NoticiasAdmin.tsx`
-- `src/components/admin/EditaisAdmin.tsx`
+- `src/components/admin/PublicacoesAdmin.tsx`
 
 Checklist:
 
 - [x] Usar classe compartilhada com `w-full min-w-0 max-w-full` no upload genérico.
 - [x] Aplicar o mesmo padrão nos uploads de notícias.
-- [x] Aplicar o mesmo padrão nos uploads de editais.
+- [x] Aplicar o mesmo padrão nos uploads de publicações.
 - [ ] Validar nome de arquivo longo em 360 px.
 - [ ] Validar ausência de overflow horizontal.
 - [ ] Validar acessibilidade por teclado.
@@ -160,7 +160,7 @@ Arquivos:
 - `src/routes/admin.tsx`
 - `src/content/inline-edit.tsx`
 - `src/components/admin/NoticiasAdmin.tsx`
-- `src/components/admin/EditaisAdmin.tsx`
+- `src/components/admin/PublicacoesAdmin.tsx`
 
 Checklist:
 
@@ -180,7 +180,7 @@ Arquivos:
 - `src/components/site/ui.tsx`
 - `src/routes/noticias.index.tsx`
 - `src/routes/noticias.$slug.tsx`
-- `src/routes/editais.tsx`
+- `src/routes/publicacoes.tsx`
 - `src/routes/index.tsx`
 
 Checklist:
@@ -189,7 +189,7 @@ Checklist:
 - [x] Aplicar `[overflow-wrap:anywhere]` a dados vulneráveis como e-mail/categoria.
 - [x] Proteger títulos públicos com `break-words`.
 - [x] Preservar `break-all` nos links de fontes.
-- [x] Proteger títulos de editais.
+- [x] Proteger títulos de publicações.
 - [ ] Validar strings sem espaços com 100+ caracteres.
 - [ ] Validar URLs longas.
 - [ ] Validar e-mail longo no footer.
@@ -201,7 +201,7 @@ Checklist:
 Arquivos:
 
 - `src/components/admin/NoticiasAdmin.tsx`
-- `src/components/admin/EditaisAdmin.tsx`
+- `src/components/admin/PublicacoesAdmin.tsx`
 
 Checklist:
 
@@ -225,7 +225,7 @@ Arquivos:
 - `src/routes/__root.tsx`
 - `src/routes/noticias.index.tsx`
 - `src/routes/noticias.$slug.tsx`
-- `src/routes/editais.tsx`
+- `src/routes/publicacoes.tsx`
 - `src/routes/index.tsx`
 
 Checklist:
@@ -234,7 +234,7 @@ Checklist:
 - [x] Aplicar `min-h-11` aos links do footer.
 - [x] Aplicar `min-h-11` a links de arquivo.
 - [x] Aplicar `min-h-11` a ações de erro global.
-- [x] Aplicar `min-h-11` a voltar/ler notícia/editais.
+- [x] Aplicar `min-h-11` a voltar/ler notícia/publicações.
 - [ ] Revisar `CtaLink` e `ExternalCta`: hoje têm `py-3`, mas sem `min-h-11` explícito.
 - [ ] Validar toque no header entre 640 e 1279 px.
 
@@ -263,10 +263,10 @@ Arquivos:
 - `src/routes/index.tsx`
 - `src/routes/noticias.index.tsx`
 - `src/routes/noticias.$slug.tsx`
-- `src/routes/editais.tsx`
+- `src/routes/publicacoes.tsx`
 - `src/components/site/ui.tsx`
 - `src/components/admin/NoticiasAdmin.tsx`
-- `src/components/admin/EditaisAdmin.tsx`
+- `src/components/admin/PublicacoesAdmin.tsx`
 
 Checklist:
 
@@ -388,7 +388,7 @@ Checklist:
 - [ ] Editor inline ausente em `/admin`.
 - [ ] WhatsApp flutuante ausente em `/admin`.
 - [ ] Cadastro e edição de notícia.
-- [ ] Cadastro e edição de edital.
+- [ ] Cadastro e edição de publicação.
 - [ ] Upload com nome de arquivo longo.
 - [ ] Listas vazias.
 - [ ] Listas extensas.
@@ -408,7 +408,7 @@ Checklist:
 - [ ] Capa vertical.
 - [ ] Capa quadrada.
 
-### Editais
+### Publicações
 
 - [ ] Estado vazio.
 - [ ] Grid em todos os breakpoints.

@@ -117,9 +117,9 @@ export const areas: Area[] = [
     titulo: "Oportunidades",
     resumo: "Criação e divulgação de oportunidades para o fortalecimento dos pequenos negócios.",
     descricao:
-      "Identificamos, organizamos e divulgamos oportunidades que muitas vezes não chegam ao microempreendedor: editais, feiras, ações de divulgação, chamadas de parceiros e espaços de comercialização.",
+      "Identificamos, organizamos e divulgamos oportunidades que muitas vezes não chegam ao microempreendedor: publicações, feiras, ações de divulgação, chamadas de parceiros e espaços de comercialização.",
     praticas: [
-      "Divulgação de editais, feiras e chamadas públicas",
+      "Divulgação de publicações, feiras e chamadas públicas",
       "Espaços de exposição e comercialização para associados",
       "Ações conjuntas de divulgação dos pequenos negócios",
       "Encaminhamento de demandas de compradores para associados",

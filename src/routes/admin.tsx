@@ -14,7 +14,7 @@ import { uploadSiteFile } from "@/lib/uploads.functions";
 import { claimAdmin } from "@/lib/admin.functions";
 import { Card, PageHero, Section } from "@/components/site/ui";
 import { formControlClassName } from "@/components/site/form-styles";
-import { EditaisAdmin } from "@/components/admin/EditaisAdmin";
+import { PublicacoesAdmin } from "@/components/admin/PublicacoesAdmin";
 import { NoticiasAdmin } from "@/components/admin/NoticiasAdmin";
 
 export const Route = createFileRoute("/admin")({
@@ -150,7 +150,7 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
     claimAdmin()
       .then(() =>
         Promise.all([
-          queryClient.invalidateQueries({ queryKey: ["editais"] }),
+          queryClient.invalidateQueries({ queryKey: ["publicacoes"] }),
           queryClient.invalidateQueries({ queryKey: ["noticias"] }),
         ]),
       )
@@ -224,7 +224,7 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
 
       <NoticiasAdmin />
 
-      <EditaisAdmin />
+      <PublicacoesAdmin />
 
       {groups.map(([group, fields]) => (
         <Card key={group}>

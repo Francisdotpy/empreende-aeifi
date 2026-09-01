@@ -40,11 +40,11 @@ function Page() {
       <Section>
         {isLoading ? (
           <p className="text-center text-sm text-muted-foreground" aria-live="polite">
-            Carregando publicações…
+            Carregando notícias…
           </p>
         ) : isError ? (
           <div className="border border-destructive/25 bg-card px-5 py-4 text-center text-sm text-destructive shadow-sm">
-            Não foi possível carregar as publicações. Tente novamente em alguns instantes.
+            Não foi possível carregar as notícias. Tente novamente em alguns instantes.
           </div>
         ) : noticiasPublicadas.length === 0 ? (
           <div className="border border-border bg-card px-6 py-10 text-center shadow-sm">

@@ -2,12 +2,12 @@ import { queryOptions } from "@tanstack/react-query";
 import { supabase, tryGetSupabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
-export type Edital = Tables<"downloads_editais">;
-export type EditalStatus = Edital["status"];
+export type Publicacao = Tables<"downloads_editais">;
+export type PublicacaoStatus = Publicacao["status"];
 
-export const editaisPublicadosQuery = queryOptions({
-  queryKey: ["editais", "publicados"],
-  queryFn: async (): Promise<Edital[]> => {
+export const publicacoesPublicadasQuery = queryOptions({
+  queryKey: ["publicacoes", "publicadas"],
+  queryFn: async (): Promise<Publicacao[]> => {
     try {
       const client = tryGetSupabase();
       if (!client) return [];
@@ -20,16 +20,16 @@ export const editaisPublicadosQuery = queryOptions({
       if (error) throw error;
       return data ?? [];
     } catch (error) {
-      console.error("[Supabase] Could not load public editais.", error);
+      console.error("[Supabase] Could not load public publications.", error);
       return [];
     }
   },
   staleTime: 60_000,
 });
 
-export const editaisAdminQuery = queryOptions({
-  queryKey: ["editais", "admin"],
-  queryFn: async (): Promise<Edital[]> => {
+export const publicacoesAdminQuery = queryOptions({
+  queryKey: ["publicacoes", "admin"],
+  queryFn: async (): Promise<Publicacao[]> => {
     const { data, error } = await supabase
       .from("downloads_editais")
       .select("*")
