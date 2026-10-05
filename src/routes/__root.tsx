@@ -144,18 +144,21 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
+  const isConexaoMeiRoute = pathname === "/conexaomei";
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col">
+      {isConexaoMeiRoute ? (
+        <main><Outlet /></main>
+      ) : <div className="flex min-h-screen flex-col">
         <Header />
         <main className="flex-1">
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
         </main>
         <Footer />
-      </div>
-      {isAdminRoute ? null : (
+      </div>}
+      {isAdminRoute || isConexaoMeiRoute ? null : (
         <>
           <WhatsAppFloatingButton />
           <InlineTextEditor />

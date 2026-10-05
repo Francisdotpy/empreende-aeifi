@@ -8,6 +8,35 @@ export const Route = createFileRoute("/api/public/arquivo/$")({
         if (!path || path.includes("..")) return new Response("Not found", { status: 404 });
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+        if (path.startsWith("conexao-mei/")) {
+          let published: { id: string } | null = null;
+          if (path.startsWith("conexao-mei/documentos/")) {
+            const result = await supabaseAdmin
+              .from("conexao_mei_documentos")
+              .select("id")
+              .eq("arquivo_path", path)
+              .eq("visivel", true)
+              .maybeSingle();
+            published = result.data;
+          } else if (path.startsWith("conexao-mei/parceiros/")) {
+            const result = await supabaseAdmin
+              .from("conexao_mei_parceiros")
+              .select("id")
+              .eq("logo_path", path)
+              .eq("visivel", true)
+              .maybeSingle();
+            published = result.data;
+          } else if (path.startsWith("conexao-mei/expositores/")) {
+            const result = await supabaseAdmin
+              .from("conexao_mei_expositores")
+              .select("id")
+              .eq("logo_path", path)
+              .eq("status", "Confirmado")
+              .maybeSingle();
+            published = result.data;
+          }
+          if (!published) return new Response("Not found", { status: 404 });
+        }
         const requestedWidth = Number(new URL(request.url).searchParams.get("width"));
         const allowedWidths = new Set([480, 768, 1024, 1440]);
         const canTransform =

@@ -255,3 +255,14 @@ Avisos conhecidos que não impediram o build:
 8. Nunca volte a versionar `.env`, `.env.local` ou `supabase/.temp/`.
 9. Ao trocar de projeto Supabase, reinicie o Vite e limpe a sessão de Auth do projeto anterior no navegador.
 10. Antes de diagnosticar permissões de upload, confirme: secret key no servidor, usuário na `admin_allowlist`, papel em `user_roles` e bucket `arquivos` existente.
+
+## Conexão MEI (implementação local, ativação pendente)
+
+- A rota `/conexaomei` e a seção **Conexão MEI** do `/admin` foram implementadas em outubro de 2026. A rota pública reproduz as seções do HTML `conexao_mei_2027_integrado_v67.html` fornecido pela AEIFI, usando os logos extraídos dele e o formulário próprio de e-mail.
+- A migration `supabase/migrations/20261003120000_create_conexao_mei.sql` cria configuração privada e registros de manifestações; sua aplicação remota foi confirmada pelo histórico em 05/10/2026.
+- O destinatário inicial é `aeififoz@gmail.com` e pode ser editado no painel após a migration.
+- O envio usa Resend no servidor, sem Cloudflare Turnstile. O formulário fica desabilitado até a configuração das variáveis do Resend e do domínio de remetente.
+- Em 04/10/2026, iniciou-se a migração dos recursos do HTML original: aba exclusiva no `/admin`, etapas e conteúdo no Supabase, inscrições privadas por etapa, consulta por CPF, etiquetas, certificados e relatórios. Em 05/10/2026, `supabase migration list` confirmou as três migrations do Conexão MEI no projeto remoto; o usuário confirmou o bucket `arquivos` e acesso ao admin. Ainda faltam testes ponta a ponta e ativação da aplicação. Inscrições começam fechadas.
+- O CPF usa índice HMAC e valor cifrado no servidor; depende de `CONEXAO_MEI_CPF_KEY` (32 bytes base64). A consulta por CPF foi solicitada pelo usuário, mas não comprova identidade; a etiqueta omite telefone/CPF no QR. O painel do protótipo com senha fixa e o armazenamento local não são usados.
+- O e-mail permanece com destinatário único configurável; ampliar para múltiplos foi barrado pela revisão automática por exposição adicional de dados pessoais. Exige autorização específica.
+- Modo de uso, variáveis e passos restantes: `docs/conexao-mei.md`.

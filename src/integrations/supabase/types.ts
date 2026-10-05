@@ -1,5 +1,81 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
+export type ConexaoMeiEventoRow = {
+  id: boolean;
+  data_destaque: string;
+  cidade_destaque: string;
+  ano_destaque: string;
+  local_nome: string;
+  local_endereco: string;
+  local_complemento: string;
+  exibir_local: boolean;
+  whatsapp_numero: string;
+  whatsapp_mensagem: string;
+  whatsapp_ativo: boolean;
+  modulos: Json;
+  assinante_nome: string;
+  assinante_cargo: string;
+  coordenador_nome: string;
+  coordenador_cargo: string;
+  updated_at: string;
+};
+export type ConexaoMeiEtapaRow = {
+  slug: string;
+  ordem: number;
+  cidade: string;
+  rotulo: string;
+  data: string;
+  local_nome: string;
+  endereco: string;
+  programacao: string;
+  inscricoes_abertas: boolean;
+  certificados_liberados: boolean;
+  carga_horaria: string;
+  updated_at: string;
+};
+export type ConexaoMeiInscricaoRow = {
+  id: string;
+  etapa_slug: string;
+  nome: string;
+  cpf_hash: string;
+  cpf_cifrado: string;
+  whatsapp: string;
+  consentimento_em: string;
+  presenca_confirmada: boolean;
+  created_at: string;
+  updated_at: string;
+};
+export type ConexaoMeiDocumentoRow = {
+  id: string;
+  titulo: string;
+  tipo: string;
+  data_publicacao: string | null;
+  arquivo_path: string;
+  arquivo_nome: string;
+  visivel: boolean;
+  created_at: string;
+};
+export type ConexaoMeiParceiroRow = {
+  id: string;
+  nome: string;
+  categoria: "realizacao" | "parceiro" | "apoio";
+  link: string;
+  logo_path: string;
+  etapa_slug: string | null;
+  visivel: boolean;
+  created_at: string;
+};
+export type ConexaoMeiExpositorRow = {
+  id: string;
+  nome: string;
+  segmento: string;
+  cidade: string;
+  link: string;
+  logo_path: string;
+  status: "Confirmado" | "Pendente" | "Oculto";
+  created_at: string;
+};
+
 export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
@@ -8,6 +84,105 @@ export type Database = {
   };
   public: {
     Tables: {
+      conexao_mei_evento: {
+        Row: ConexaoMeiEventoRow;
+        Insert: Omit<ConexaoMeiEventoRow, "updated_at"> & { updated_at?: string };
+        Update: Partial<ConexaoMeiEventoRow>;
+        Relationships: [];
+      };
+      conexao_mei_etapas: {
+        Row: ConexaoMeiEtapaRow;
+        Insert: Omit<ConexaoMeiEtapaRow, "updated_at"> & { updated_at?: string };
+        Update: Partial<ConexaoMeiEtapaRow>;
+        Relationships: [];
+      };
+      conexao_mei_inscricoes: {
+        Row: ConexaoMeiInscricaoRow;
+        Insert: Omit<
+          ConexaoMeiInscricaoRow,
+          "id" | "presenca_confirmada" | "created_at" | "updated_at"
+        > &
+          Partial<
+            Pick<ConexaoMeiInscricaoRow, "id" | "presenca_confirmada" | "created_at" | "updated_at">
+          >;
+        Update: Partial<ConexaoMeiInscricaoRow>;
+        Relationships: [];
+      };
+      conexao_mei_documentos: {
+        Row: ConexaoMeiDocumentoRow;
+        Insert: Omit<ConexaoMeiDocumentoRow, "id" | "created_at"> &
+          Partial<Pick<ConexaoMeiDocumentoRow, "id" | "created_at">>;
+        Update: Partial<ConexaoMeiDocumentoRow>;
+        Relationships: [];
+      };
+      conexao_mei_parceiros: {
+        Row: ConexaoMeiParceiroRow;
+        Insert: Omit<ConexaoMeiParceiroRow, "id" | "created_at"> &
+          Partial<Pick<ConexaoMeiParceiroRow, "id" | "created_at">>;
+        Update: Partial<ConexaoMeiParceiroRow>;
+        Relationships: [];
+      };
+      conexao_mei_expositores: {
+        Row: ConexaoMeiExpositorRow;
+        Insert: Omit<ConexaoMeiExpositorRow, "id" | "created_at"> &
+          Partial<Pick<ConexaoMeiExpositorRow, "id" | "created_at">>;
+        Update: Partial<ConexaoMeiExpositorRow>;
+        Relationships: [];
+      };
+      conexao_mei_config: {
+        Row: { id: boolean; destinatario: string; updated_at: string };
+        Insert: { id?: boolean; destinatario: string; updated_at?: string };
+        Update: { id?: boolean; destinatario?: string; updated_at?: string };
+        Relationships: [];
+      };
+      conexao_mei_manifestacoes: {
+        Row: {
+          id: string;
+          nome: string;
+          empresa: string;
+          telefone: string;
+          email: string;
+          cidade_uf: string;
+          modalidade: string;
+          mensagem: string;
+          destinatario: string;
+          status: "pendente" | "enviado" | "falhou";
+          resend_id: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          nome: string;
+          empresa: string;
+          telefone: string;
+          email: string;
+          cidade_uf: string;
+          modalidade: string;
+          mensagem: string;
+          destinatario: string;
+          status?: "pendente" | "enviado" | "falhou";
+          resend_id?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          nome?: string;
+          empresa?: string;
+          telefone?: string;
+          email?: string;
+          cidade_uf?: string;
+          modalidade?: string;
+          mensagem?: string;
+          destinatario?: string;
+          status?: "pendente" | "enviado" | "falhou";
+          resend_id?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       noticias: {
         Row: {
           capa_url: string;
@@ -145,6 +320,10 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      conexao_mei_allow_attempt: {
+        Args: { p_scope: string; p_subject_hash: string; p_limit: number };
+        Returns: boolean;
+      };
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"];

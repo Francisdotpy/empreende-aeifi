@@ -16,6 +16,7 @@ import { Card, PageHero, Section } from "@/components/site/ui";
 import { formControlClassName } from "@/components/site/form-styles";
 import { PublicacoesAdmin } from "@/components/admin/PublicacoesAdmin";
 import { NoticiasAdmin } from "@/components/admin/NoticiasAdmin";
+import { ConexaoMeiWorkspaceAdmin } from "@/components/admin/ConexaoMeiWorkspaceAdmin";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -136,6 +137,7 @@ function LoginForm() {
 
 function Editor({ onSignOut }: { onSignOut: () => void }) {
   const queryClient = useQueryClient();
+  const [activeTab, setActiveTab] = useState<"site" | "conexao-mei">("site");
   const { data, isLoading } = useQuery(siteContentQuery);
   const editableFields = useMemo(() => getEditableFields(), []);
   const [values, setValues] = useState<Record<string, string>>({});
@@ -206,52 +208,82 @@ function Editor({ onSignOut }: { onSignOut: () => void }) {
         </button>
       </div>
 
-      <Card>
-        <h2 className="font-display text-lg font-semibold text-primary">Textos das páginas</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Para reescrever qualquer texto do site, navegue até a página desejada com o seu login
-          ativo e clique em <strong>“Editar textos da página”</strong>, no canto inferior esquerdo.
-          Depois é só clicar sobre o trecho e digitar. Abaixo ficam registradas as alterações já
-          feitas.
-        </p>
-        <CustomTexts data={data ?? {}} />
-      </Card>
-
-      <WhatsAppContactsEditor
-        value={values[WHATSAPP_CONTACTS_KEY] ?? ""}
-        onChange={(next) => setValues((current) => ({ ...current, [WHATSAPP_CONTACTS_KEY]: next }))}
-      />
-
-      <NoticiasAdmin />
-
-      <PublicacoesAdmin />
-
-      {groups.map(([group, fields]) => (
-        <Card key={group}>
-          <h2 className="font-display text-lg font-semibold text-primary">{group}</h2>
-          <div className="mt-4 grid gap-4 md:grid-cols-2">
-            {fields.map((field) => (
-              <FieldEditor
-                key={field.key}
-                field={field}
-                value={values[field.key] ?? ""}
-                onChange={(next) => setValues((v) => ({ ...v, [field.key]: next }))}
-              />
-            ))}
-          </div>
-        </Card>
-      ))}
-
-      <div className="sticky bottom-[max(1rem,env(safe-area-inset-bottom))] z-30 flex flex-wrap items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-lift">
+      <nav
+        className="flex flex-wrap gap-2 rounded-2xl border border-border bg-card p-2"
+        aria-label="Áreas administrativas"
+      >
         <button
-          onClick={save}
-          disabled={saving}
-          className="rounded-lg bg-secondary px-5 py-3 text-sm font-semibold text-secondary-foreground shadow-sm transition-all hover:bg-secondary/90 hover:shadow-md active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
+          type="button"
+          onClick={() => setActiveTab("site")}
+          aria-current={activeTab === "site" ? "page" : undefined}
+          className={`min-h-11 rounded-xl px-5 py-2 text-sm font-semibold ${activeTab === "site" ? "bg-primary text-primary-foreground" : "text-primary hover:bg-muted"}`}
         >
-          {saving ? "Salvando…" : "Salvar e publicar"}
+          Site AEIFI
         </button>
-        {status ? <span className="text-sm text-muted-foreground">{status}</span> : null}
-      </div>
+        <button
+          type="button"
+          onClick={() => setActiveTab("conexao-mei")}
+          aria-current={activeTab === "conexao-mei" ? "page" : undefined}
+          className={`min-h-11 rounded-xl px-5 py-2 text-sm font-semibold ${activeTab === "conexao-mei" ? "bg-primary text-primary-foreground" : "text-primary hover:bg-muted"}`}
+        >
+          Conexão MEI 2027
+        </button>
+      </nav>
+
+      {activeTab === "conexao-mei" ? (
+        <ConexaoMeiWorkspaceAdmin />
+      ) : (
+        <>
+          <Card>
+            <h2 className="font-display text-lg font-semibold text-primary">Textos das páginas</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Para reescrever qualquer texto do site, navegue até a página desejada com o seu login
+              ativo e clique em <strong>“Editar textos da página”</strong>, no canto inferior
+              esquerdo. Depois é só clicar sobre o trecho e digitar. Abaixo ficam registradas as
+              alterações já feitas.
+            </p>
+            <CustomTexts data={data ?? {}} />
+          </Card>
+
+          <WhatsAppContactsEditor
+            value={values[WHATSAPP_CONTACTS_KEY] ?? ""}
+            onChange={(next) =>
+              setValues((current) => ({ ...current, [WHATSAPP_CONTACTS_KEY]: next }))
+            }
+          />
+
+          <NoticiasAdmin />
+
+          <PublicacoesAdmin />
+
+          {groups.map(([group, fields]) => (
+            <Card key={group}>
+              <h2 className="font-display text-lg font-semibold text-primary">{group}</h2>
+              <div className="mt-4 grid gap-4 md:grid-cols-2">
+                {fields.map((field) => (
+                  <FieldEditor
+                    key={field.key}
+                    field={field}
+                    value={values[field.key] ?? ""}
+                    onChange={(next) => setValues((v) => ({ ...v, [field.key]: next }))}
+                  />
+                ))}
+              </div>
+            </Card>
+          ))}
+
+          <div className="sticky bottom-[max(1rem,env(safe-area-inset-bottom))] z-30 flex flex-wrap items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-lift">
+            <button
+              onClick={save}
+              disabled={saving}
+              className="rounded-lg bg-secondary px-5 py-3 text-sm font-semibold text-secondary-foreground shadow-sm transition-all hover:bg-secondary/90 hover:shadow-md active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
+            >
+              {saving ? "Salvando…" : "Salvar e publicar"}
+            </button>
+            {status ? <span className="text-sm text-muted-foreground">{status}</span> : null}
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -574,7 +606,7 @@ function CustomTexts({ data }: { data: Record<string, string> }) {
             type="button"
             disabled={busy === item.key}
             onClick={() => void reset(item.key)}
-          className="mt-2 inline-flex min-h-11 items-center text-xs font-semibold text-destructive underline disabled:opacity-60"
+            className="mt-2 inline-flex min-h-11 items-center text-xs font-semibold text-destructive underline disabled:opacity-60"
           >
             {busy === item.key ? "Restaurando…" : "Restaurar texto original"}
           </button>
