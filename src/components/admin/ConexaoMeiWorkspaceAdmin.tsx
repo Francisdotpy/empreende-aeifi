@@ -6,6 +6,7 @@ import { formControlClassName } from "@/components/site/form-styles";
 import { supabase } from "@/integrations/supabase/client";
 import { claimAdmin } from "@/lib/admin.functions";
 import { getConexaoMeiReport } from "@/lib/conexao-mei-report.functions";
+import { conexaoMeiFileUrl } from "@/lib/conexao-mei-content";
 import { printConexaoMeiCertificate, printConexaoMeiLabel } from "@/lib/conexao-mei-print";
 import type {
   ConexaoMeiDocumentoRow,
@@ -543,12 +544,29 @@ function RegistrationsEditor({
                       onClick={() => {
                         const label = labelFor(item);
                         if (!label || !selectedStage) return;
-                        printConexaoMeiCertificate(label, {
-                          horas: selectedStage.carga_horaria,
-                          assinanteNome: data.evento.assinante_nome,
-                          assinanteCargo: data.evento.assinante_cargo,
-                          coordenadorNome: data.evento.coordenador_nome,
-                          coordenadorCargo: data.evento.coordenador_cargo,
+                        void printConexaoMeiCertificate(
+                          label,
+                          {
+                            horas: selectedStage.carga_horaria,
+                            assinanteNome: data.evento.assinante_nome,
+                            assinanteCargo: data.evento.assinante_cargo,
+                            coordenadorNome: data.evento.coordenador_nome,
+                            coordenadorCargo: data.evento.coordenador_cargo,
+                          },
+                          data.parceiros
+                            .filter(
+                              (partner) =>
+                                partner.visivel && partner.etapa_slug === selectedStage.slug,
+                            )
+                            .map((partner) => ({
+                              nome: partner.nome,
+                              logoUrl: conexaoMeiFileUrl(partner.logo_path),
+                            })),
+                        ).then((ok) => {
+                          if (!ok)
+                            setStatus(
+                              "Não foi possível carregar as logos ou abrir a impressão do certificado.",
+                            );
                         });
                       }}
                       className="text-primary underline disabled:opacity-40"

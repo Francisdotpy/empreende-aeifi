@@ -22,7 +22,13 @@ type Certificate = {
   coordenadorCargo: string;
 };
 type Mode = "inscricao" | "etiqueta" | "certificado";
-export function StageParticipation({ stage }: { stage: StageInfo }) {
+export function StageParticipation({
+  stage,
+  partners,
+}: {
+  stage: StageInfo;
+  partners: { nome: string; logoUrl: string }[];
+}) {
   const [mode, setMode] = useState<Mode>("inscricao");
   const [available, setAvailable] = useState(false);
   const [checking, setChecking] = useState(true);
@@ -219,8 +225,12 @@ export function StageParticipation({ stage }: { stage: StageInfo }) {
             <button
               type="button"
               onClick={() => {
-                if (!printConexaoMeiCertificate(label, certificate))
-                  setMessage("Permita pop-ups para salvar o certificado em PDF.");
+                void printConexaoMeiCertificate(label, certificate, partners).then((ok) => {
+                  if (!ok)
+                    setMessage(
+                      "Não foi possível carregar as logos ou abrir a impressão do certificado.",
+                    );
+                });
               }}
               className="mt-3 block min-h-10 rounded-lg bg-[#063f78] px-4 py-2 font-bold text-white"
             >

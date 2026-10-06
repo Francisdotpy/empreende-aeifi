@@ -202,7 +202,7 @@ export function ConexaoMeiLanding() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-[#102338] [scroll-behavior:smooth] [&_h1]:font-sans [&_h2]:font-sans [&_h3]:font-sans [&_h4]:font-sans">
-            <nav
+      <nav
         className="sticky top-0 z-30 border-b border-[#dbe5ef] bg-white/95 backdrop-blur-md"
         aria-label="Navegação do evento"
       >
@@ -691,7 +691,10 @@ export function ConexaoMeiLanding() {
       ) : null}
 
       {modules.expositores ? (
-        <section id="expositores-confirmados" className="scroll-mt-20 bg-[#f5f8fb] pt-8 pb-12 lg:pt-8 lg:pb-16">
+        <section
+          id="expositores-confirmados"
+          className="scroll-mt-20 bg-[#f5f8fb] pt-8 pb-12 lg:pt-8 lg:pb-16"
+        >
           <div className="mx-auto w-[92%] max-w-[1160px]">
             <Heading
               kicker="Empresas participantes"
@@ -860,6 +863,9 @@ export function ConexaoMeiLanding() {
             </div>
             <StageParticipation
               key={selectedStage.slug}
+              partners={(data?.parceiros ?? [])
+                .filter((item) => item.visivel && item.etapa_slug === selectedStage.slug)
+                .map((item) => ({ nome: item.nome, logoUrl: conexaoMeiFileUrl(item.logo_path) }))}
               stage={{
                 slug: selectedStage.slug,
                 city: selectedStage.city,

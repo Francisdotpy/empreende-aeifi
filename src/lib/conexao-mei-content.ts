@@ -42,15 +42,22 @@ export async function getConexaoMeiPublicData(): Promise<ConexaoMeiPublicData> {
       .eq("status", "Confirmado")
       .order("created_at"),
   ]);
-  const error =
-    evento.error ?? etapas.error ?? documentos.error ?? parceiros.error ?? expositores.error;
-  if (error || !evento.data) throw error ?? new Error("Dados do evento indisponíveis.");
+  // Core settings must load; optional modules must not replace configured stages with fallbacks.
+  const coreError = evento.error ?? etapas.error;
+  if (coreError || !evento.data) throw coreError ?? new Error("Dados do evento indisponíveis.");
+  for (const [module, error] of [
+    ["documentos", documentos.error],
+    ["parceiros", parceiros.error],
+    ["expositores", expositores.error],
+  ] as const) {
+    if (error) console.error(`[Conexão MEI] Não foi possível carregar ${module}.`, error);
+  }
   return {
     evento: evento.data,
     etapas: etapas.data ?? [],
-    documentos: documentos.data ?? [],
-    parceiros: parceiros.data ?? [],
-    expositores: expositores.data ?? [],
+    documentos: documentos.error ? [] : (documentos.data ?? []),
+    parceiros: parceiros.error ? [] : (parceiros.data ?? []),
+    expositores: expositores.error ? [] : (expositores.data ?? []),
   };
 }
 
