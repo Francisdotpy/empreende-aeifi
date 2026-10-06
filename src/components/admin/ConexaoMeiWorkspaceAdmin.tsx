@@ -5,6 +5,7 @@ import { Card } from "@/components/site/ui";
 import { formControlClassName } from "@/components/site/form-styles";
 import { supabase } from "@/integrations/supabase/client";
 import { claimAdmin } from "@/lib/admin.functions";
+import { getConexaoMeiLabelQr } from "@/lib/conexao-mei-inscricoes.functions";
 import { getConexaoMeiReport } from "@/lib/conexao-mei-report.functions";
 import { conexaoMeiFileUrl } from "@/lib/conexao-mei-content";
 import { printConexaoMeiCertificate, printConexaoMeiLabel } from "@/lib/conexao-mei-print";
@@ -532,7 +533,14 @@ function RegistrationsEditor({
                       type="button"
                       onClick={() => {
                         const label = labelFor(item);
-                        if (label) void printConexaoMeiLabel(label);
+                        if (!label) return;
+                        const qrDataUrl = getConexaoMeiLabelQr({
+                          data: { id: item.id },
+                        }).then((result) => result.qrDataUrl);
+                        void printConexaoMeiLabel(label, qrDataUrl).then((ok) => {
+                          if (!ok)
+                            setStatus("Não foi possível preparar a etiqueta para impressão.");
+                        });
                       }}
                       className="text-primary underline"
                     >

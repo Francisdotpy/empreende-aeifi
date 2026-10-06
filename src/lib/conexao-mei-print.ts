@@ -41,16 +41,20 @@ function finish(popup: Window, html: string) {
   setTimeout(() => popup.print(), 500);
 }
 
-export async function printConexaoMeiLabel(label: ConexaoMeiLabelData) {
+export async function printConexaoMeiLabel(
+  label: ConexaoMeiLabelData,
+  qrDataUrl: string | Promise<string>,
+) {
   const popup = openPrintWindow();
   if (!popup) return false;
   try {
-    const { toDataURL } = await import("qrcode");
-    const qr = await toDataURL(`CONEXAO-MEI-2027:${label.id}`, { margin: 0, width: 200 });
+    const qr = await qrDataUrl;
+    if (!/^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(qr) || qr.length > 100_000)
+      throw new Error("QR inválido.");
     const date = label.data.split("-").reverse().join("/");
     finish(
       popup,
-      `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Etiqueta de inscrição</title><style>@page{size:100mm 25mm;margin:0}*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif}.label{width:100mm;height:25mm;border:.35mm solid #c8d5e2;display:grid;grid-template-columns:1fr 26mm;color:#071628}.info{padding:2mm 3mm;display:flex;flex-direction:column;justify-content:center;text-align:center}.name{font-size:10.5pt;font-weight:900;text-transform:uppercase;overflow:hidden}.stage{background:#074984;color:#fff;border-radius:1.5mm;padding:1mm;font-size:7pt;margin-top:1mm}.qr{display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:6pt}.qr img{width:17mm;height:17mm}</style></head><body><div class="label"><div class="info"><div class="name">${escapeHtml(label.nome)}</div><div class="stage">${escapeHtml(label.cidade)} • ${escapeHtml(label.rotulo)} • ${escapeHtml(date)}</div></div><div class="qr"><img src="${qr}" alt="QR Code"><b>${escapeHtml(label.id.slice(0, 8).toUpperCase())}</b></div></div></body></html>`,
+      `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Etiqueta de inscrição</title><style>@page{size:100mm 25mm;margin:0}*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif}.label{width:100mm;height:25mm;border:.35mm solid #c8d5e2;display:grid;grid-template-columns:1fr 26mm;color:#071628}.info{padding:2mm 3mm;display:flex;flex-direction:column;justify-content:center;text-align:center}.name{font-size:10.5pt;font-weight:900;text-transform:uppercase;overflow:hidden}.stage{background:#074984;color:#fff;border-radius:1.5mm;padding:1mm;font-size:7pt;margin-top:1mm}.qr{display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:6pt}.qr img{width:20mm;height:20mm}</style></head><body><div class="label"><div class="info"><div class="name">${escapeHtml(label.nome)}</div><div class="stage">${escapeHtml(label.cidade)} • ${escapeHtml(label.rotulo)} • ${escapeHtml(date)}</div></div><div class="qr"><img src="${escapeHtml(qr)}" alt="QR Code para contato pelo WhatsApp"><b>${escapeHtml(label.id.slice(0, 8).toUpperCase())}</b></div></div></body></html>`,
     );
     return true;
   } catch {

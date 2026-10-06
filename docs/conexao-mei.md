@@ -10,7 +10,7 @@
 - Os dados do destinatário e das manifestações ficam em tabelas privadas; a credencial do Resend fica somente no servidor.
 - Enquanto o envio não estiver configurado, o botão da página fica desabilitado e nenhum dado é recebido.
 - As seis etapas, local, endereço, programação, situação das inscrições e certificados são lidos do Supabase. A tela de cada etapa pode ser compartilhada como `/conexaomei?etapa=missal` (trocando o slug da cidade).
-- Inscrição, recuperação de etiqueta e consulta de certificado usam CPF, validação no servidor e limites de tentativas. A etiqueta tem QR com código opaco, sem CPF ou WhatsApp. O certificado só é emitido após presença confirmada e liberação da etapa.
+- Inscrição, recuperação de etiqueta e consulta de certificado usam CPF, validação no servidor e limites de tentativas. A etiqueta tem QR com link direto `https://wa.me/` para o WhatsApp informado pela pessoa. O CPF não aparece no QR; o número de telefone aparece no link lido pela câmera e pode ser visto por quem tiver acesso à etiqueta. O certificado só é emitido após presença confirmada e liberação da etapa.
 
 ## Como usar depois da ativação
 
@@ -42,7 +42,7 @@ A manifestação exige `RESEND_API_KEY`, `CONEXAO_MEI_FROM_EMAIL` e `SUPABASE_SE
 
 ## Diferenças de segurança em relação ao protótipo
 
-O HTML original guarda tudo apenas no navegador e usa senha fixa. A implementação atual usa o login administrativo existente, RLS e funções no servidor. A consulta apenas por CPF foi uma escolha explícita; ela não comprova identidade. Os limites de tentativa no servidor reduzem abuso, mas não substituem a verificação de identidade: qualquer pessoa que conheça um CPF válido ainda pode obter a etiqueta ou certificado liberado. Sem o desafio contra robôs, há maior risco de consultas automatizadas e envio excessivo de manifestações; monitorar os registros e revisar os limites antes da abertura pública. Para reduzir exposição, o QR não contém nome, CPF nem telefone. Antes da ativação pública, revisar a política de privacidade e executar testes completos com dados fictícios.
+O HTML original guarda tudo apenas no navegador e usa senha fixa. A implementação atual usa o login administrativo existente, RLS e funções no servidor. A consulta apenas por CPF foi uma escolha explícita; ela não comprova identidade. Os limites de tentativa no servidor reduzem abuso, mas não substituem a verificação de identidade: qualquer pessoa que conheça um CPF válido ainda pode obter a etiqueta ou certificado liberado. Sem o desafio contra robôs, há maior risco de consultas automatizadas e envio excessivo de manifestações; monitorar os registros e revisar os limites antes da abertura pública. O QR contém diretamente o link do WhatsApp, portanto revela o telefone a qualquer pessoa que possa escanear a etiqueta. Ele não contém CPF. O consentimento da inscrição informa esse uso. Etiquetas já emitidas com o QR antigo continuam mostrando apenas o código da inscrição; é preciso reimprimi-las para usar o link direto. Antes da ativação pública, revisar a política de privacidade e executar testes completos com dados fictícios.
 
 O HTML original admite vários e-mails destinatários; esta implementação mantém **um único destinatário** porque a ampliação do envio de dados pessoais exige autorização específica.
 

@@ -13,7 +13,14 @@ type StageInfo = {
   registrationOpen: boolean;
   certificates: boolean;
 };
-type Label = { id: string; nome: string; cidade: string; rotulo: string; data: string };
+type Label = {
+  id: string;
+  nome: string;
+  cidade: string;
+  rotulo: string;
+  data: string;
+  qrDataUrl?: string;
+};
 type Certificate = {
   horas: string;
   assinanteNome: string;
@@ -192,7 +199,8 @@ export function StageParticipation({
                 onChange={(e) => setConsent(e.target.checked)}
               />{" "}
               Autorizo o uso destes dados para inscrição, controle de participação, etiqueta e
-              certificado desta etapa.
+              certificado desta etapa. Estou ciente de que quem escanear o QR da etiqueta poderá ver
+              o número informado e abrir uma conversa no WhatsApp.
             </label>
           ) : null}
           <button
@@ -240,8 +248,11 @@ export function StageParticipation({
             <button
               type="button"
               onClick={() =>
-                void printConexaoMeiLabel(label).then((ok) => {
-                  if (!ok) setMessage("Permita pop-ups para imprimir a etiqueta.");
+                void printConexaoMeiLabel(label, label.qrDataUrl ?? "").then((ok) => {
+                  if (!ok)
+                    setMessage(
+                      "Não foi possível preparar a etiqueta. Confira se pop-ups estão permitidos.",
+                    );
                 })
               }
               className="mt-3 block min-h-10 rounded-lg bg-[#063f78] px-4 py-2 font-bold text-white"

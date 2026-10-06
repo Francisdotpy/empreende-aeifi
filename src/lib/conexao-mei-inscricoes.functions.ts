@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 const registerSchema = z.object({
   etapa: z.string().regex(/^[a-z0-9-]{2,40}$/),
@@ -149,9 +150,10 @@ export const registerConexaoMeiStage = createServerFn({ method: "POST" })
       .maybeSingle();
     if (stageError || !stage?.inscricoes_abertas)
       return { ok: false as const, message: "As inscrições desta etapa estão encerradas." };
+    const { createConexaoMeiWhatsAppQr } = await import("./conexao-mei-qr.server");
     const { data: existing } = await supabaseAdmin
       .from("conexao_mei_inscricoes")
-      .select("id,nome")
+      .select("id,nome,whatsapp")
       .eq("etapa_slug", data.etapa)
       .eq("cpf_hash", cpfHash)
       .maybeSingle();
@@ -162,6 +164,7 @@ export const registerConexaoMeiStage = createServerFn({ method: "POST" })
         label: {
           id: existing.id,
           nome: existing.nome,
+          qrDataUrl: await createConexaoMeiWhatsAppQr(existing.whatsapp),
           cidade: stage.cidade,
           rotulo: stage.rotulo,
           data: stage.data,
@@ -178,7 +181,7 @@ export const registerConexaoMeiStage = createServerFn({ method: "POST" })
         whatsapp: data.whatsapp,
         consentimento_em: new Date().toISOString(),
       })
-      .select("id,nome")
+      .select("id,nome,whatsapp")
       .single();
     if (error || !registration)
       return {
@@ -191,6 +194,7 @@ export const registerConexaoMeiStage = createServerFn({ method: "POST" })
       label: {
         id: registration.id,
         nome: registration.nome,
+        qrDataUrl: await createConexaoMeiWhatsAppQr(registration.whatsapp),
         cidade: stage.cidade,
         rotulo: stage.rotulo,
         data: stage.data,
@@ -217,7 +221,7 @@ export const lookupConexaoMeiRegistration = createServerFn({ method: "POST" })
         .maybeSingle(),
       supabaseAdmin
         .from("conexao_mei_inscricoes")
-        .select("id,nome,presenca_confirmada")
+        .select("id,nome,whatsapp,presenca_confirmada")
         .eq("etapa_slug", data.etapa)
         .eq("cpf_hash", cpfHash)
         .maybeSingle(),
@@ -242,12 +246,19 @@ export const lookupConexaoMeiRegistration = createServerFn({ method: "POST" })
           : "Presença ainda não confirmada pela organização.",
       };
     }
+    const qrDataUrl =
+      data.finalidade === "etiqueta"
+        ? await (
+            await import("./conexao-mei-qr.server")
+          ).createConexaoMeiWhatsAppQr(registration.whatsapp)
+        : undefined;
     return {
       ok: true as const,
       message: "Inscrição localizada.",
       label: {
         id: registration.id,
         nome: registration.nome,
+        ...(qrDataUrl ? { qrDataUrl } : {}),
         cidade: stage.cidade,
         rotulo: stage.rotulo,
         data: stage.data,
@@ -263,4 +274,23 @@ export const lookupConexaoMeiRegistration = createServerFn({ method: "POST" })
             }
           : null,
     };
+  });
+
+export const getConexaoMeiLabelQr = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .validator((input: unknown) => z.object({ id: z.string().uuid() }).parse(input))
+  .handler(async ({ data, context }) => {
+    const { data: isAdmin, error } = await context.supabase.rpc("has_role", {
+      _user_id: context.userId,
+      _role: "admin",
+    });
+    if (error || !isAdmin) throw new Error("Acesso administrativo necessário.");
+    const registration = await context.supabase
+      .from("conexao_mei_inscricoes")
+      .select("whatsapp")
+      .eq("id", data.id)
+      .maybeSingle();
+    if (registration.error || !registration.data) throw new Error("Inscrição não encontrada.");
+    const { createConexaoMeiWhatsAppQr } = await import("./conexao-mei-qr.server");
+    return { qrDataUrl: await createConexaoMeiWhatsAppQr(registration.data.whatsapp) };
   });
