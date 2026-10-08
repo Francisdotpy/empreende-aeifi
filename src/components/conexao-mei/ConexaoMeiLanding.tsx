@@ -359,7 +359,7 @@ export function ConexaoMeiLanding() {
             </div>
           </div>
           <aside className="rounded-[28px] border border-white bg-white p-6 text-[#063f78] shadow-xl">
-            <p className="text-sm font-extrabold uppercase tracking-[0.14em] text-[#e9a900]">
+            <p className="text-lg font-extrabold uppercase tracking-[0.12em] text-[#e9a900] sm:text-xl">
               Encontro Regional
             </p>
             <p className="mt-3 text-[clamp(3.5rem,7vw,5.5rem)] font-black leading-none">
@@ -562,19 +562,20 @@ export function ConexaoMeiLanding() {
                 </span>
               ))}
             </div>
-            <a className={`${blueButton} mt-5`} href="#interesse">
-              MANIFESTAR INTERESSE
-            </a>
-            {modules.documentos && editalDocument ? (
-              <a
-                className={`${lightButton} ml-2 mt-5`}
-                href={conexaoMeiFileUrl(editalDocument.arquivo_path)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                VER EDITAL
+            <div className="mt-5 flex flex-wrap gap-3">
+              <a className={blueButton} href="#interesse">
+                MANIFESTAR INTERESSE
               </a>
-            ) : null}
+              {modules.documentos && editalDocument ? (
+                <a
+                  className={lightButton}
+                  href={conexaoMeiFileUrl(editalDocument.arquivo_path)}
+                  download={editalDocument.arquivo_nome}
+                >
+                  ⬇ BAIXAR EDITAL
+                </a>
+              ) : null}
+            </div>
           </div>
         </div>
       </section>
@@ -769,7 +770,7 @@ export function ConexaoMeiLanding() {
             <div>
               <h3 className="font-bold text-white">Encontro Regional</h3>
               <p className="mt-3 text-sm">
-                <strong>24 de julho de 2027</strong>
+                <strong>24 e 25 de julho de 2027</strong>
                 <br />
                 Foz do Iguaçu - Paraná
               </p>
